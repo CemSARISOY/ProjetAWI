@@ -24,7 +24,8 @@ export class IngredientsService {
       doc.LIBELLE,
       doc.CATEGORIE,
       doc.PRIX_UNITAIRE,
-      doc.UNITE
+      doc.UNITE,
+      doc.id
     );
   }
 
@@ -37,19 +38,22 @@ export class IngredientsService {
       .pipe(map((data) => data.map((doc) => this.doc2Ingredient(doc))));
   }
 
-  deleteIngredient(ingredientId: string) {
-    return this.db.doc('Ingredient/' + ingredientId).delete();
+  deleteIngredient(ingredient: Ingredients) {
+    return this.db.doc('Ingredient/' + ingredient.id).delete();
   }
-/*
-  updateIngredient(ingredient: Ingredients){
-    this.ingredientCollection.doc(ingredient.id).update(Object.assign({}, ingredient));
 
-}*/
+  updateIngredient(ingredient: Ingredients){
+    var id = ingredient.id
+    delete ingredient.id
+    this.ingredientCollection.doc(id).update(Object.assign({}, ingredient));
+    ingredient.id = id
+
+}
 
   getIngredient(ingredientId: string): Observable<Ingredients> {
     var ingredient = this.db.doc<Ingredients>(this.path + ingredientId);
     return ingredient
-      .valueChanges()
+      .valueChanges({ idField: 'id' })
       .pipe(map((doc) => this.doc2Ingredient(doc)));
   }
 
@@ -63,8 +67,10 @@ export class IngredientsService {
           var id = ingredient.id
           delete ingredient.id
           this.ingredientCollection
-            .doc(ingredient.id)
+            .doc(id)
             .set(Object.assign({}, ingredient));
+            ingredient.id = id
+
         }
       });
   }

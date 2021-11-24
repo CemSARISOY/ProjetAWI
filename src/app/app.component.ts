@@ -17,11 +17,12 @@ export class AppComponent {
     //this.ingredientService.getAllIngredients().subscribe(ingredient => console.log(ingredient));
     //this.ingredientService.addIngredient(new Ingredients(2000,"kebabs","VIANDES / VOLAILLES",0.50,"P"))
 
-    /* this.ingredientService.getIngredient("kHyZp5XVo0hEwrTrZIQk")
+     this.ingredientService.getIngredient("SVHoTCzCNoecPlVTu9GU")
      .subscribe(ingredient => {
-
-      ingredient.LIBELLE = "Tacos";
-        this.ingredientService.updateIngredient(ingredient)});*/
+       console.log(ingredient);
+      console.log(ingredient.id)
+     ingredient.LIBELLE = "Tacos";
+        this.ingredientService.deleteIngredient(ingredient)});
 
       //this.ingredientService.updateIngredient(ingredient)});
 
