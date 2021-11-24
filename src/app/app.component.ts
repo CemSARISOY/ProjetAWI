@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Ingredients } from './models/ingredients';
 import { IngredientsService } from './services/ingredients.service';
 
 @Component({
@@ -13,6 +14,17 @@ export class AppComponent {
   title = 'ProjetAWI';
 
   ngOnInit(){
-    this.ingredientService.getAllIngredients().subscribe(ingredient => console.log(ingredient));
+    //this.ingredientService.getAllIngredients().subscribe(ingredient => console.log(ingredient));
+    //this.ingredientService.addIngredient(new Ingredients(2000,"kebabs","VIANDES / VOLAILLES",0.50,"P"))
+
+    /* this.ingredientService.getIngredient("kHyZp5XVo0hEwrTrZIQk")
+     .subscribe(ingredient => {
+
+      ingredient.LIBELLE = "Tacos";
+        this.ingredientService.updateIngredient(ingredient)});*/
+
+      //this.ingredientService.updateIngredient(ingredient)});
+
+
   }
 }

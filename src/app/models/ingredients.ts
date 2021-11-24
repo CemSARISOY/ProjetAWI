@@ -1,15 +1,16 @@
 export class Ingredients {
-    public code : number;
-    public libelle : String;
-    public categorie : String;
-    public coutUnitaire : number;
-    public unite : String;
+    public id : string;
+    public CODE : number;
+    public LIBELLE : String;
+    public CATEGORIE : String;
+    public PRIX_UNITAIRE : number;
+    public UNITE : String;
 
-    public constructor(code : number, libelle: String, categorie: String, coutUnitaire : number, unite : String){
-        this.code = code;
-        this.libelle = libelle;
-        this.categorie = categorie;
-        this.coutUnitaire = coutUnitaire;
-        this.unite = unite;
+    public constructor(code : number, libelle: String, categorie: String, prix_unitaire : number, unite : String){
+        this.CODE = code;
+        this.LIBELLE = libelle;
+        this.CATEGORIE = categorie;
+        this.PRIX_UNITAIRE = prix_unitaire;
+        this.UNITE = unite;
     }
 }
