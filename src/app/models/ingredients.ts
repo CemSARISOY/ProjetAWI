@@ -3,12 +3,12 @@ import { Optional } from "@angular/core";
 export class Ingredients {
     public id : string;
     public CODE : number;
-    public LIBELLE : String;
-    public CATEGORIE : String;
+    public LIBELLE : string;
+    public CATEGORIE : string;
     public PRIX_UNITAIRE : number;
-    public UNITE : String;
+    public UNITE : string;
 
-    public constructor(code : number, libelle: String, categorie: String, prix_unitaire : number, unite : String,@Optional() id?: string){
+    public constructor(code : number, libelle: string, categorie: string, prix_unitaire : number, unite : string,@Optional() id?: string){
         this.CODE = code;
         this.LIBELLE = libelle;
         this.CATEGORIE = categorie;

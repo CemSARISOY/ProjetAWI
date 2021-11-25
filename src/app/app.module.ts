@@ -20,8 +20,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-
+import { MatInputModule } from '@angular/material/input';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatExpansionModule} from '@angular/material/expansion';
 const route = [
   {path : '',component:IngredientsComponent}
 ]
@@ -48,7 +49,12 @@ const route = [
     MatPaginatorModule,
     MatSortModule,
     RouterModule.forRoot(route),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatButtonToggleModule,
+    MatExpansionModule
+    
+  
   ],
   providers: [],
   bootstrap: [AppComponent]
