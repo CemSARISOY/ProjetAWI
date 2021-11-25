@@ -3,12 +3,20 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { IngredientsDataSource, IngredientsItem } from './ingredients-datasource';
-
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-ingredients',
   templateUrl: './ingredients.component.html',
-  styleUrls: ['./ingredients.component.css']
+  styleUrls: ['./ingredients.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
+  
 })
 export class IngredientsComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -18,6 +26,7 @@ export class IngredientsComponent implements AfterViewInit {
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['CODE', 'LIBELLE' ,'PRIX_UNITAIRE','UNITE','CATEGORIE'];
+  expandedElement: IngredientsItem | null;
 
   constructor() {
     this.dataSource = new IngredientsDataSource(EXAMPLE_DATA);
