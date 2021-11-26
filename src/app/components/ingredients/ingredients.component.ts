@@ -5,6 +5,7 @@ import { MatTable } from '@angular/material/table';
 import { IngredientsDataSource, IngredientsItem } from './ingredients-datasource';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
+
 @Component({
   selector: 'app-ingredients',
   templateUrl: './ingredients.component.html',
@@ -27,6 +28,7 @@ export class IngredientsComponent implements AfterViewInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['CODE', 'LIBELLE' ,'PRIX_UNITAIRE','UNITE','CATEGORIE'];
   expandedElement: IngredientsItem | null;
+  expansable : boolean = false;
 
   constructor() {
     this.dataSource = new IngredientsDataSource(EXAMPLE_DATA);
@@ -46,7 +48,8 @@ export class IngredientsComponent implements AfterViewInit {
   }
 
   DeleteMode() {
-    console.log("Delete")
+    this.expansable = false;
+    console.log(this.expansable)
     var i = this.displayedColumns.length -1
     while (this.displayedColumns[i] != 'CATEGORIE'){
       console.log(this.displayedColumns)
@@ -58,6 +61,8 @@ export class IngredientsComponent implements AfterViewInit {
    }
   
   EditMode(){
+    this.expansable = true;
+    console.log(this.expansable)
     var i = this.displayedColumns.length -1
     while (this.displayedColumns[i] != 'CATEGORIE'){
       this.displayedColumns.pop()
@@ -67,6 +72,8 @@ export class IngredientsComponent implements AfterViewInit {
   }
 
   ViewMode(){
+    this.expansable = false;
+    console.log(this.expansable)
     var i = this.displayedColumns.length -1
     while (this.displayedColumns[i] != 'CATEGORIE'){
       this.displayedColumns.pop()
@@ -75,7 +82,11 @@ export class IngredientsComponent implements AfterViewInit {
 
   }
 
+  
+ 
+
 }
+
 
 const EXAMPLE_DATA: IngredientsItem[] = [
   {id : "rgggrgeqggr", CODE : 1, LIBELLE : "kebab", CATEGORIE : "VIANDES", PRIX_UNITAIRE : 1, UNITE : "K"},

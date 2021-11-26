@@ -23,6 +23,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { IngredientFormComponent } from './components/ingredient-form/ingredient-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field'; 
 const route = [
   {path : '',component:IngredientsComponent}
 ]
@@ -31,7 +34,8 @@ const route = [
   declarations: [
     AppComponent,
     NavigationComponent,
-    IngredientsComponent
+    IngredientsComponent,
+    IngredientFormComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +56,9 @@ const route = [
     BrowserAnimationsModule,
     MatInputModule,
     MatButtonToggleModule,
-    MatExpansionModule
+    MatExpansionModule,
+    ReactiveFormsModule,
+    MatFormFieldModule
     
   
   ],

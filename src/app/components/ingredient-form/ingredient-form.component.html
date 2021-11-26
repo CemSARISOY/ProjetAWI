@@ -1,0 +1,49 @@
+<form [formGroup]="ingredientForm" (ngSubmit)="onSubmit()" novalidate>
+ 
+
+    <p>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>CODE</mat-label>
+            <input formControlName="CODE" matInput placeholder="3455" >
+          </mat-form-field>
+    </p>
+
+    <p>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>CATEGORIE</mat-label>
+            <input formControlName="CATEGORIE" matInput placeholder="VIANDES" >
+  
+          </mat-form-field>
+  
+    </p> 
+   
+    <p>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>UNITE</mat-label>
+            <input formControlName="UNITE" matInput placeholder="Kg" >
+          </mat-form-field>
+    </p>
+
+    <p>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>PRIX UNITAIRE</mat-label>
+            <input formControlName="PRIX_UNITAIRE" matInput placeholder="3.94" >
+  
+          </mat-form-field>
+  
+    </p>
+
+    <p>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>LIBELLE</mat-label>
+            <input formControlName="LIBELLE" matInput placeholder="Kebab" >
+  
+          </mat-form-field>
+  
+    </p>
+        
+      <button mat-flat-button color="primary">Submit</button>
+
+ 
+</form>
+
