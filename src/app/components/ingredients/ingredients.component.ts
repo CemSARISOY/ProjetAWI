@@ -82,6 +82,11 @@ export class IngredientsComponent implements AfterViewInit {
 
   }
 
+  expand(element){
+    if(this.expansable) this.expandedElement = this.expandedElement === element ? null : element;
+    else return null;
+  }
+
   
  
 

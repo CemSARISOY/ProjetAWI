@@ -88,20 +88,11 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
 
-<div *ngIf="expansable; else elseBlock">
-  <tr mat-row *matRowDef="let element; columns: displayedColumns;"
+<tr mat-row *matRowDef="let element; columns: displayedColumns;"
   class="example-element-row"
   [class.example-expanded-row]="expandedElement === element"
-  (click)="expandedElement = expandedElement === element ? null : element">
+  (click)="this.expand(element)">
 </tr>
-</div>
-<ng-template #elseBlock>
-  <tr mat-row *matRowDef="let element; columns: displayedColumns;"
-    class="example-element-row"
-    [class.example-expanded-row]="expandedElement === element"
-    (click)="expandedElement =  null">
-</tr>
-</ng-template>
 <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
   </table>
   <button mat-fab color="primary">
