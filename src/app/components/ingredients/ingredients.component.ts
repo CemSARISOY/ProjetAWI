@@ -1,9 +1,10 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild,OnChanges } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { IngredientsDataSource, IngredientsItem } from './ingredients-datasource';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+
 
 
 @Component({
@@ -28,7 +29,9 @@ export class IngredientsComponent implements AfterViewInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['CODE', 'LIBELLE' ,'PRIX_UNITAIRE','UNITE','CATEGORIE'];
   expandedElement: IngredientsItem | null;
-  expansable : boolean = false;
+  expansable : boolean = true;
+  isHide : boolean = true;
+
 
   constructor() {
     this.dataSource = new IngredientsDataSource(EXAMPLE_DATA);
@@ -59,20 +62,10 @@ export class IngredientsComponent implements AfterViewInit {
     }
     this.displayedColumns.push('DELETE');
    }
-  
-  EditMode(){
-    this.expansable = true;
-    console.log(this.expansable)
-    var i = this.displayedColumns.length -1
-    while (this.displayedColumns[i] != 'CATEGORIE'){
-      this.displayedColumns.pop()
-      i+=-1
-    }
-    this.displayedColumns.push('EDIT')
-  }
+
 
   ViewMode(){
-    this.expansable = false;
+    this.expansable = true;
     console.log(this.expansable)
     var i = this.displayedColumns.length -1
     while (this.displayedColumns[i] != 'CATEGORIE'){
@@ -87,13 +80,44 @@ export class IngredientsComponent implements AfterViewInit {
     else return null;
   }
 
+  updateIngredient = (ingredient : IngredientsItem) =>{
+    for (var i = 0; i<EXAMPLE_DATA.length;i++){
+      if (EXAMPLE_DATA[i].id = ingredient.id){
+        console.log(ingredient.id)
+        EXAMPLE_DATA[i] = ingredient
+        this.dataSource = new IngredientsDataSource(EXAMPLE_DATA)
+        return 
+      }
+  }
+}
+
+deleteIngredient = (ingredient : IngredientsItem) =>{
+  EXAMPLE_DATA = EXAMPLE_DATA.filter(item => item !== ingredient)
+  this.dataSource = new IngredientsDataSource(EXAMPLE_DATA)
+  return
+}
+
+
+addIngredient = (ingredient : IngredientsItem) =>{
+  this.isHide=true
+  console.log(ingredient.id)
+  EXAMPLE_DATA.push(ingredient);
+  this.dataSource = new IngredientsDataSource(EXAMPLE_DATA)
+  return 
+}
+
+showAddForm = ()=>this.isHide = !this.isHide;
+
+
+
+
   
  
 
 }
 
 
-const EXAMPLE_DATA: IngredientsItem[] = [
+var EXAMPLE_DATA: IngredientsItem[] = [
   {id : "rgggrgeqggr", CODE : 1, LIBELLE : "kebab", CATEGORIE : "VIANDES", PRIX_UNITAIRE : 1, UNITE : "K"},
   {id : "rgqgrgg", CODE : 2, LIBELLE : "tacos", CATEGORIE : "VIANDES", PRIX_UNITAIRE : 1, UNITE : "K"},
   {id : "rggrgegg", CODE : 3, LIBELLE : "pizza", CATEGORIE : "VIANDES", PRIX_UNITAIRE : 1, UNITE : "K"},

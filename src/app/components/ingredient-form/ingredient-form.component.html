@@ -14,6 +14,13 @@
             <input formControlName="CATEGORIE" matInput placeholder="VIANDES" >
   
           </mat-form-field>
+
+        <!--
+          <mat-label>CATEGORIE</mat-label>
+          <mat-select formControlName="CATEGORIE" matInput placeholder="VIANDES">
+            <mat-option value="one">First option</mat-option>
+            <mat-option value="two">Second option</mat-option>
+          </mat-select>-->
   
     </p> 
    
@@ -42,8 +49,14 @@
   
     </p>
         
-      <button mat-flat-button color="primary">Submit</button>
+      <button mat-flat-button color="primary" [disabled]="enableSubmit||!ingredientForm.valid">{{buttonName}}</button>
 
+      
  
 </form>
+<div [hidden] = "modeAdd">
+  <button mat-mini-fab color="primary" (click)="toggleEdit()">
+    <mat-icon>edit</mat-icon>
+  </button>  
+</div>
 

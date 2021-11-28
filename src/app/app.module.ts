@@ -26,6 +26,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { IngredientFormComponent } from './components/ingredient-form/ingredient-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field'; 
+import { MatSelectModule } from '@angular/material/select';
 const route = [
   {path : '',component:IngredientsComponent}
 ]
@@ -58,7 +59,8 @@ const route = [
     MatButtonToggleModule,
     MatExpansionModule,
     ReactiveFormsModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatSelectModule
     
   
   ],
