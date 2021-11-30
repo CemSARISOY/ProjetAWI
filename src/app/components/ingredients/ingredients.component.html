@@ -22,7 +22,7 @@
       <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
         <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
 
-          <app-ingredient-form [ingredient]="element" (update)="updateIngredient($event)"></app-ingredient-form>
+          <app-ingredient-form [ingredient]="element" [allergenes]="getAllergenes(element)" (update)="updateIngredient($event)"></app-ingredient-form>
 
 
 

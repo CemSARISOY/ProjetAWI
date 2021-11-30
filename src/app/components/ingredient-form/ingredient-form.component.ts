@@ -1,9 +1,11 @@
 import { Component, Input, OnInit, OnChanges, Output,EventEmitter} from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { SimpleChanges } from '@angular/core';
 import { IngredientsItem } from '../ingredients/ingredients-datasource';
 import { Ingredients } from 'src/app/models/ingredients';
 import { compileDeclarePipeFromMetadata } from '@angular/compiler';
+import { MatChipInputEvent } from '@angular/material/chips';
+
 
 
 @Component({
@@ -12,12 +14,24 @@ import { compileDeclarePipeFromMetadata } from '@angular/compiler';
   styleUrls: ['./ingredient-form.component.css']
 })
 export class IngredientFormComponent implements OnInit,OnChanges {
-
+  keywords = new Set([' Céréales contenant du Gluten', 'Arachide', 'Crustacé','Céleri','Fruits à coque','Lait','Lupin','Mollusques','Moutarde','Poisson','Soja','Sulfites','Sésame','Oeuf']);
+  ;
   ingredientForm;
   enableSubmit = true; 
   buttonName : string;
-  @Input() ingredient : IngredientsItem
+  @Input()  set ingredient(value: IngredientsItem) {
+    this.ingredientForm.get('CODE').setValue(value.CODE)
+    this.ingredientForm.get('LIBELLE').setValue(value.LIBELLE)
+    this.ingredientForm.get('PRIX_UNITAIRE').setValue(value.PRIX_UNITAIRE)
+    this.ingredientForm.get('UNITE').setValue(value.UNITE)
+    this.ingredientForm.get('CATEGORIE').setValue(value.CATEGORIE)
+ //   console.log("allergenes :"+changes.allergenes.currentValue[0])
+    this.ingredientForm.get('ALLERGENE').setValue([''])
+  }
   @Input() modeAdd : boolean
+  @Input() set allergenes(value : string[]){
+    this.ingredientForm.get('ALLERGENE').setValue(value)
+  }
   @Output('update') ingredientUpdated  = new EventEmitter<IngredientsItem>();
   
 
@@ -28,22 +42,22 @@ export class IngredientFormComponent implements OnInit,OnChanges {
       PRIX_UNITAIRE:  ['',[Validators.required,Validators.pattern("^[0-9]+(\.[0-9])*$")]],
       UNITE : ['',[Validators.required]],
       CATEGORIE :  ['',[Validators.required]],
+     // ALLERGENE : new FormControl([this.allergenes])
+     ALLERGENE : new FormControl('')
     })
-
+    
     this.ingredientForm.get('CODE').disable();
     this.ingredientForm.get('LIBELLE').disable();
     this.ingredientForm.get('PRIX_UNITAIRE').disable();
     this.ingredientForm.get('UNITE').disable();
     this.ingredientForm.get('CATEGORIE').disable();
+    this.ingredientForm.get('ALLERGENE').disable()
+
    }
 
 
   ngOnChanges(changes: SimpleChanges): void {
-      this.ingredientForm.get('CODE').setValue(changes.ingredient.currentValue.CODE)
-      this.ingredientForm.get('LIBELLE').setValue(changes.ingredient.currentValue.LIBELLE)
-      this.ingredientForm.get('PRIX_UNITAIRE').setValue(changes.ingredient.currentValue.PRIX_UNITAIRE)
-      this.ingredientForm.get('UNITE').setValue(changes.ingredient.currentValue.UNITE)
-      this.ingredientForm.get('CATEGORIE').setValue(changes.ingredient.currentValue.CATEGORIE)
+
      
   }
 
@@ -53,6 +67,7 @@ export class IngredientFormComponent implements OnInit,OnChanges {
       this.ingredientForm.get('PRIX_UNITAIRE').setValue('')
       this.ingredientForm.get('UNITE').setValue('')
       this.ingredientForm.get('CATEGORIE').setValue('')
+    
   }
 
   ngOnInit(): void {
@@ -72,6 +87,7 @@ export class IngredientFormComponent implements OnInit,OnChanges {
     this.ingredientForm.get('PRIX_UNITAIRE').enable()
     this.ingredientForm.get('UNITE').enable()
     this.ingredientForm.get('CATEGORIE').enable()
+   this.ingredientForm.get('ALLERGENE').enable()
    }
 
    
@@ -82,6 +98,7 @@ export class IngredientFormComponent implements OnInit,OnChanges {
     this.ingredientForm.get('PRIX_UNITAIRE').disable();
     this.ingredientForm.get('UNITE').disable();
     this.ingredientForm.get('CATEGORIE').disable();
+ this.ingredientForm.get('ALLERGENE').enable()
    }
 
   onSubmit() {
@@ -100,8 +117,18 @@ export class IngredientFormComponent implements OnInit,OnChanges {
     }
     else {
       this.dialEdit()
+    } 
+  }
+
+  addKeywordFromInput(event: MatChipInputEvent) {
+    if (event.value) {
+      this.keywords.add(event.value);
+      event.chipInput!.clear();
     }
-   
+  }
+
+  removeKeyword(keyword: string) {
+    this.keywords.delete(keyword);
   }
 
 

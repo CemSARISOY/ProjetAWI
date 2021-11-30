@@ -60,3 +60,22 @@
   </button>  
 </div>
 
+<p>
+  <i>Select a focused chip by pressing <code>SPACE</code></i>
+</p>
+
+<mat-form-field class="example-chip-list" appearance="fill">
+  <mat-label>Allergenes keywords</mat-label>
+  <mat-chip-list #chipList aria-label="Allergenes keywords" multiple [formControl]="ingredientForm.get('ALLERGENE')">
+    <mat-chip
+        *ngFor="let keyword of keywords"
+        [selected]="keyword"
+        [value]="keyword"
+        (removed)="removeKeyword(keyword)">
+      {{keyword}}
+    </mat-chip>
+  </mat-chip-list>
+</mat-form-field>
+<p>
+  <b>The following keywords are selected:</b> {{ingredientForm.get('ALLERGENE').value}}
+</p>

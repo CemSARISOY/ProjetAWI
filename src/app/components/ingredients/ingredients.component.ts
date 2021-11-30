@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { IngredientsDataSource, IngredientsItem } from './ingredients-datasource';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import { Ingredients } from 'src/app/models/ingredients';
 
 
 
@@ -108,8 +109,18 @@ addIngredient = (ingredient : IngredientsItem) =>{
 
 showAddForm = ()=>this.isHide = !this.isHide;
 
+getAllergenes = (ingredient : IngredientsItem) => {
+  //TODO 
+  console.log("get allergenes")
+  return ['Crustacé','Céleri']
+}
 
-
+isAllergenic = (ingredient:IngredientsItem)=> {
+  if (this.getAllergenes(ingredient).length == 0){
+    return false 
+  }
+  else return true
+}
 
   
  
