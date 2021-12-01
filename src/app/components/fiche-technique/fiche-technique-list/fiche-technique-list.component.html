@@ -1,0 +1,4 @@
+<div *ngFor="let ft of fichesTechniques | async">
+    {{ft.intitule}}
+</div>
+<a [routerLink]="['/fiches-techniques/create']">Créer</a>
