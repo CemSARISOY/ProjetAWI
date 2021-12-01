@@ -4,8 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { IngredientsDataSource, IngredientsItem } from './ingredients-datasource';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import { Ingredients } from 'src/app/models/ingredients';
-
+import { IngredientsItemWithAllergenes } from '../ingredient-form/ingredient-form.component';
 
 
 @Component({
@@ -81,10 +80,12 @@ export class IngredientsComponent implements AfterViewInit {
     else return null;
   }
 
-  updateIngredient = (ingredient : IngredientsItem) =>{
+  updateIngredient = (ingredientWithAllergene : IngredientsItemWithAllergenes) =>{
+    var ingredient = ingredientWithAllergene.ingredient
+    //TO DO update allergenes
+    console.log(ingredient)
     for (var i = 0; i<EXAMPLE_DATA.length;i++){
       if (EXAMPLE_DATA[i].id = ingredient.id){
-        console.log(ingredient.id)
         EXAMPLE_DATA[i] = ingredient
         this.dataSource = new IngredientsDataSource(EXAMPLE_DATA)
         return 
@@ -93,13 +94,16 @@ export class IngredientsComponent implements AfterViewInit {
 }
 
 deleteIngredient = (ingredient : IngredientsItem) =>{
+  //TO DO DElete Allergenes
   EXAMPLE_DATA = EXAMPLE_DATA.filter(item => item !== ingredient)
   this.dataSource = new IngredientsDataSource(EXAMPLE_DATA)
   return
 }
 
 
-addIngredient = (ingredient : IngredientsItem) =>{
+addIngredient = (ingredientWithAllergene : IngredientsItemWithAllergenes) =>{
+  //To do add allergnes
+  var ingredient = ingredientWithAllergene.ingredient
   this.isHide=true
   console.log(ingredient.id)
   EXAMPLE_DATA.push(ingredient);
@@ -111,7 +115,6 @@ showAddForm = ()=>this.isHide = !this.isHide;
 
 getAllergenes = (ingredient : IngredientsItem) => {
   //TODO 
-  console.log("get allergenes")
   return ['Crustacé','Céleri']
 }
 

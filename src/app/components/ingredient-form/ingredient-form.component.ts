@@ -2,8 +2,6 @@ import { Component, Input, OnInit, OnChanges, Output,EventEmitter} from '@angula
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { SimpleChanges } from '@angular/core';
 import { IngredientsItem } from '../ingredients/ingredients-datasource';
-import { Ingredients } from 'src/app/models/ingredients';
-import { compileDeclarePipeFromMetadata } from '@angular/compiler';
 import { MatChipInputEvent } from '@angular/material/chips';
 
 
@@ -13,6 +11,8 @@ import { MatChipInputEvent } from '@angular/material/chips';
   templateUrl: './ingredient-form.component.html',
   styleUrls: ['./ingredient-form.component.css']
 })
+
+
 export class IngredientFormComponent implements OnInit,OnChanges {
   keywords = new Set([' Céréales contenant du Gluten', 'Arachide', 'Crustacé','Céleri','Fruits à coque','Lait','Lupin','Mollusques','Moutarde','Poisson','Soja','Sulfites','Sésame','Oeuf']);
   ;
@@ -25,25 +25,29 @@ export class IngredientFormComponent implements OnInit,OnChanges {
     this.ingredientForm.get('PRIX_UNITAIRE').setValue(value.PRIX_UNITAIRE)
     this.ingredientForm.get('UNITE').setValue(value.UNITE)
     this.ingredientForm.get('CATEGORIE').setValue(value.CATEGORIE)
- //   console.log("allergenes :"+changes.allergenes.currentValue[0])
     this.ingredientForm.get('ALLERGENE').setValue([''])
+    this.ingredientForm.get('id').setValue([value.id])
+ 
   }
   @Input() modeAdd : boolean
-  @Input() set allergenes(value : string[]){
-    this.ingredientForm.get('ALLERGENE').setValue(value)
-  }
-  @Output('update') ingredientUpdated  = new EventEmitter<IngredientsItem>();
+
+
+  @Input() allergenes : string[]
+    
+  
+  @Output('update') ingredientUpdated  = new EventEmitter<IngredientsItemWithAllergenes>();
   
 
   constructor(public fb :FormBuilder) {
     this.ingredientForm = this.fb.group({
+      id:[''],
       CODE : ['',[Validators.required,Validators.pattern("^[0-9]+$")]],
       LIBELLE : ['',[Validators.required]],
       PRIX_UNITAIRE:  ['',[Validators.required,Validators.pattern("^[0-9]+(\.[0-9])*$")]],
       UNITE : ['',[Validators.required]],
       CATEGORIE :  ['',[Validators.required]],
      // ALLERGENE : new FormControl([this.allergenes])
-     ALLERGENE : new FormControl('')
+     ALLERGENE : new FormControl([''])
     })
     
     this.ingredientForm.get('CODE').disable();
@@ -57,8 +61,9 @@ export class IngredientFormComponent implements OnInit,OnChanges {
 
 
   ngOnChanges(changes: SimpleChanges): void {
-
-     
+    if (changes.allergenes.firstChange){
+        this.ingredientForm.get('ALLERGENE').setValue(this.allergenes)
+    }
   }
 
   clearForm(){
@@ -98,12 +103,12 @@ export class IngredientFormComponent implements OnInit,OnChanges {
     this.ingredientForm.get('PRIX_UNITAIRE').disable();
     this.ingredientForm.get('UNITE').disable();
     this.ingredientForm.get('CATEGORIE').disable();
- this.ingredientForm.get('ALLERGENE').enable()
+    this.ingredientForm.get('ALLERGENE').disable()
    }
 
   onSubmit() {
-    var ing : IngredientsItem = {
-      id : this.modeAdd?"toCreateWhenAddToDatabase":this.ingredient.id,
+    var ingredient : IngredientsItem = {
+      id : this.modeAdd?"toCreateWhenAddToDatabase":this.ingredientForm.get('id'),
       CODE : this.ingredientForm.value.CODE,
       LIBELLE :this.ingredientForm.value.LIBELLE,
       PRIX_UNITAIRE:this.ingredientForm.value.PRIX_UNITAIRE,
@@ -111,8 +116,16 @@ export class IngredientFormComponent implements OnInit,OnChanges {
       CATEGORIE:this.ingredientForm.value.CATEGORIE
 
     };
-    this.ingredientUpdated.emit(ing)
+     var allergenes = this.ingredientForm.value.ALLERGENE
+
+    var ingredientWithAllergene : IngredientsItemWithAllergenes = {
+      ingredient : ingredient,
+      allergenes : allergenes
+    }
+
+    this.ingredientUpdated.emit(ingredientWithAllergene)
     if (this.modeAdd){
+      console.log("vlear")
       this.clearForm()
     }
     else {
@@ -122,6 +135,7 @@ export class IngredientFormComponent implements OnInit,OnChanges {
 
   addKeywordFromInput(event: MatChipInputEvent) {
     if (event.value) {
+      console.log("event value:"+event + event.value)
       this.keywords.add(event.value);
       event.chipInput!.clear();
     }
@@ -133,4 +147,9 @@ export class IngredientFormComponent implements OnInit,OnChanges {
 
 
 
+}
+
+export interface IngredientsItemWithAllergenes {
+  ingredient : IngredientsItem
+  allergenes : string[]
 }
