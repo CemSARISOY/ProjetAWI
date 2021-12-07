@@ -1,0 +1,16 @@
+#tout{
+    width:80%;
+    margin-left:10%;
+}
+
+#entete{
+    display: flex;
+    justify-content: center;
+}
+#entete > *{
+    margin-right:2%;
+    flex-grow: 1;
+}
+#entete > *:last-child{
+    margin-right:0%;
+}

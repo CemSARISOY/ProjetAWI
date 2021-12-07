@@ -6,7 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./fiche-technique-form.component.css']
 })
 export class FicheTechniqueFormComponent implements OnInit {
-
+  nomPlat : String = "";
+  nomCuisinier : String = "Sébastien";
+  nbCouverts : number;
   constructor() { }
 
   ngOnInit(): void {

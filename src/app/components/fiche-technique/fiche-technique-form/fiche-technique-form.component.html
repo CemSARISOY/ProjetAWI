@@ -1,1 +1,17 @@
 <p>fiche-technique-form works!</p>
+<div id="tout">
+    <div id="entete">
+        <mat-form-field>
+            <mat-label>Nom du plat </mat-label>
+            <input matInput type="text" [(ngModel)]="nomPlat" />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Nom du cuisiner </mat-label>
+            <input matInput type="text" [(ngModel)]="nomCuisinier" />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Nom de couverts </mat-label>
+            <input matInput type="number" min=0 [(ngModel)]="nbCouverts" />
+        </mat-form-field>
+    </div>
+</div>
