@@ -1,6 +1,6 @@
 #tout{
-    width:80%;
-    margin-left:10%;
+    padding-left:10%;
+    padding-right:10%;
 }
 
 #entete{
@@ -14,3 +14,25 @@
 #entete > *:last-child{
     margin-right:0%;
 }
+
+#tout > div{
+  display:flex;
+  justify-content: center;
+  width:100%;
+}
+
+#tout > div > button{
+  width:60%;
+}
+
+#tout > div{
+  padding-top:1%;
+  padding-bottom: 1%;
+  border-bottom: 1px solid rgb(141, 141, 141);
+}
+
+#tout > div:last-child{
+  border-bottom: 0px;
+}
+
+
