@@ -21,6 +21,62 @@
   width:100%;
 }
 
+#etape{
+  display: block !important;
+}
+#etape > div:first-child{
+  width:100%;
+  display: flex;
+}
+#etape > div > div{
+  width:100%;
+  display: flex;
+}
+#etape > div:first-child > p:first-child{
+  width: 50%;
+}
+#etape > div:first-child > p:nth-child(2){
+  width: 30%;
+}
+
+#etape > div:first-child > p:last-child{
+  width: 20%;
+}
+
+#etape > div:first-child > p{
+  width:10%;
+  padding-left:1%;
+  border-right:1px solid rgb(141, 141, 141)
+}
+#etape > div:first-child > p:last-child{
+  padding-left:0%;
+  border-right: 0px;
+}
+
+#etape > div:last-child > div> div:first-child{
+  width: 50%;
+}
+#etape > div:last-child > div>div:nth-child(2){
+  width: 30%;
+}
+#etape > div:last-child > div>  div:last-child{
+  width: 20%;
+}
+#etape > div:last-child> div>  div{
+  width: 10%;
+  padding-left:1%;
+  border-right:1px solid rgb(141, 141, 141)
+}
+
+#etape > div:last-child> div>  div:last-child{
+  padding-left:0%;
+  border-right:0px;
+}
+#etape > div:last-child> div > div:last-child > *{
+  width:49%;
+  margin-left:1%;
+}
+
 #tout > div > button{
   width:60%;
 }
@@ -35,4 +91,6 @@
   border-bottom: 0px;
 }
 
-
+#edit > button:first-child{
+  margin-right:10%;
+}

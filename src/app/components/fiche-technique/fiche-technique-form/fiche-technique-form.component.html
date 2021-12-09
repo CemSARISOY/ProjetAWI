@@ -15,10 +15,29 @@
         </mat-form-field>
     </div>
     <div id="etape">
-      test
+      <div>
+        <p>Etapes</p>
+        <p>Ingrédients</p>
+        <p>Temps</p>
+        <p></p>
+      </div>
+
+      <div cdkDropList>
+        <div cdkDrag>
+          <div *cdkDragPreview>1 - test</div>
+          <div>1 - test</div>
+          <div>Oui</div>
+          <div>5 mins</div>
+          <div>
+            <button mat-flat-button color="primary" >Modifier</button>
+            <button mat-flat-button color="primary" >Supprimer</button>
+          </div>
+        </div>
+      </div>
     </div>
     <div id="edit">
-      test
+      <button mat-flat-button color="primary" >Ajouter une étape</button>
+      <button mat-flat-button color="primary" >Ajouter une fiche technique</button>
     </div>
     <div>
       <button mat-flat-button color="primary" >Créer</button>
