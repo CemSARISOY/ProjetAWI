@@ -1,69 +1,65 @@
-<form [formGroup]="ingredientForm" (ngSubmit)="onSubmit()" novalidate>
+<div class="FormFields" style="float:left">
+<!--Form -->
+<form [formGroup]="ingredientForm" (ngSubmit)="addNotification()" novalidate>
  
 
-    <p>
-        <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>CODE</mat-label>
-            <input formControlName="CODE" matInput placeholder="3455" >
-          </mat-form-field>
-    </p>
+  <p>
+      <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>CODE</mat-label>
+          <input formControlName="CODE" matInput placeholder="3455" >
+        </mat-form-field>
+  </p>
 
-    <p>
-        <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>CATEGORIE</mat-label>
-            <input formControlName="CATEGORIE" matInput placeholder="VIANDES" >
-  
-          </mat-form-field>
-
-        <!--
+  <p>
+      <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>CATEGORIE</mat-label>
-          <mat-select formControlName="CATEGORIE" matInput placeholder="VIANDES">
-            <mat-option value="one">First option</mat-option>
-            <mat-option value="two">Second option</mat-option>
-          </mat-select>-->
-  
-    </p> 
-   
-    <p>
-        <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>UNITE</mat-label>
-            <input formControlName="UNITE" matInput placeholder="Kg" >
-          </mat-form-field>
-    </p>
+          <input formControlName="CATEGORIE" matInput placeholder="VIANDES" >
 
-    <p>
-        <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>PRIX UNITAIRE</mat-label>
-            <input formControlName="PRIX_UNITAIRE" matInput placeholder="3.94" >
-  
-          </mat-form-field>
-  
-    </p>
+        </mat-form-field>
 
-    <p>
-        <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>LIBELLE</mat-label>
-            <input formControlName="LIBELLE" matInput placeholder="Kebab" >
-  
-          </mat-form-field>
-  
-    </p>
-        
-      <button mat-flat-button color="primary" [disabled]="enableSubmit||!ingredientForm.valid">{{buttonName}}</button>
+      <!--
+        <mat-label>CATEGORIE</mat-label>
+        <mat-select formControlName="CATEGORIE" matInput placeholder="VIANDES">
+          <mat-option value="one">First option</mat-option>
+          <mat-option value="two">Second option</mat-option>
+        </mat-select>-->
 
-      
+  </p> 
  
+  <p>
+      <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>UNITE</mat-label>
+          <input formControlName="UNITE" matInput placeholder="Kg" >
+        </mat-form-field>
+  </p>
+
+  <p>
+      <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>PRIX UNITAIRE</mat-label>
+          <input formControlName="PRIX_UNITAIRE" matInput placeholder="3.94" >
+
+        </mat-form-field>
+
+  </p>
+
+  <p>
+      <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>LIBELLE</mat-label>
+          <input formControlName="LIBELLE" matInput placeholder="Kebab" >
+
+        </mat-form-field>
+
+  </p>
+    <!--Submit -->
+    <button mat-flat-button color="primary" [disabled]="enableSubmit||!ingredientForm.valid">{{buttonName}}</button>
+
+    
+
 </form>
-<div [hidden] = "modeAdd">
-  <button mat-mini-fab color="primary" (click)="toggleEdit()">
-    <mat-icon>edit</mat-icon>
-  </button>  
 </div>
 
-<p>
-  <i>Select a focused chip by pressing <code>SPACE</code></i>
-</p>
-
+<div class="Allergenes" style="float:right;clear:right;">
+<!--Chips Allergene -->
 <mat-form-field class="example-chip-list" appearance="fill">
   <mat-label>Allergenes keywords</mat-label>
   <mat-chip-list #chipList aria-label="Allergenes keywords" multiple [formControl]="ingredientForm.get('ALLERGENE')">
@@ -79,3 +75,18 @@
 <p>
   <b>The following keywords are selected:</b> {{ingredientForm.get('ALLERGENE').value }}
 </p>
+</div>
+
+
+<!--edit -->
+<div [hidden] = "modeAdd">
+  <button mat-mini-fab color="primary" (click)="editNotification()">
+    <mat-icon>edit</mat-icon>
+  </button>  
+</div>
+
+<p>
+  <i>Select a focused chip by pressing <code>SPACE</code></i>
+</p>
+
+

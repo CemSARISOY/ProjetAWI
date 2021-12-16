@@ -5,6 +5,8 @@ import { MatTable } from '@angular/material/table';
 import { IngredientsDataSource, IngredientsItem } from './ingredients-datasource';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { IngredientsItemWithAllergenes } from '../ingredient-form/ingredient-form.component';
+import Swal from 'sweetalert2';
+
 
 
 @Component({
@@ -85,16 +87,17 @@ export class IngredientsComponent implements AfterViewInit {
     //TO DO update allergenes
     console.log(ingredient)
     for (var i = 0; i<EXAMPLE_DATA.length;i++){
-      if (EXAMPLE_DATA[i].id = ingredient.id){
+      if (EXAMPLE_DATA[i].id == ingredient.id){
         EXAMPLE_DATA[i] = ingredient
         this.dataSource = new IngredientsDataSource(EXAMPLE_DATA)
+        this.paginator.initialized
         return 
       }
   }
 }
 
 deleteIngredient = (ingredient : IngredientsItem) =>{
-  //TO DO DElete Allergenes
+  //TO DO DElete Allergenes and stocks
   EXAMPLE_DATA = EXAMPLE_DATA.filter(item => item !== ingredient)
   this.dataSource = new IngredientsDataSource(EXAMPLE_DATA)
   return
@@ -102,7 +105,7 @@ deleteIngredient = (ingredient : IngredientsItem) =>{
 
 
 addIngredient = (ingredientWithAllergene : IngredientsItemWithAllergenes) =>{
-  //To do add allergnes
+  //To do add allergnes and stocks
   var ingredient = ingredientWithAllergene.ingredient
   this.isHide=true
   console.log(ingredient.id)
@@ -115,18 +118,40 @@ showAddForm = ()=>this.isHide = !this.isHide;
 
 getAllergenes = (ingredient : IngredientsItem) => {
   //TODO 
+  console.log("hello")
   return ['Crustacé','Céleri']
 }
 
 isAllergenic = (ingredient:IngredientsItem)=> {
+
   if (this.getAllergenes(ingredient).length == 0){
     return false 
   }
   else return true
 }
 
-  
- 
+pageEvent = (event)=>{
+  console.log("paginator event")
+}
+
+
+deleteNotification = (ingredient : IngredientsItem) => {Swal.fire({
+  title: 'Voulez vous vraiment supprimer cet ingrédient ?',
+  text: ingredient.CODE +" "+ingredient.LIBELLE + " "+ingredient.CATEGORIE,
+  icon: 'warning',
+  showDenyButton: true,
+  confirmButtonText: 'Oui',
+  denyButtonText: `Non`,
+}).then((result) => {
+  if (result.isConfirmed) {
+    this.deleteIngredient(ingredient)
+    Swal.fire('Ingrédient supprimé!', '', 'success')
+  } else if (result.isDenied) {
+    Swal.fire('Suppression annulée', '', 'info')
+  }
+})
+}
+
 
 }
 

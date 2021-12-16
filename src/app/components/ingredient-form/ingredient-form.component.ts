@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { SimpleChanges } from '@angular/core';
 import { IngredientsItem } from '../ingredients/ingredients-datasource';
 import { MatChipInputEvent } from '@angular/material/chips';
+import Swal from 'sweetalert2';
+import { Ingredients } from 'src/app/models/ingredients';
 
 
 
@@ -108,7 +110,7 @@ export class IngredientFormComponent implements OnInit,OnChanges {
 
   onSubmit() {
     var ingredient : IngredientsItem = {
-      id : this.modeAdd?"toCreateWhenAddToDatabase":this.ingredientForm.get('id'),
+      id : this.modeAdd?"toCreateWhenAddToDatabase":this.ingredientForm.value.id,
       CODE : this.ingredientForm.value.CODE,
       LIBELLE :this.ingredientForm.value.LIBELLE,
       PRIX_UNITAIRE:this.ingredientForm.value.PRIX_UNITAIRE,
@@ -146,9 +148,58 @@ export class IngredientFormComponent implements OnInit,OnChanges {
   }
 
 
+  editNotification = () => {Swal.fire({
+    title: 'Voulez vous editer cet ingrédient ?',
+    showDenyButton: true,
+    confirmButtonText: 'Oui',
+    denyButtonText: `Non`,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.toggleEdit()
+      //
+    } else if (result.isDenied) {
+     //
+    }
+  })
+  
+
+
+}
+addNotification = () => {
+  if (this.modeAdd){
+    var ingredient : IngredientsItem = {
+      id : this.modeAdd?"toCreateWhenAddToDatabase":this.ingredientForm.value.id,
+      CODE : this.ingredientForm.value.CODE,
+      LIBELLE :this.ingredientForm.value.LIBELLE,
+      PRIX_UNITAIRE:this.ingredientForm.value.PRIX_UNITAIRE,
+      UNITE:this.ingredientForm.value.UNITE,
+      CATEGORIE:this.ingredientForm.value.CATEGORIE
+
+    };
+    Swal.fire({
+      title: 'Voulez vous ajouter cet ingrédient ?',
+      text: "Code\n : "+ingredient.CODE+"Libelle : " + ingredient.LIBELLE  + 
+      "Prix unitaire : "+ ingredient.PRIX_UNITAIRE+ "Unite : "+ingredient.UNITE +
+      "Categorie : "+ ingredient.CATEGORIE +"Allergenes : " + this.ingredientForm.value.ALLERGENE,
+      showDenyButton: true,
+      confirmButtonText: 'Oui',
+      denyButtonText: `Non`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire('Ingrédient ajouté !', '', 'success')
+        this.onSubmit()
+      } else if (result.isDenied) {
+        Swal.fire('Opération annulée', '', 'info')
+      }
+    })
+  }
+  else {
+    this.onSubmit()
+  }
 
 }
 
+}
 export interface IngredientsItemWithAllergenes {
   ingredient : IngredientsItem
   allergenes : string[]
