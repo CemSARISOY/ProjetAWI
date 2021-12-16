@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-
+import { FormsModule } from '@angular/forms'
+import { DragDropModule } from '@angular/cdk/drag-drop'
 import { AppComponent } from './app.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
@@ -25,12 +26,11 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { IngredientFormComponent } from './components/ingredient-form/ingredient-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import {MatFormFieldModule} from '@angular/material/form-field'; 
+import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import {MatChipsModule} from '@angular/material/chips';
 import { FicheTechniqueListComponent } from './components/fiche-technique/fiche-technique-list/fiche-technique-list.component';
-import { FicheTechniqueFormComponent } from './components/fiche-technique/fiche-technique-form/fiche-technique-form.component'; 
-import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
+import { FicheTechniqueFormComponent } from './components/fiche-technique/fiche-technique-form/fiche-technique-form.component';
 const route = [
   {path : '',component:IngredientsComponent},
   {path: 'fiches-techniques', component:FicheTechniqueListComponent},
@@ -70,9 +70,9 @@ const route = [
     MatFormFieldModule,
     MatSelectModule,
     MatChipsModule,
-    SweetAlert2Module.forRoot()
-    
-  
+    FormsModule,
+    DragDropModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

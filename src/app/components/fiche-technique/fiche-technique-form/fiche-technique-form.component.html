@@ -1,1 +1,45 @@
 <p>fiche-technique-form works!</p>
+<div id="tout">
+    <div id="entete">
+        <mat-form-field>
+            <mat-label>Nom du plat </mat-label>
+            <input matInput type="text" [(ngModel)]="nomPlat" />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Nom du cuisiner </mat-label>
+            <input matInput type="text" [(ngModel)]="nomCuisinier" />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Nom de couverts </mat-label>
+            <input matInput type="number" min=0 [(ngModel)]="nbCouverts" />
+        </mat-form-field>
+    </div>
+    <div id="etape">
+      <div>
+        <p>Etapes</p>
+        <p>Ingrédients</p>
+        <p>Temps</p>
+        <p></p>
+      </div>
+
+      <div cdkDropList>
+        <div cdkDrag>
+          <div *cdkDragPreview>1 - test</div>
+          <div>1 - test</div>
+          <div>Oui</div>
+          <div>5 mins</div>
+          <div>
+            <button mat-flat-button color="primary" >Modifier</button>
+            <button mat-flat-button color="primary" >Supprimer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="edit">
+      <button mat-flat-button color="primary" >Ajouter une étape</button>
+      <button mat-flat-button color="primary" >Ajouter une fiche technique</button>
+    </div>
+    <div>
+      <button mat-flat-button color="primary" >Créer</button>
+    </div>
+</div>
