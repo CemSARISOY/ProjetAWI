@@ -14,7 +14,7 @@ export class AppComponent {
   title = 'ProjetAWI';
 
   ngOnInit(){
-    //this.ingredientService.getAllIngredients().subscribe(ingredient => console.log(ingredient));
+    //this.ingredientService.getAllIngredients().subscribe(ingredient => console.log("hey"));
     //this.ingredientService.addIngredient(new Ingredients(2000,"kebabs","VIANDES / VOLAILLES",0.50,"P"))
 
     /* this.ingredientService.getIngredient("SVHoTCzCNoecPlVTu9GU")

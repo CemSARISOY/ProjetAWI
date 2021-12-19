@@ -27,17 +27,13 @@ export class IngredientFormComponent implements OnInit,OnChanges {
     this.ingredientForm.get('PRIX_UNITAIRE').setValue(value.PRIX_UNITAIRE)
     this.ingredientForm.get('UNITE').setValue(value.UNITE)
     this.ingredientForm.get('CATEGORIE').setValue(value.CATEGORIE)
-    this.ingredientForm.get('ALLERGENE').setValue([''])
+    this.ingredientForm.get('STOCK').setValue(value.STOCK)
+    this.ingredientForm.get('ALLERGENE').setValue(value.ALLERGENES)
     this.ingredientForm.get('id').setValue([value.id])
  
   }
   @Input() modeAdd : boolean
-
-
-  @Input() allergenes : string[]
-    
-  
-  @Output('update') ingredientUpdated  = new EventEmitter<IngredientsItemWithAllergenes>();
+  @Output('update') ingredientUpdated  = new EventEmitter<IngredientsItem>();
   
 
   constructor(public fb :FormBuilder) {
@@ -48,6 +44,7 @@ export class IngredientFormComponent implements OnInit,OnChanges {
       PRIX_UNITAIRE:  ['',[Validators.required,Validators.pattern("^[0-9]+(\.[0-9])*$")]],
       UNITE : ['',[Validators.required]],
       CATEGORIE :  ['',[Validators.required]],
+      STOCK :  ['',[Validators.required]],
      // ALLERGENE : new FormControl([this.allergenes])
      ALLERGENE : new FormControl([''])
     })
@@ -58,14 +55,15 @@ export class IngredientFormComponent implements OnInit,OnChanges {
     this.ingredientForm.get('UNITE').disable();
     this.ingredientForm.get('CATEGORIE').disable();
     this.ingredientForm.get('ALLERGENE').disable()
+    this.ingredientForm.get('STOCK').disable()
 
    }
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.allergenes.firstChange){
+   /* if (changes.allergenes.firstChange){
         this.ingredientForm.get('ALLERGENE').setValue(this.allergenes)
-    }
+    }*/
   }
 
   clearForm(){
@@ -74,10 +72,12 @@ export class IngredientFormComponent implements OnInit,OnChanges {
       this.ingredientForm.get('PRIX_UNITAIRE').setValue('')
       this.ingredientForm.get('UNITE').setValue('')
       this.ingredientForm.get('CATEGORIE').setValue('')
+      this.ingredientForm.get('STOCK').setValue(0)
     
   }
 
   ngOnInit(): void {
+    console.log("init")
     if (this.modeAdd){
       this.buttonName = "Add"
       this.toggleEdit()
@@ -95,6 +95,7 @@ export class IngredientFormComponent implements OnInit,OnChanges {
     this.ingredientForm.get('UNITE').enable()
     this.ingredientForm.get('CATEGORIE').enable()
    this.ingredientForm.get('ALLERGENE').enable()
+   this.ingredientForm.get('STOCK').enable()
    }
 
    
@@ -106,26 +107,23 @@ export class IngredientFormComponent implements OnInit,OnChanges {
     this.ingredientForm.get('UNITE').disable();
     this.ingredientForm.get('CATEGORIE').disable();
     this.ingredientForm.get('ALLERGENE').disable()
+    this.ingredientForm.get('STOCK').disable()
    }
 
   onSubmit() {
     var ingredient : IngredientsItem = {
-      id : this.modeAdd?"toCreateWhenAddToDatabase":this.ingredientForm.value.id,
-      CODE : this.ingredientForm.value.CODE,
-      LIBELLE :this.ingredientForm.value.LIBELLE,
-      PRIX_UNITAIRE:this.ingredientForm.value.PRIX_UNITAIRE,
-      UNITE:this.ingredientForm.value.UNITE,
-      CATEGORIE:this.ingredientForm.value.CATEGORIE
+      id: this.modeAdd ? "toCreateWhenAddToDatabase" : this.ingredientForm.value.id,
+      CODE: this.ingredientForm.value.CODE,
+      LIBELLE: this.ingredientForm.value.LIBELLE,
+      PRIX_UNITAIRE: this.ingredientForm.value.PRIX_UNITAIRE,
+      UNITE: this.ingredientForm.value.UNITE,
+      CATEGORIE: this.ingredientForm.value.CATEGORIE,
+      STOCK: this.ingredientForm.value.STOCK,
+      ALLERGENES : this.ingredientForm.value.ALLERGENE
 
     };
-     var allergenes = this.ingredientForm.value.ALLERGENE
-
-    var ingredientWithAllergene : IngredientsItemWithAllergenes = {
-      ingredient : ingredient,
-      allergenes : allergenes
-    }
-
-    this.ingredientUpdated.emit(ingredientWithAllergene)
+  
+    this.ingredientUpdated.emit(ingredient)
     if (this.modeAdd){
       console.log("vlear")
       this.clearForm()
@@ -168,13 +166,14 @@ export class IngredientFormComponent implements OnInit,OnChanges {
 addNotification = () => {
   if (this.modeAdd){
     var ingredient : IngredientsItem = {
-      id : this.modeAdd?"toCreateWhenAddToDatabase":this.ingredientForm.value.id,
-      CODE : this.ingredientForm.value.CODE,
-      LIBELLE :this.ingredientForm.value.LIBELLE,
-      PRIX_UNITAIRE:this.ingredientForm.value.PRIX_UNITAIRE,
-      UNITE:this.ingredientForm.value.UNITE,
-      CATEGORIE:this.ingredientForm.value.CATEGORIE
-
+      id: this.modeAdd ? "toCreateWhenAddToDatabase" : this.ingredientForm.value.id,
+      CODE: this.ingredientForm.value.CODE,
+      LIBELLE: this.ingredientForm.value.LIBELLE,
+      PRIX_UNITAIRE: this.ingredientForm.value.PRIX_UNITAIRE,
+      UNITE: this.ingredientForm.value.UNITE,
+      CATEGORIE: this.ingredientForm.value.CATEGORIE,
+      STOCK: this.ingredientForm.value.STOCK,
+      ALLERGENES : this.ingredientForm.value.ALLERGNES
     };
     Swal.fire({
       title: 'Voulez vous ajouter cet ingrédient ?',

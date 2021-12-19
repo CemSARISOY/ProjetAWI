@@ -15,6 +15,8 @@ export interface IngredientsItem {
    CATEGORIE : string;
    PRIX_UNITAIRE : number;
    UNITE : string;
+   STOCK : number;
+   ALLERGENES : string[];
 }
 
 

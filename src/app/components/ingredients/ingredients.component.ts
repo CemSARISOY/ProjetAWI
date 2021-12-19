@@ -4,8 +4,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { IngredientsDataSource, IngredientsItem } from './ingredients-datasource';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import { IngredientsItemWithAllergenes } from '../ingredient-form/ingredient-form.component';
 import Swal from 'sweetalert2';
+import { IngredientsService } from 'src/app/services/ingredients.service';
 
 
 
@@ -23,6 +23,8 @@ import Swal from 'sweetalert2';
   
 })
 export class IngredientsComponent implements AfterViewInit {
+
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<IngredientsItem>;
@@ -33,11 +35,27 @@ export class IngredientsComponent implements AfterViewInit {
   expandedElement: IngredientsItem | null;
   expansable : boolean = true;
   isHide : boolean = true;
+  ingredients : IngredientsItem[]
 
+  constructor(private ingredientService : IngredientsService) {
+   
+  }
 
-  constructor() {
-    this.dataSource = new IngredientsDataSource(EXAMPLE_DATA);
-    
+  ngOnInit() {
+    this.ingredientService.getAllIngredients().subscribe(ingredient =>  {
+      this.dataSource = new IngredientsDataSource(ingredient)
+      this.dataSource.paginator = this.paginator
+      this.dataSource.sort = this.sort
+      this.ingredients = ingredient
+    })
+   /* this.dataSource = new IngredientsDataSource(this.ingredients);
+    console.log(this.ingredients) */
+
+  }
+
+  ngOnChanges(){
+   // this.dataSource = new IngredientsDataSource(this.ingredients);
+   
   }
 
   applyFilter(filterValue: string) {
@@ -82,49 +100,41 @@ export class IngredientsComponent implements AfterViewInit {
     else return null;
   }
 
-  updateIngredient = (ingredientWithAllergene : IngredientsItemWithAllergenes) =>{
-    var ingredient = ingredientWithAllergene.ingredient
-    //TO DO update allergenes
-    console.log(ingredient)
-    for (var i = 0; i<EXAMPLE_DATA.length;i++){
-      if (EXAMPLE_DATA[i].id == ingredient.id){
-        EXAMPLE_DATA[i] = ingredient
-        this.dataSource = new IngredientsDataSource(EXAMPLE_DATA)
+  updateIngredient = (ingredientItem : IngredientsItem) =>{
+    this.ingredientService.updateIngredient(ingredientItem)
+    console.log(ingredientItem)
+    for (var i = 0; i<this.ingredients.length;i++){
+      if (this.ingredients[i].id == ingredientItem.id){
+        this.ingredients[i] = ingredientItem
+        this.dataSource = new IngredientsDataSource(this.ingredients)
         this.paginator.initialized
         return 
       }
   }
 }
 
-deleteIngredient = (ingredient : IngredientsItem) =>{
-  //TO DO DElete Allergenes and stocks
-  EXAMPLE_DATA = EXAMPLE_DATA.filter(item => item !== ingredient)
-  this.dataSource = new IngredientsDataSource(EXAMPLE_DATA)
+deleteIngredient = (ingredientItem : IngredientsItem) =>{
+  this.ingredientService.deleteIngredient(ingredientItem)
+  this.ingredients = this.ingredients.filter(item => item !== ingredientItem)
+  this.dataSource = new IngredientsDataSource(this.ingredients)
   return
 }
 
 
-addIngredient = (ingredientWithAllergene : IngredientsItemWithAllergenes) =>{
-  //To do add allergnes and stocks
-  var ingredient = ingredientWithAllergene.ingredient
+addIngredient = (ingredientItem : IngredientsItem) =>{
+  this.ingredientService.addIngredient(ingredientItem)
   this.isHide=true
-  console.log(ingredient.id)
-  EXAMPLE_DATA.push(ingredient);
-  this.dataSource = new IngredientsDataSource(EXAMPLE_DATA)
+  console.log(ingredientItem.id)
+  this.ingredients.push(ingredientItem);
+  this.dataSource = new IngredientsDataSource(this.ingredients)
   return 
 }
 
 showAddForm = ()=>this.isHide = !this.isHide;
 
-getAllergenes = (ingredient : IngredientsItem) => {
-  //TODO 
-  console.log("hello")
-  return ['Crustacé','Céleri']
-}
+isAllergenic = (ingredientItem:IngredientsItem)=> {
 
-isAllergenic = (ingredient:IngredientsItem)=> {
-
-  if (this.getAllergenes(ingredient).length == 0){
+  if (ingredientItem.ALLERGENES.length == 0){
     return false 
   }
   else return true
@@ -155,22 +165,22 @@ deleteNotification = (ingredient : IngredientsItem) => {Swal.fire({
 
 }
 
-
+/*
 var EXAMPLE_DATA: IngredientsItem[] = [
-  {id : "rgggrgeqggr", CODE : 1, LIBELLE : "kebab", CATEGORIE : "VIANDES", PRIX_UNITAIRE : 1, UNITE : "K"},
-  {id : "rgqgrgg", CODE : 2, LIBELLE : "tacos", CATEGORIE : "VIANDES", PRIX_UNITAIRE : 1, UNITE : "K"},
-  {id : "rggrgegg", CODE : 3, LIBELLE : "pizza", CATEGORIE : "VIANDES", PRIX_UNITAIRE : 1, UNITE : "K"},
-  {id : "qregzrjetj", CODE : 4, LIBELLE : "uWu", CATEGORIE : "VIANDES", PRIX_UNITAIRE : 1, UNITE : "K"},
-  {id : "dyjdjtjdytyjtdj", CODE : 5, LIBELLE : "nem", CATEGORIE : "VIANDES", PRIX_UNITAIRE : 1, UNITE : "K"},
-  {id : "dyjjydyjjy", CODE : 6, LIBELLE : "poutine", CATEGORIE : "CAT2", PRIX_UNITAIRE : 1, UNITE : "K"},
-  {id : "ydtjdytjyj", CODE : 7, LIBELLE : "grec", CATEGORIE : "CAT2", PRIX_UNITAIRE : 1, UNITE : "K"},
-  {id : "yjdyjdz(y", CODE : 8, LIBELLE : "frites", CATEGORIE : "CAT2", PRIX_UNITAIRE : 1, UNITE : "K"},
-  {id : "jghzqferght", CODE : 9, LIBELLE : "sushis", CATEGORIE : "CAT2", PRIX_UNITAIRE : 1, UNITE : "K"},
-  {id : "zjfyuixh", CODE : 10, LIBELLE : "choucroute", CATEGORIE : "TEST", PRIX_UNITAIRE : 1, UNITE : "K"},
-  {id : "zq'tjrrsrty", CODE : 11, LIBELLE : "ragoût", CATEGORIE : "TEST", PRIX_UNITAIRE : 1, UNITE : "K"},
-  {id : "q't(hzsujrtj", CODE : 12, LIBELLE : "raviolis", CATEGORIE : "TEST", PRIX_UNITAIRE : 1, UNITE : "K"},
-  {id : "etiiu-rsy", CODE : 13, LIBELLE : "poireaux", CATEGORIE : "TEST", PRIX_UNITAIRE : 1, UNITE : "K"},
-  {id : "'(s(eysry", CODE : 14, LIBELLE : "carottes", CATEGORIE : "TEST", PRIX_UNITAIRE : 1, UNITE : "K"},
-  {id : "ertzte('t'e", CODE : 15, LIBELLE : "pomme de terre", CATEGORIE : "TEST", PRIX_UNITAIRE : 1, UNITE : "K"},
+  {id : "rgggrgeqggr", CODE : 1, LIBELLE : "kebab", CATEGORIE : "VIANDES", PRIX_UNITAIRE : 1, UNITE : "K" ,STOCK : 0},
+  {id : "rgqgrgg", CODE : 2, LIBELLE : "tacos", CATEGORIE : "VIANDES", PRIX_UNITAIRE : 1, UNITE : "K" ,STOCK : 0},
+  {id : "rggrgegg", CODE : 3, LIBELLE : "pizza", CATEGORIE : "VIANDES", PRIX_UNITAIRE : 1, UNITE : "K" ,STOCK : 0},
+  {id : "qregzrjetj", CODE : 4, LIBELLE : "uWu", CATEGORIE : "VIANDES", PRIX_UNITAIRE : 1, UNITE : "K" ,STOCK : 0},
+  {id : "dyjdjtjdytyjtdj", CODE : 5, LIBELLE : "nem", CATEGORIE : "VIANDES", PRIX_UNITAIRE : 1, UNITE : "K" ,STOCK : 0},
+  {id : "dyjjydyjjy", CODE : 6, LIBELLE : "poutine", CATEGORIE : "CAT2", PRIX_UNITAIRE : 1, UNITE : "K" ,STOCK : 0},
+  {id : "ydtjdytjyj", CODE : 7, LIBELLE : "grec", CATEGORIE : "CAT2", PRIX_UNITAIRE : 1, UNITE : "K" ,STOCK : 0},
+  {id : "yjdyjdz(y", CODE : 8, LIBELLE : "frites", CATEGORIE : "CAT2", PRIX_UNITAIRE : 1, UNITE : "K" ,STOCK : 0},
+  {id : "jghzqferght", CODE : 9, LIBELLE : "sushis", CATEGORIE : "CAT2", PRIX_UNITAIRE : 1, UNITE : "K" ,STOCK : 0},
+  {id : "zjfyuixh", CODE : 10, LIBELLE : "choucroute", CATEGORIE : "TEST", PRIX_UNITAIRE : 1, UNITE : "K" ,STOCK : 0},
+  {id : "zq'tjrrsrty", CODE : 11, LIBELLE : "ragoût", CATEGORIE : "TEST", PRIX_UNITAIRE : 1, UNITE : "K" ,STOCK : 0},
+  {id : "q't(hzsujrtj", CODE : 12, LIBELLE : "raviolis", CATEGORIE : "TEST", PRIX_UNITAIRE : 1, UNITE : "K" ,STOCK : 0},
+  {id : "etiiu-rsy", CODE : 13, LIBELLE : "poireaux", CATEGORIE : "TEST", PRIX_UNITAIRE : 1, UNITE : "K" ,STOCK : 0},
+  {id : "'(s(eysry", CODE : 14, LIBELLE : "carottes", CATEGORIE : "TEST", PRIX_UNITAIRE : 1, UNITE : "K" ,STOCK : 0},
+  {id : "ertzte('t'e", CODE : 15, LIBELLE : "pomme de terre", CATEGORIE : "TEST", PRIX_UNITAIRE : 1, UNITE : "K" ,STOCK : 0},
 ];
-
+*/

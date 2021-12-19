@@ -18,14 +18,16 @@ export class IngredientsService {
   }
 
   doc2Ingredient(doc: any): Ingredients {
-    console.log(doc);
     return new Ingredients(
       doc.CODE,
       doc.LIBELLE,
       doc.CATEGORIE,
       doc.PRIX_UNITAIRE,
       doc.UNITE,
+      doc.STOCK,
+      doc.ALLERGENES,
       doc.id
+      
     );
   }
 
@@ -49,6 +51,7 @@ export class IngredientsService {
     ingredient.id = id
 
 }
+
 
   getIngredient(ingredientId: string): Observable<Ingredients> {
     var ingredient = this.db.doc<Ingredients>(this.path + ingredientId);
