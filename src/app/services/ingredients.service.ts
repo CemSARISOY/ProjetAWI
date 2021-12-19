@@ -27,7 +27,6 @@ export class IngredientsService {
       doc.STOCK,
       doc.ALLERGENES,
       doc.id
-      
     );
   }
 

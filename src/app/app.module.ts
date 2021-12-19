@@ -31,6 +31,7 @@ import { MatSelectModule } from '@angular/material/select';
 import {MatChipsModule} from '@angular/material/chips';
 import { FicheTechniqueListComponent } from './components/fiche-technique/fiche-technique-list/fiche-technique-list.component';
 import { FicheTechniqueFormComponent } from './components/fiche-technique/fiche-technique-form/fiche-technique-form.component';
+
 const route = [
   {path : '',component:IngredientsComponent},
   {path: 'fiches-techniques', component:FicheTechniqueListComponent},
