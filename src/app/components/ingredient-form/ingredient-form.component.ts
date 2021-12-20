@@ -28,8 +28,8 @@ export class IngredientFormComponent implements OnInit,OnChanges {
     this.ingredientForm.get('UNITE').setValue(value.UNITE)
     this.ingredientForm.get('CATEGORIE').setValue(value.CATEGORIE)
     this.ingredientForm.get('STOCK').setValue(value.STOCK)
-    this.ingredientForm.get('ALLERGENE').setValue([value.ALLERGENES])
-    this.ingredientForm.get('id').setValue([value.id])
+    this.ingredientForm.get('ALLERGENE').setValue(value.ALLERGENES)
+    this.ingredientForm.get('id').setValue(value.id)
  
   }
   @Input() modeAdd : boolean
@@ -198,8 +198,4 @@ addNotification = () => {
 
 }
 
-}
-export interface IngredientsItemWithAllergenes {
-  ingredient : IngredientsItem
-  allergenes : string[]
 }

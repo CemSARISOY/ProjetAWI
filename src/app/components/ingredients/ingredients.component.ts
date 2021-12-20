@@ -104,21 +104,20 @@ export class IngredientsComponent implements AfterViewInit {
 
   updateIngredient = (ingredientItem : IngredientsItem) =>{
     this.ingredientService.updateIngredient(ingredientItem)
-    console.log(ingredientItem)
     for (var i = 0; i<this.ingredients.length;i++){
       if (this.ingredients[i].id == ingredientItem.id){
         this.ingredients[i] = ingredientItem
-        this.dataSource = new IngredientsDataSource(this.ingredients)
-        this.paginator.initialized
+        this.table.renderRows()
         return 
       }
   }
+  
 }
 
 deleteIngredient = (ingredientItem : IngredientsItem) =>{
   this.ingredientService.deleteIngredient(ingredientItem)
   this.ingredients = this.ingredients.filter(item => item !== ingredientItem)
-  this.dataSource = new IngredientsDataSource(this.ingredients)
+  this.table.renderRows()
   return
 }
 
@@ -128,7 +127,8 @@ addIngredient = (ingredientItem : IngredientsItem) =>{
   this.isHide=true
   console.log(ingredientItem.id)
   this.ingredients.push(ingredientItem);
-  this.dataSource = new IngredientsDataSource(this.ingredients)
+  //this.dataSource = new IngredientsDataSource(this.ingredients)
+  this.table.renderRows()
   return 
 }
 
