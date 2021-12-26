@@ -30,4 +30,13 @@ export class FicheTechniqueService {
     return this.ficheTechniqueCollection.valueChanges({idField: "id"})
     .pipe(map(data => data.map(doc => this.doc2FicheTechnique(doc))));
   }
+
+  addFicheTechnique(ficheTechnique : FicheTechnique){
+    const id = this.ficheTechniqueStore.createId()
+    this.ficheTechniqueCollection.doc(id).get().subscribe(doc => {
+      if(!doc.exists){
+        this.ficheTechniqueCollection.doc(id).set(Object.assign({}, ficheTechnique));
+      }
+    })
+  }
 }

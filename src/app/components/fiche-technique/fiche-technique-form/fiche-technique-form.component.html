@@ -1,4 +1,3 @@
-<p>fiche-technique-form works!</p>
 <div id="tout">
     <div id="entete">
         <mat-form-field>
@@ -13,33 +12,78 @@
             <mat-label>Nom de couverts </mat-label>
             <input matInput type="number" min=0 [(ngModel)]="nbCouverts" />
         </mat-form-field>
+        <mat-form-field>
+          <mat-label>Catégorie </mat-label>
+          <input matInput type="text" [(ngModel)]="categorie" />
+      </mat-form-field>
     </div>
     <div id="etape">
-      <div>
-        <p>Etapes</p>
-        <p>Ingrédients</p>
-        <p>Temps</p>
-        <p></p>
-      </div>
+      <table cdkDropList (cdkDropListDropped)="drop($event)" *ngIf="etapes.length>0">
+        <tr>
+          <th>Etape</th>
+          <th>Description</th>
+          <th>Ingrédients</th>
+          <th>Temps</th>
+          <th></th>
+        </tr>
+        <tr class="example-box" cdkDrag cdkDragLockAxis="y" *ngFor="let etape of etapes; let index=index" >
+          <td>{{index+1}}</td>
+          <td>{{etape.description}}</td>
+          <td *ngIf="etape.ingredients != ''">{{etape.ingredients}}</td>
+          <td *ngIf="etape.ingredients == ''">Aucun ingrédient nécessaire</td>
+          <td>{{etape.temps}} mins</td>
+          <td *ngIf="this.modifyingStep === undefined && !isAddingStep"><button mat-icon-button color="primary" (click)="modify(index)" >
+            <mat-icon>edit</mat-icon>
+          </button>
+            <button mat-icon-button color="primary" (click)="etapes.splice(index,1)" >
+              <mat-icon>delete</mat-icon>
+            </button></td>
 
-      <div cdkDropList>
-        <div cdkDrag>
-          <div *cdkDragPreview>1 - test</div>
-          <div>1 - test</div>
-          <div>Oui</div>
-          <div>5 mins</div>
-          <div>
-            <button mat-flat-button color="primary" >Modifier</button>
-            <button mat-flat-button color="primary" >Supprimer</button>
-          </div>
-        </div>
-      </div>
+        </tr>
+      </table>
+      <div id="textEmpty" *ngIf="etapes.length==0">Veuillez ajouter une étape</div>
+
     </div>
     <div id="edit">
-      <button mat-flat-button color="primary" >Ajouter une étape</button>
-      <button mat-flat-button color="primary" >Ajouter une fiche technique</button>
+      <div id="boutonsAjouter" *ngIf="!isAddingStep&&!isAddingFt">
+        <button mat-flat-button color="primary" (click)="addingStep()" >Ajouter une étape</button>
+        <button mat-flat-button color="primary" (click)="addingFt()">Ajouter une fiche technique</button>
+      </div>
+      
+
+      <div id="newStep" *ngIf="isAddingStep">
+        <button mat-icon-button color="primary" (click)="isAddingStep = false; this.modifyingStep = undefined">
+          <mat-icon>
+            arrow_back
+            </mat-icon>
+        </button>
+        <app-etape-form (newStepValues)="newStep($event)" (modifiedStepValues)="this.modifyStep($event)" [values]="modifyingStep"></app-etape-form>
+        
+      </div>
+
+      <div id="newFt" *ngIf="isAddingFt">
+        <button mat-icon-button color="primary" (click)="isAddingFt = false; this.modifyingStep = undefined"><mat-icon>
+          arrow_back
+          </mat-icon></button>
+        <mat-form-field class="example-full-width">
+          <mat-label>Fiche Technique</mat-label>
+          <input type="text"
+                 aria-label="Fiche Technique"
+                 matInput
+                 [formControl]="myControlFt"
+                 [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptionsFt | async" [value]="option.intitule">
+              {{option.intitule}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        
+        <button mat-flat-button color="primary" (click)="addFt()">Ajouter la fiche technique</button>
+      </div>
+
     </div>
     <div>
-      <button mat-flat-button color="primary" >Créer</button>
+      <button mat-flat-button color="primary" (click)="create()" >Créer</button>
     </div>
 </div>

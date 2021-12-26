@@ -24,57 +24,9 @@
 #etape{
   display: block !important;
 }
-#etape > div:first-child{
-  width:100%;
-  display: flex;
-}
-#etape > div > div{
-  width:100%;
-  display: flex;
-}
-#etape > div:first-child > p:first-child{
-  width: 50%;
-}
-#etape > div:first-child > p:nth-child(2){
-  width: 30%;
-}
 
-#etape > div:first-child > p:last-child{
-  width: 20%;
-}
-
-#etape > div:first-child > p{
-  width:10%;
-  padding-left:1%;
-  border-right:1px solid rgb(141, 141, 141)
-}
-#etape > div:first-child > p:last-child{
-  padding-left:0%;
-  border-right: 0px;
-}
-
-#etape > div:last-child > div> div:first-child{
-  width: 50%;
-}
-#etape > div:last-child > div>div:nth-child(2){
-  width: 30%;
-}
-#etape > div:last-child > div>  div:last-child{
-  width: 20%;
-}
-#etape > div:last-child> div>  div{
-  width: 10%;
-  padding-left:1%;
-  border-right:1px solid rgb(141, 141, 141)
-}
-
-#etape > div:last-child> div>  div:last-child{
-  padding-left:0%;
-  border-right:0px;
-}
-#etape > div:last-child> div > div:last-child > *{
-  width:49%;
-  margin-left:1%;
+#etape > div{
+  text-align: center;
 }
 
 #tout > div > button{
@@ -82,8 +34,8 @@
 }
 
 #tout > div{
-  padding-top:1%;
-  padding-bottom: 1%;
+  padding-top:2%;
+  padding-bottom: 2%;
   border-bottom: 1px solid rgb(141, 141, 141);
 }
 
@@ -91,6 +43,105 @@
   border-bottom: 0px;
 }
 
-#edit > button:first-child{
+#boutonsAjouter > button:first-child{
   margin-right:10%;
+}
+#boutonsAjouter > button{
+  width:45%;
+}
+
+#edit{
+  display: block !important;
+}
+
+
+
+
+#textEmpty{
+  color:red;
+  justify-content: center;
+}
+
+
+table, td, th {
+  border: 1px solid black;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table > tr > *:last-child{
+  width:10%;
+}
+
+table > tr > *:nth-child(4){
+  width:10%;
+}
+
+table > tr > *:first-child{
+  width:5%;
+}
+
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating { 
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+
+.example-list {
+  width: 100%;  
+  display: block;
+  background: white;
+  overflow: hidden;
+} 
+
+
+.example-handle {
+  position: absolute;  
+  color: #ccc;
+  cursor: move;
+  width: 24px;
+  height: 24px;
+}
+
+
+
+
+.example-box:last-child {
+  border: none;
+}
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-box {  
+  box-sizing: border-box;
+  border-radius: 5px;
+  border-bottom: solid 1px #ced4da;
+  color: rgba(0, 0, 0, 0.87);
+  box-sizing: border-box;
+  background: white;
+  font-size: medium;
+  position: relative;
+  z-index: 1;
+  transition: box-shadow 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+#newStep > button{
+  margin-bottom:1%;
 }

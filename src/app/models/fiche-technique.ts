@@ -2,17 +2,19 @@ import { Etape } from "./etape";
 
 export class FicheTechnique {
 
-    public intitule : String;
-    public responsable : String;
+    public id : string;
+    public intitule : string;
+    public responsable : string;
     public nbCouvert : number;
-    public progression : (FicheTechnique | Etape)[];
-    public categorie : String;
+    public progression : any[];
+    public categorie : string;
 
-    public constructor(intitule : String, responsable : String, nbCouvert : number, progression : (FicheTechnique | Etape)[], categorie : String){
+    public constructor(intitule : string, responsable : string, nbCouvert : number, progression : any[], categorie : string, id? : string){
         this.intitule = intitule;
         this.responsable = responsable;
         this.nbCouvert = nbCouvert;
         this.progression = progression;
         this.categorie = categorie;
+        if(id) this.id=id;
     }
 }

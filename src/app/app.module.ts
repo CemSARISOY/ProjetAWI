@@ -31,6 +31,9 @@ import { MatSelectModule } from '@angular/material/select';
 import {MatChipsModule} from '@angular/material/chips';
 import { FicheTechniqueListComponent } from './components/fiche-technique/fiche-technique-list/fiche-technique-list.component';
 import { FicheTechniqueFormComponent } from './components/fiche-technique/fiche-technique-form/fiche-technique-form.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { EtapeFormComponent } from './components/fiche-technique/fiche-technique-form/etape-form/etape-form.component';
+
 
 const route = [
   {path : '',component:IngredientsComponent},
@@ -45,7 +48,8 @@ const route = [
     IngredientsComponent,
     IngredientFormComponent,
     FicheTechniqueListComponent,
-    FicheTechniqueFormComponent
+    FicheTechniqueFormComponent,
+    EtapeFormComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +76,8 @@ const route = [
     MatSelectModule,
     MatChipsModule,
     FormsModule,
-    DragDropModule
+    DragDropModule,
+    MatAutocompleteModule
 
   ],
   providers: [],

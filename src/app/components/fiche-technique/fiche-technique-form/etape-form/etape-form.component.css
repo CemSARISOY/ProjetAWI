@@ -1,0 +1,29 @@
+#container {
+  display: flex;
+  width: 90%;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  padding-left:5%;
+  padding-right:5%;
+}
+
+
+#container > div:nth-child(1) {
+  width: 50%;
+}
+#container > div:nth-child(2) {
+  width: 50%;
+}
+
+#container > *:first-child {
+  display: flex;
+  flex-direction: column;
+}
+
+#container > *:first-child > *:first-child {
+  width: 30%;
+}
+
+#container > *:last-child {
+  width: 100%;
+}
