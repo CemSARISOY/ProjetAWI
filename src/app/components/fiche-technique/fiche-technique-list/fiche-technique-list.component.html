@@ -1,4 +1,34 @@
-<div *ngFor="let ft of fichesTechniques | async">
-    {{ft.intitule}}
-</div>
 <a [routerLink]="['/fiches-techniques/create']">Créer</a>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+
+    <ng-container matColumnDef="intitule">
+    <th mat-header-cell *matHeaderCellDef>Intitule</th>
+    <td mat-cell *matCellDef="let row">{{row.intitule}}</td>
+</ng-container>
+
+<ng-container matColumnDef="responsable">
+    <th mat-header-cell *matHeaderCellDef>Responsable</th>
+    <td mat-cell *matCellDef="let row">{{row.responsable}}</td>
+</ng-container>
+
+<ng-container matColumnDef="categorie">
+    <th mat-header-cell *matHeaderCellDef>Catégorie</th>
+    <td mat-cell *matCellDef="let row">{{row.categorie}}</td>
+</ng-container>
+
+
+<ng-container matColumnDef="nbCouvert">
+    <th mat-header-cell *matHeaderCellDef>Nombre de couverts</th>
+    <td mat-cell *matCellDef="let row">{{row.nbCouvert}}</td>
+</ng-container>
+
+
+
+<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+<tr
+    mat-row
+    *matRowDef="let row; columns: displayedColumns;"
+    (click)="navigate(row)"
+></tr>
+</table>

@@ -18,6 +18,7 @@ export class FicheTechniqueFormComponent implements OnInit {
   // Control attributes
   isAddingStep : boolean = false;
   isAddingFt : boolean = false;
+  newFicheTechnique : string;
 
   modifyingStep : any;
   modifyingStepIndex : number;
@@ -38,13 +39,16 @@ export class FicheTechniqueFormComponent implements OnInit {
   constructor(private ficheTechniqueService : FicheTechniqueService, private router: Router) { }
 
   ngOnInit(): void {
-    
+    this.ficheTechniques = this.ficheTechniqueService.getAllFicheTechniques();
     
   }
 
   private filterFt(value: string): void{
-    const filterValue = value.toLowerCase();
-    this.filteredOptionsFt = this.ficheTechniques.pipe(map (element => element.filter(data => data.intitule.toLowerCase().includes(filterValue))));
+    if(value !== undefined){
+      const filterValue = value.toLowerCase();
+      this.filteredOptionsFt = this.ficheTechniques.pipe(map (element => element.filter(data => data.intitule.toLowerCase().includes(filterValue))));
+    }
+
   }
 
   public addingStep(){
@@ -53,8 +57,8 @@ export class FicheTechniqueFormComponent implements OnInit {
 
   public addingFt(){
 
-    if(this.ficheTechniques === undefined){
-      this.ficheTechniques = this.ficheTechniqueService.getAllFicheTechniques();
+    if(this.filteredOptionsFt === undefined){
+      
       this.filteredOptionsFt = this.ficheTechniques;
       
       this.myControlFt.valueChanges.subscribe(value =>
@@ -68,7 +72,27 @@ export class FicheTechniqueFormComponent implements OnInit {
   
 
   public addFt(){
-    this.isAddingFt=false;
+    let found = false;
+
+    this.ficheTechniques.forEach(data => {
+      data.forEach((ficheTechnique : FicheTechnique) => {
+        if(ficheTechnique.intitule == this.newFicheTechnique)
+        {
+          found = true
+          this.etapes.push({
+            intitule:ficheTechnique.intitule,
+            categorie:ficheTechnique.categorie,
+            nbCouvert: ficheTechnique.nbCouvert,
+            responsable: ficheTechnique.responsable,
+            progression: ficheTechnique.progression
+          })
+          this.newFicheTechnique = "";
+        } 
+      });
+      this.isAddingFt=!found;
+    });
+
+
   }
 
   public newStep(event){
@@ -105,9 +129,27 @@ export class FicheTechniqueFormComponent implements OnInit {
       confirmButtonText: 'Confirmer'
     }).then((result) => {
       if (result.isConfirmed) {
-        let f : FicheTechnique = new FicheTechnique(this.nomPlat,this.nomCuisinier, this.nbCouverts,this.etapes,this.categorie);
-        this.ficheTechniqueService.addFicheTechnique(f);
-        this.router.navigate(["/fiches-techniques"])
+        console.log(this);
+        
+        this.ficheTechniques.forEach(data => {
+          let found = false;
+          data.forEach((ficheTechnique : FicheTechnique) => {
+            if(ficheTechnique.intitule == this.nomPlat)
+            {
+              found = true
+            } 
+          });
+
+          if(!found){
+            let f : FicheTechnique = new FicheTechnique(this.nomPlat,this.nomCuisinier, this.nbCouverts,this.etapes,this.categorie);
+            this.ficheTechniqueService.addFicheTechnique(f);
+            this.router.navigate(["/fiches-techniques"])
+          }else{
+            console.log("erreur");
+            
+          }
+        });
+        
       }
     })
   }

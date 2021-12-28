@@ -52,15 +52,13 @@ export class EtapeFormComponent implements OnInit {
 
   public async addIngredient(){
     let found = false;
-
     const ingrExists = new Promise( (resolve, reject) => {
       this.ingredients.forEach(data => {
-        console.log(data)
         data.forEach((ingredient : Ingredients) => {
           if(ingredient.LIBELLE == this.newIngredient)
           {
-            resolve(found);
             found = true
+            resolve(found);
           } 
         });
         resolve(found);
@@ -76,8 +74,11 @@ export class EtapeFormComponent implements OnInit {
   }
 
   private filter(value: string): void{
-    const filterValue = value.toLowerCase();
-    this.filteredOptions = this.ingredients.pipe(map (element => element.filter(data => data.LIBELLE.toLowerCase().includes(filterValue))));
+    if(value !== undefined){
+      const filterValue = value.toLowerCase();
+      this.filteredOptions = this.ingredients.pipe(map (element => element.filter(data => data.LIBELLE.toLowerCase().includes(filterValue))));
+    }
+    
   }
 
   public addStep(){

@@ -28,11 +28,12 @@
         </tr>
         <tr class="example-box" cdkDrag cdkDragLockAxis="y" *ngFor="let etape of etapes; let index=index" >
           <td>{{index+1}}</td>
-          <td>{{etape.description}}</td>
+          <td *ngIf="etape.progression !== undefined">Realiser {{ etape.intitule }}</td>
+          <td *ngIf="etape.progression === undefined">{{etape.description}}</td>
           <td *ngIf="etape.ingredients != ''">{{etape.ingredients}}</td>
           <td *ngIf="etape.ingredients == ''">Aucun ingrédient nécessaire</td>
           <td>{{etape.temps}} mins</td>
-          <td *ngIf="this.modifyingStep === undefined && !isAddingStep"><button mat-icon-button color="primary" (click)="modify(index)" >
+          <td *ngIf="(this.modifyingStep === undefined && !isAddingStep ) "><button *ngIf="etape.progression === undefined" mat-icon-button color="primary" (click)="modify(index)" >
             <mat-icon>edit</mat-icon>
           </button>
             <button mat-icon-button color="primary" (click)="etapes.splice(index,1)" >
@@ -71,7 +72,8 @@
                  aria-label="Fiche Technique"
                  matInput
                  [formControl]="myControlFt"
-                 [matAutocomplete]="auto">
+                 [matAutocomplete]="auto"
+                 [(ngModel)]="newFicheTechnique">
           <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let option of filteredOptionsFt | async" [value]="option.intitule">
               {{option.intitule}}

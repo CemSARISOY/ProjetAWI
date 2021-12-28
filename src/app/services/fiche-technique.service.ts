@@ -23,7 +23,7 @@ export class FicheTechniqueService {
     for(let i = 0 ; i < doc.progression.length ; i++){
       prog.push(doc.progression[i])
     }
-    return new FicheTechnique(doc.intitule,doc.responsable,doc.nbCouvert,prog,doc.categorie);
+    return new FicheTechnique(doc.intitule,doc.responsable,doc.nbCouvert,prog,doc.categorie, doc.id);
   }
 
   getAllFicheTechniques() : Observable<FicheTechnique[]>{
@@ -38,5 +38,9 @@ export class FicheTechniqueService {
         this.ficheTechniqueCollection.doc(id).set(Object.assign({}, ficheTechnique));
       }
     })
+  }
+
+  getOneFicheTechnique(id : String) : Observable<FicheTechnique>{
+    return null;
   }
 }
