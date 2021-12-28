@@ -33,12 +33,17 @@ import { FicheTechniqueListComponent } from './components/fiche-technique/fiche-
 import { FicheTechniqueFormComponent } from './components/fiche-technique/fiche-technique-form/fiche-technique-form.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { EtapeFormComponent } from './components/fiche-technique/fiche-technique-form/etape-form/etape-form.component';
+import { FicheTechniqueDetailsComponent } from './components/fiche-technique/fiche-technique-details/fiche-technique-details.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 
 const route = [
-  {path : '',component:IngredientsComponent},
+  {path : '', redirectTo : "/fiches-techniques", pathMatch : 'full'},
   {path: 'fiches-techniques', component:FicheTechniqueListComponent},
-  {path: 'fiches-techniques/create', component:FicheTechniqueFormComponent}
+  {path: 'fiches-techniques/create', component:FicheTechniqueFormComponent},
+  {path: 'fiches-techniques/:id', component:FicheTechniqueDetailsComponent},
+  {path: 'ingredients', component:IngredientsComponent},
+  {path: '**', component:NotFoundComponent}
 ]
 
 @NgModule({
@@ -49,7 +54,9 @@ const route = [
     IngredientFormComponent,
     FicheTechniqueListComponent,
     FicheTechniqueFormComponent,
-    EtapeFormComponent
+    EtapeFormComponent,
+    FicheTechniqueDetailsComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
