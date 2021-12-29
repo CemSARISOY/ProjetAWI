@@ -1,0 +1,62 @@
+
+    <form  [formGroup]="coutsForm" (ngSubmit)="OnSubmit()">
+        <label>Utiliser le coût des charges pour les calculs des coûts</label>
+        <div>
+            <mat-radio-group color="primary" formControlName="charges">
+                <mat-radio-button value="Oui" (click)="controlCharges(true)">Oui</mat-radio-button>
+                <mat-radio-button value="Non" (click)="controlCharges(false)">Non</mat-radio-button>
+            </mat-radio-group>
+        </div>
+
+
+        <label>Coûts de production<label>
+                <div>
+                    <label>Coût des assaisonnement :</label>
+                    <mat-radio-group  color="primary"  formControlName="assaisonnement">
+                        <mat-radio-button value="Oui" (click)="controlAssaisonnement(true)">Pourcentage du coût matière
+                        </mat-radio-button>
+                        <mat-radio-button value="Non" (click)="controlAssaisonnement(false)">Montant fixe
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+
+                <p>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Coût d'aissaisonnement en pourcentage du coût matière</mat-label>
+                        <input formControlName="coutProdPerc" matInput placeholder="hello" type="number" min = 0 max= 100>
+                        <span matSuffix>%&nbsp;</span>
+                    </mat-form-field>
+                </p>
+
+
+
+
+                <p>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Coût d'aissaisonnement fixe</mat-label>
+                        <input formControlName="coutProdFix" matInput placeholder="" type="number" min = 0>
+                        <span matSuffix>€&nbsp;</span>
+                    </mat-form-field>
+                </p>
+
+                <label>Coût des chargess</label>
+                <p>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Taux horaire personnel</mat-label>
+                        <input formControlName="tauxHorPers" matInput placeholder="" type="number" min = 0 >
+                        <span matSuffix>€&nbsp;</span>
+                    </mat-form-field>
+                </p>
+
+                <p>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Taux horaire forfaitaire</mat-label>
+                        <input formControlName="tauxHorsForf" matInput placeholder="" type="number" min = 0 >
+                        <span matSuffix>€&nbsp;</span>
+                    </mat-form-field>
+                </p>
+  
+                <button mat-flat-button color="primary" [disabled]="!coutsForm.valid" >Save</button>
+                
+            
