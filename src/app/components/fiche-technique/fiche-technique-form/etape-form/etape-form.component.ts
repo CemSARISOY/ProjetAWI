@@ -19,6 +19,7 @@ export class EtapeFormComponent implements OnInit {
   isModifying : boolean = false;
 
   // Adding step attributes
+  titre : string;
   temps : number = 0;
   description : string;
 
@@ -85,6 +86,7 @@ export class EtapeFormComponent implements OnInit {
 
     if(this.isModifying){
       this.modifiedStepValues.emit({
+        titreEtape: this.titre,
         temps: this.temps,
         description: this.description,
         ingredients: this.ingredientsEtape
@@ -92,6 +94,7 @@ export class EtapeFormComponent implements OnInit {
     }
     else{
       this.newStepValues.emit({
+        titreEtape: this.titre,
         temps: this.temps,
         description: this.description,
         ingredients: this.ingredientsEtape

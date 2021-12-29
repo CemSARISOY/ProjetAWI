@@ -6,7 +6,7 @@ import { FicheTechnique } from 'src/app/models/fiche-technique';
 import { FicheTechniqueService } from 'src/app/services/fiche-technique.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import Swal from 'sweetalert2';
-import { Router } from "@angular/router"
+import { Router, ActivatedRoute } from "@angular/router"
 
 @Component({
   selector: 'app-fiche-technique-form',
@@ -14,6 +14,9 @@ import { Router } from "@angular/router"
   styleUrls: ['./fiche-technique-form.component.css']
 })
 export class FicheTechniqueFormComponent implements OnInit {
+
+  modifyingFt$ : Observable<FicheTechnique>;
+  modifyingFt : FicheTechnique;
 
   // Control attributes
   isAddingStep : boolean = false;
@@ -36,9 +39,16 @@ export class FicheTechniqueFormComponent implements OnInit {
   ficheTechniques : Observable<FicheTechnique[]>;
   filteredOptionsFt : Observable<FicheTechnique[]>;
 
-  constructor(private ficheTechniqueService : FicheTechniqueService, private router: Router) { }
+  constructor(private route : ActivatedRoute, private ficheTechniqueService : FicheTechniqueService, private router: Router) { }
 
   ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    if(id){
+      this.modifyingFt$ = this.ficheTechniqueService.getOneFicheTechnique(id);
+      this.modifyingFt$.subscribe(data => { this.modifyingFt = data; console.log(data)})
+    }
+    
+    
     this.ficheTechniques = this.ficheTechniqueService.getAllFicheTechniques();
     
   }

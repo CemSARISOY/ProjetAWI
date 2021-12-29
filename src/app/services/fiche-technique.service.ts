@@ -40,7 +40,11 @@ export class FicheTechniqueService {
     })
   }
 
-  getOneFicheTechnique(id : String) : Observable<FicheTechnique>{
-    return null;
+  getOneFicheTechnique(id : string) : Observable<FicheTechnique>{
+    return this.ficheTechniqueStore.doc(this.path + id).valueChanges().pipe(map( doc => this.doc2FicheTechnique(doc)))
+  }
+
+  deleteOneFicheTechnique(id : string){
+    return this.db.doc(this.path + id).delete();
   }
 }

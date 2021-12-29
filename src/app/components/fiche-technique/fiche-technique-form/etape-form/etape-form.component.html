@@ -1,6 +1,10 @@
 <div id="container">
     <div>
         <mat-form-field>
+          <mat-label>Titre de l'étape </mat-label>
+          <input matInput type="text" [(ngModel)]="titre" />
+        </mat-form-field>
+        <mat-form-field>
           <mat-label>Temps en minutes </mat-label>
           <input matInput type="number" min="0" [(ngModel)]="temps" />
         </mat-form-field>

@@ -1,1 +1,36 @@
-<p>fiche-technique-details works!</p>
+
+<mat-card *ngIf="ficheTechnique$ | async as ficheTechnique " class="container">
+
+
+
+  <mat-card-title>Fiche technique {{ficheTechnique.intitule}}</mat-card-title>
+  <mat-card-subtitle>Responsable : {{ficheTechnique.responsable}}</mat-card-subtitle>
+  <mat-card-subtitle>Nombre de couverts : {{ficheTechnique.nbCouvert}}</mat-card-subtitle>
+
+
+  <mat-divider></mat-divider>
+
+  <!-- Recursivité étapes -->
+  <mat-card-content>
+    <ol>
+      <ng-template #recursiveList let-list>
+      <li *ngFor="let prog of list">
+        <ng-container *ngIf="prog.progression">Réaliser {{prog.intitule}}</ng-container>
+        <ng-container *ngIf="!prog.progression">Titre étape : {{ prog.titreEtape }} / Ingrédients : {{ prog.ingredients }}</ng-container>
+        <ol *ngIf="prog.progression" >
+          
+          <ng-container *ngTemplateOutlet="recursiveList; context:{$implicit: prog.progression}"></ng-container>
+        </ol>
+        
+      </li>
+      </ng-template>
+      <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: ficheTechnique.progression }"></ng-container>
+    </ol>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-button [routerLink]="['./modify']">Modifier</button>
+    <button mat-button (click)="delete()">Supprimer</button>
+  </mat-card-actions>
+</mat-card>
+

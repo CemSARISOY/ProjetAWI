@@ -35,6 +35,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { EtapeFormComponent } from './components/fiche-technique/fiche-technique-form/etape-form/etape-form.component';
 import { FicheTechniqueDetailsComponent } from './components/fiche-technique/fiche-technique-details/fiche-technique-details.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { MatCardModule } from '@angular/material/card';
 import { CoutsFormComponent } from './couts/couts-form/couts-form.component';
 import {MatRadioModule} from '@angular/material/radio';
 
@@ -43,6 +44,7 @@ const route = [
   {path: 'fiches-techniques', component:FicheTechniqueListComponent},
   {path: 'fiches-techniques/create', component:FicheTechniqueFormComponent},
   {path: 'fiches-techniques/:id', component:FicheTechniqueDetailsComponent},
+  {path: 'fiches-techniques/:id/modify', component:FicheTechniqueFormComponent},
   {path: 'ingredients', component:IngredientsComponent},
   {path: 'couts', component:CoutsFormComponent},
   {path: '**', component:NotFoundComponent}
@@ -88,6 +90,7 @@ const route = [
     FormsModule,
     DragDropModule,
     MatAutocompleteModule,
+    MatCardModule,
     MatRadioModule
 
   ],
