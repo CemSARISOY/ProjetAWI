@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>Generation d'étiquettes</h1>
+<div mat-dialog-content>
+  <p>Combien d'étiquettes voulez vous générer ?</p>
+
+  <form  [formGroup]="dialogForm">
+    <mat-form-field>
+        <mat-label>Nombre d'étiquettes</mat-label>
+        <input matInput  formControlName = "numberOfEtiq"  type = number min = 1 [(ngModel)]="data.numberOfEtiq" required="true" >
+      </mat-form-field>
+  </form>
+
+   
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Retour</button>
+  <button mat-button [mat-dialog-close]="data.numberOfEtiq" [disabled]="!dialogForm.valid" cdkFocusInitial>Ok</button>
+</div>

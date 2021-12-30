@@ -7,12 +7,23 @@ import { CoutsService } from 'src/app/services/couts.service';
 import { first } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { Cout } from 'src/app/models/cout';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { EtiquetteDialogueComponent } from './etiquette-dialogue/etiquette-dialogue.component';
+import { ThrowStmt } from '@angular/compiler';
+
+
+
+export interface DialogData {
+  numberOfEtiq: string;
+}
 
 @Component({
   selector: 'app-fiche-technique-details',
   templateUrl: './fiche-technique-details.component.html',
   styleUrls: ['./fiche-technique-details.component.css']
 })
+
+
 export class FicheTechniqueDetailsComponent implements OnInit {
 
   queryId : string;
@@ -20,7 +31,7 @@ export class FicheTechniqueDetailsComponent implements OnInit {
   couts$ : Observable<Cout>
   coutMatiere : number;
 
-  constructor(private router : Router, private route : ActivatedRoute, private ficheTechniqueService : FicheTechniqueService, private coutsService : CoutsService) { }
+  constructor(private router : Router, private route : ActivatedRoute, private ficheTechniqueService : FicheTechniqueService, private coutsService : CoutsService,public dialog: MatDialog) { }
 
   ngOnInit(): void {
     
@@ -39,6 +50,33 @@ export class FicheTechniqueDetailsComponent implements OnInit {
       });
       
     })
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(EtiquetteDialogueComponent, {
+      width: '250px',
+      data: {number: -1},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!(result === undefined)){
+        console.log('The dialog was closed '+result);
+        this.ficheTechnique$.subscribe(ft => {
+          console.log(ft.intitule)
+          ft.progression.forEach(element => {
+            if (!(element.ingredients === undefined)){
+              element.ingredients.forEach(ingredientWithQuantity => console.log(ingredientWithQuantity))
+                
+            }
+          })
+        })
+      }
+ 
+        
+  
+      
+      
+    });
   }
 
   getCoutMatiere(progression : any[]) : number{

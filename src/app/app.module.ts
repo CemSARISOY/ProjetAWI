@@ -38,6 +38,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { MatCardModule } from '@angular/material/card';
 import { CoutsFormComponent } from './couts/couts-form/couts-form.component';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatDialogModule} from '@angular/material/dialog';
+import { EtiquetteDialogueComponent } from './components/fiche-technique/fiche-technique-details/etiquette-dialogue/etiquette-dialogue.component';
 
 const route = [
   {path : '', redirectTo : "/fiches-techniques", pathMatch : 'full'},
@@ -61,7 +63,9 @@ const route = [
     EtapeFormComponent,
     FicheTechniqueDetailsComponent,
     NotFoundComponent,
-    CoutsFormComponent
+    CoutsFormComponent,
+    EtiquetteDialogueComponent
+
   ],
   imports: [
     BrowserModule,
@@ -91,7 +95,8 @@ const route = [
     DragDropModule,
     MatAutocompleteModule,
     MatCardModule,
-    MatRadioModule
+    MatRadioModule,
+    MatDialogModule
 
   ],
   providers: [],
