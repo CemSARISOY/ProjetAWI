@@ -30,8 +30,8 @@
           <td>{{index+1}}</td>
           <td *ngIf="etape.progression !== undefined">Realiser {{ etape.intitule }}</td>
           <td *ngIf="etape.progression === undefined">{{etape.description}}</td>
-          <td *ngIf="etape.ingredients != ''">{{etape.ingredients}}</td>
-          <td *ngIf="etape.ingredients == ''">Aucun ingrédient nécessaire</td>
+          <td *ngIf="!etape.ingredients || etape.ingredients.length ==0">Aucun ingrédient nécessaire</td>
+          <td *ngIf="etape.ingredients && etape.ingredients.length > 0"><div *ngFor="let ingredient of etape.ingredients">{{ingredient.LIBELLE}}</div></td>
           <td>{{etape.temps}} mins</td>
           <td *ngIf="(this.modifyingStep === undefined && !isAddingStep ) "><button *ngIf="etape.progression === undefined" mat-icon-button color="primary" (click)="modify(index)" >
             <mat-icon>edit</mat-icon>
@@ -86,6 +86,7 @@
 
     </div>
     <div>
-      <button mat-flat-button color="primary" (click)="create()" >Créer</button>
+      <button *ngIf="!isModifying()" mat-flat-button color="primary" (click)="create()" >Créer</button>
+      <button *ngIf="isModifying()" mat-flat-button color="primary" (click)="modifyFt()" >Modifier</button>
     </div>
 </div>

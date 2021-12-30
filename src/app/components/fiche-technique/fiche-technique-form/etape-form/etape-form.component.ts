@@ -36,6 +36,7 @@ export class EtapeFormComponent implements OnInit {
   ngOnInit(): void {
     if(this.values !== undefined){
       this.isModifying = true;
+      this.titre = this.values.titreEtape;
       this.temps = this.values.temps;
       this.description = this.values.description;
       this.ingredientsEtape = this.values.ingredients
@@ -59,6 +60,8 @@ export class EtapeFormComponent implements OnInit {
           if(ingredient.LIBELLE == this.newIngredient)
           {
             found = true
+            this.ingredientsEtape.push(JSON.parse(JSON.stringify(ingredient)))
+            this.newIngredient = "";
             resolve(found);
           } 
         });
@@ -66,12 +69,6 @@ export class EtapeFormComponent implements OnInit {
       });
     }) 
 
-    ingrExists.then( resp => {
-      if(resp){
-        this.ingredientsEtape.push(this.newIngredient)
-        this.newIngredient = "";
-      }
-    })
   }
 
   private filter(value: string): void{

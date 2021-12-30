@@ -7,6 +7,7 @@ import { FicheTechniqueService } from 'src/app/services/fiche-technique.service'
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import Swal from 'sweetalert2';
 import { Router, ActivatedRoute } from "@angular/router"
+import { first } from 'rxjs/internal/operators/first';
 
 @Component({
   selector: 'app-fiche-technique-form',
@@ -17,12 +18,13 @@ export class FicheTechniqueFormComponent implements OnInit {
 
   modifyingFt$ : Observable<FicheTechnique>;
   modifyingFt : FicheTechnique;
+  id : string;
+  isModifying = () => { return this.modifyingFt !== undefined}
 
   // Control attributes
   isAddingStep : boolean = false;
   isAddingFt : boolean = false;
   newFicheTechnique : string;
-
   modifyingStep : any;
   modifyingStepIndex : number;
   
@@ -34,29 +36,38 @@ export class FicheTechniqueFormComponent implements OnInit {
   categorie : string;
 
 
+
   // Autocompletion
   myControlFt = new FormControl();
-  ficheTechniques : Observable<FicheTechnique[]>;
+  ficheTechniques$ : Observable<FicheTechnique[]>;
   filteredOptionsFt : Observable<FicheTechnique[]>;
 
   constructor(private route : ActivatedRoute, private ficheTechniqueService : FicheTechniqueService, private router: Router) { }
 
+
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if(id){
-      this.modifyingFt$ = this.ficheTechniqueService.getOneFicheTechnique(id);
-      this.modifyingFt$.subscribe(data => { this.modifyingFt = data; console.log(data)})
+    this.id = this.route.snapshot.paramMap.get('id');
+    if(this.id){
+      this.modifyingFt$ = this.ficheTechniqueService.getOneFicheTechnique(this.id);
+      this.modifyingFt$.subscribe((data : FicheTechnique) => { 
+        this.modifyingFt = data;
+        this.categorie = data.categorie;
+        this.nomPlat = data.intitule;
+        this.nomCuisinier = data.responsable;
+        this.nbCouverts = data.nbCouvert;
+        this.etapes = data.progression;
+      })
     }
     
     
-    this.ficheTechniques = this.ficheTechniqueService.getAllFicheTechniques();
+    this.ficheTechniques$ = this.ficheTechniqueService.getAllFicheTechniques();
     
   }
 
   private filterFt(value: string): void{
     if(value !== undefined){
       const filterValue = value.toLowerCase();
-      this.filteredOptionsFt = this.ficheTechniques.pipe(map (element => element.filter(data => data.intitule.toLowerCase().includes(filterValue))));
+      this.filteredOptionsFt = this.ficheTechniques$.pipe(map (element => element.filter(data => data.intitule.toLowerCase().includes(filterValue))));
     }
 
   }
@@ -69,7 +80,7 @@ export class FicheTechniqueFormComponent implements OnInit {
 
     if(this.filteredOptionsFt === undefined){
       
-      this.filteredOptionsFt = this.ficheTechniques;
+      this.filteredOptionsFt = this.ficheTechniques$;
       
       this.myControlFt.valueChanges.subscribe(value =>
         this.filterFt(value)
@@ -84,7 +95,7 @@ export class FicheTechniqueFormComponent implements OnInit {
   public addFt(){
     let found = false;
 
-    this.ficheTechniques.forEach(data => {
+    this.ficheTechniques$.forEach(data => {
       data.forEach((ficheTechnique : FicheTechnique) => {
         if(ficheTechnique.intitule == this.newFicheTechnique)
         {
@@ -94,7 +105,8 @@ export class FicheTechniqueFormComponent implements OnInit {
             categorie:ficheTechnique.categorie,
             nbCouvert: ficheTechnique.nbCouvert,
             responsable: ficheTechnique.responsable,
-            progression: ficheTechnique.progression
+            progression: ficheTechnique.progression,
+            id: ficheTechnique.id
           })
           this.newFicheTechnique = "";
         } 
@@ -139,26 +151,44 @@ export class FicheTechniqueFormComponent implements OnInit {
       confirmButtonText: 'Confirmer'
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log(this);
-        
-        this.ficheTechniques.forEach(data => {
+        this.ficheTechniques$.pipe(first()).subscribe(data => {
           let found = false;
           data.forEach((ficheTechnique : FicheTechnique) => {
-            if(ficheTechnique.intitule == this.nomPlat)
-            {
-              found = true
-            } 
+            if(ficheTechnique.intitule == this.nomPlat) found = true
           });
 
           if(!found){
             let f : FicheTechnique = new FicheTechnique(this.nomPlat,this.nomCuisinier, this.nbCouverts,this.etapes,this.categorie);
             this.ficheTechniqueService.addFicheTechnique(f);
+            ;
             this.router.navigate(["/fiches-techniques"])
           }else{
             console.log("erreur");
             
           }
         });
+        
+        
+      }
+    })
+  }
+
+  public modifyFt(){
+    Swal.fire({
+      title: 'Etes vous sur d\'avoir bien terminé ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmer'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.ficheTechniques$.pipe(first()).subscribe(data => {
+          let newF : FicheTechnique = new FicheTechnique(this.nomPlat,this.nomCuisinier, this.nbCouverts,this.etapes,this.categorie, this.id);
+          this.ficheTechniqueService.updateFicheTechnique(this.modifyingFt, newF)
+          //this.router.navigate(["/fiches-techniques"])
+        });
+        
         
       }
     })

@@ -24,6 +24,7 @@ export class FicheTechniqueListComponent implements OnInit {
     this.fichesTechniques.subscribe(ft => {
       this.dataSource = new MatTableDataSource(ft);
     })
+
   }
 
   navigate(ficheTechnique : FicheTechnique){

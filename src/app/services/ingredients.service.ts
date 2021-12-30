@@ -3,6 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/comp
 import { Observable } from 'rxjs';
 import { Ingredients } from '../models/ingredients';
 import { map, tap, first} from 'rxjs/operators';
+import { FicheTechniqueService } from './fiche-technique.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ export class IngredientsService {
   private ingredientStore: AngularFirestore;
   private ingredientCollection: AngularFirestoreCollection<Ingredients>;
 
-  constructor(private db: AngularFirestore) {
+  constructor(private db: AngularFirestore, private ficheTechniqueService : FicheTechniqueService) {
     this.ingredientStore = db;
     this.ingredientCollection = this.ingredientStore.collection(this.path);
   }
@@ -44,6 +45,9 @@ export class IngredientsService {
   }
 
   updateIngredient(ingredient: Ingredients){
+    // Modifier en premier les fiches techniques
+    this.ficheTechniqueService.updateFicheTechniqueByIngredients(ingredient);
+
     var id = ingredient.id
     delete ingredient.id
     this.ingredientCollection.doc(id).update(Object.assign({}, ingredient));
