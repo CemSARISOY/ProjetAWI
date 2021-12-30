@@ -23,7 +23,8 @@ export class EtapeFormComponent implements OnInit {
   temps : number = 0;
   description : string;
 
-  newIngredient : any;
+  newIngredient : string;
+  quantite : number;
   ingredientsEtape : any[] = [];
 
 
@@ -40,7 +41,7 @@ export class EtapeFormComponent implements OnInit {
       this.temps = this.values.temps;
       this.description = this.values.description;
       this.ingredientsEtape = this.values.ingredients
-
+      
     }
     
     
@@ -60,7 +61,7 @@ export class EtapeFormComponent implements OnInit {
           if(ingredient.LIBELLE == this.newIngredient)
           {
             found = true
-            this.ingredientsEtape.push(JSON.parse(JSON.stringify(ingredient)))
+            this.ingredientsEtape.push({ingredient:JSON.parse(JSON.stringify(ingredient)),quantite:this.quantite})
             this.newIngredient = "";
             resolve(found);
           } 

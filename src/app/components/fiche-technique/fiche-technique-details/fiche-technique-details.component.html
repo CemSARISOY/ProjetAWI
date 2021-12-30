@@ -16,7 +16,7 @@
       <ng-template #recursiveList let-list>
       <li *ngFor="let prog of list">
         <ng-container *ngIf="prog.progression">Réaliser {{prog.intitule}}</ng-container>
-        <ng-container *ngIf="!prog.progression">Titre étape : {{ prog.titreEtape }} / Ingrédients : <ng-container *ngFor="let ingredient of prog.ingredients">{{ingredient.LIBELLE}}</ng-container></ng-container>
+        <ng-container *ngIf="!prog.progression">Titre étape : {{ prog.titreEtape }} / Ingrédients : <ng-container *ngFor="let ingredient of prog.ingredients">{{ingredient.ingredient.LIBELLE}} : {{ingredient.quantite}}</ng-container></ng-container>
         <ol *ngIf="prog.progression" >
           
           <ng-container *ngTemplateOutlet="recursiveList; context:{$implicit: prog.progression}"></ng-container>
@@ -26,6 +26,12 @@
       </ng-template>
       <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: ficheTechnique.progression }"></ng-container>
     </ol>
+  </mat-card-content>
+
+  <mat-divider></mat-divider>
+
+  <mat-card-content>
+    Coût de la matière : {{ coutMatiere}} €
   </mat-card-content>
 
   <mat-card-actions>

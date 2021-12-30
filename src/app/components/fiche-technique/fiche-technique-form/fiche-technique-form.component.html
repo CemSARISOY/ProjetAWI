@@ -1,20 +1,20 @@
 <div id="tout">
     <div id="entete">
-        <mat-form-field>
-            <mat-label>Nom du plat </mat-label>
-            <input matInput type="text" [(ngModel)]="nomPlat" />
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Nom du cuisiner </mat-label>
-            <input matInput type="text" [(ngModel)]="nomCuisinier" />
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Nom de couverts </mat-label>
-            <input matInput type="number" min=0 [(ngModel)]="nbCouverts" />
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Catégorie </mat-label>
-          <input matInput type="text" [(ngModel)]="categorie" />
+      <mat-form-field>
+        <mat-label>Nom du plat </mat-label>
+        <input matInput type="text" [(ngModel)]="nomPlat" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Nom du cuisiner </mat-label>
+        <input matInput type="text" [(ngModel)]="nomCuisinier" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Nom de couverts </mat-label>
+        <input matInput type="number" min=0 [(ngModel)]="nbCouverts" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Catégorie </mat-label>
+        <input matInput type="text" [(ngModel)]="categorie" />
       </mat-form-field>
     </div>
     <div id="etape">
@@ -31,7 +31,7 @@
           <td *ngIf="etape.progression !== undefined">Realiser {{ etape.intitule }}</td>
           <td *ngIf="etape.progression === undefined">{{etape.description}}</td>
           <td *ngIf="!etape.ingredients || etape.ingredients.length ==0">Aucun ingrédient nécessaire</td>
-          <td *ngIf="etape.ingredients && etape.ingredients.length > 0"><div *ngFor="let ingredient of etape.ingredients">{{ingredient.LIBELLE}}</div></td>
+          <td *ngIf="etape.ingredients && etape.ingredients.length > 0"><div *ngFor="let ingredient of etape.ingredients">{{ingredient.ingredient.LIBELLE}} : {{ingredient.quantite}}</div></td>
           <td>{{etape.temps}} mins</td>
           <td *ngIf="(this.modifyingStep === undefined && !isAddingStep ) "><button *ngIf="etape.progression === undefined" mat-icon-button color="primary" (click)="modify(index)" >
             <mat-icon>edit</mat-icon>
@@ -45,6 +45,7 @@
       <div id="textEmpty" *ngIf="etapes.length==0">Veuillez ajouter une étape</div>
 
     </div>
+
     <div id="edit">
       <div id="boutonsAjouter" *ngIf="!isAddingStep&&!isAddingFt">
         <button mat-flat-button color="primary" (click)="addingStep()" >Ajouter une étape</button>

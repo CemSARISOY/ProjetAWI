@@ -35,8 +35,6 @@ export class FicheTechniqueFormComponent implements OnInit {
   etapes : any[] = [];
   categorie : string;
 
-
-
   // Autocompletion
   myControlFt = new FormControl();
   ficheTechniques$ : Observable<FicheTechnique[]>;
