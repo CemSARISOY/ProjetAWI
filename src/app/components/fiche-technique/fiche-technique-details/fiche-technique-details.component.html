@@ -1,5 +1,12 @@
 
-<mat-card *ngIf="ficheTechnique$ | async as ficheTechnique " class="container">
+
+<mat-slide-toggle
+class="example-margin"
+[(ngModel)]="coutActive">
+Calculer les coûts
+</mat-slide-toggle>
+
+<mat-card *ngIf="ficheTechnique$ | async as ficheTechnique " id="container">
 
 
 
@@ -30,11 +37,18 @@
 
   <mat-divider></mat-divider>
 
-  <mat-card-content>
+  <mat-card-content *ngIf="coutActive">
     Coût de la matière : {{ coutMatiere|  currency:'EUR':'symbol'}}<br>
-    Coût des charges : {{ coutCharge |  currency:'EUR':'symbol'}}<br>
-    Coût de production : {{ (coutMatiere + coutCharge) |  currency:'EUR':'symbol' }} <br>
-    Coût de production par portion : {{ (coutMatiere + coutCharge) / ficheTechnique.nbCouvert |  currency:'EUR':'symbol'}}
+    <div *ngIf="coutCharge !== undefined">
+      Coût des charges : {{ coutCharge |  currency:'EUR':'symbol'}}<br>
+    </div>
+    Coût de production : {{ (coutMatiere ) |  currency:'EUR':'symbol' }} <br>
+    Coût de production par portion : {{ (coutMatiere ) / ficheTechnique.nbCouvert |  currency:'EUR':'symbol'}}<br>
+    Prix de vente : {{ prixVente | currency:'EUR':'symbol'}} <br>
+    Prix de vente par portion : {{ (prixVente) / ficheTechnique.nbCouvert | currency:'EUR':'symbol'}} <br>
+    Seuil de rentabilité : {{ seuilRentabilite }} portions <br>
+    Benefice : {{ benefice | currency:'EUR':'symbol'  }} <br>
+    Benefice par portion : {{ benefice / ficheTechnique.nbCouvert | currency:'EUR':'symbol'}}
   </mat-card-content>
 
   <mat-card-actions>
@@ -43,4 +57,8 @@
     <button mat-button (click)="openDialog()">Générer des étiquettes</button>
   </mat-card-actions>
 </mat-card>
+
+<div class="col-md-4 text-right">
+  <button class="btn btn-success btn-block" (click)="openPDF()">Download PDF</button>
+</div>
 

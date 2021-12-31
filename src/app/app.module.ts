@@ -43,6 +43,7 @@ import localeFr from '@angular/common/locales/fr'
 registerLocaleData(localeFr)
 import {MatDialogModule} from '@angular/material/dialog';
 import { EtiquetteDialogueComponent } from './components/fiche-technique/fiche-technique-details/etiquette-dialogue/etiquette-dialogue.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 const route = [
   {path : '', redirectTo : "/fiches-techniques", pathMatch : 'full'},
@@ -99,7 +100,8 @@ const route = [
     MatAutocompleteModule,
     MatCardModule,
     MatRadioModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSlideToggleModule
 
   ],
   providers: [
