@@ -9,12 +9,14 @@ import Swal from 'sweetalert2';
 import { Cout } from 'src/app/models/cout';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { EtiquetteDialogueComponent } from './etiquette-dialogue/etiquette-dialogue.component';
-import { jsPDF } from 'jspdf';
 import { Ingredients } from 'src/app/models/ingredients';
 import { IngredientsService } from 'src/app/services/ingredients.service';
 
 
 
+// PDF
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 
 export interface DialogData {
@@ -36,8 +38,16 @@ export class FicheTechniqueDetailsComponent implements OnInit {
   ficheTechnique$ : Observable<FicheTechnique>;
   couts$ : Observable<Cout>
   coutMatiere : number;
+  coutCharge : number;
+  coutProduction : number;
+  prixVente : number;
+  seuilRentabilite : number;
+  benefice : number;
+  coutActive : boolean = false;
 
   constructor(private router : Router, private route : ActivatedRoute, private ficheTechniqueService : FicheTechniqueService, private coutsService : CoutsService,public dialog: MatDialog,public ingredientService : IngredientsService) { }
+
+  
 
   ngOnInit(): void {
     
@@ -50,12 +60,37 @@ export class FicheTechniqueDetailsComponent implements OnInit {
         console.log(data);
         
         this.coutMatiere = this.getCoutMatiere(data.progression);
-
         if(cout.usePerc) this.coutMatiere = this.coutMatiere + this.coutMatiere * (cout.coutProdPerc / 100);
         else this.coutMatiere = this.coutMatiere + cout.coutProdFixe;
+
+
+        let tempsNecessaire = this.getTempsNecessaire(data.progression);
+        if(cout.useCharge) {
+          this.coutCharge = ((Number(cout.tauxForf) + Number(cout.tauxPers)) / 60 ) * tempsNecessaire
+          this.coutProduction = this.coutCharge + this.coutMatiere;
+          this.prixVente = this.coutProduction * cout.coefCharge
+        }else{
+          this.coutProduction = this.coutMatiere;
+          this.prixVente = this.coutProduction * cout.coefcoefWithoutCharge;
+        }
+
+        this.seuilRentabilite = Math.ceil(this.coutProduction / (this.prixVente/1.1) / data.nbCouvert);
+        this.benefice = (this.prixVente/1.1) - this.coutProduction;
+
       });
       
     })
+  }
+
+  getTempsNecessaire(progression : any[]) : number{
+    let sum : number = 0;
+    for(let i = 0; i < progression.length ; i ++){
+      if(progression[i].progression) sum+= this.getTempsNecessaire(progression[i].progression)
+      else{
+        sum+= Number(progression[i].temps);
+      }
+    }
+    return sum;
   }
 
   openDialog(): void {
@@ -244,5 +279,22 @@ export class FicheTechniqueDetailsComponent implements OnInit {
     
   }
   
+  // PDF
+public openPDF():void {
+  let DATA = document.getElementById('container');
+      
+  html2canvas(DATA).then(canvas => {
+      
+      let fileWidth = 208;
+      let fileHeight = canvas.height * fileWidth / canvas.width;
+      
+      const FILEURI = canvas.toDataURL('image/png')
+      let PDF = new jsPDF('p', 'mm', 'a4');
+      let position = 0;
+      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight)
+      
+      PDF.save('angular-demo.pdf');
+  });     
+  }
 
 }

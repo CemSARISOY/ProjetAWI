@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms'
@@ -38,9 +38,13 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { MatCardModule } from '@angular/material/card';
 import { CoutsFormComponent } from './couts/couts-form/couts-form.component';
 import {MatRadioModule} from '@angular/material/radio';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr'
+registerLocaleData(localeFr)
 import {MatDialogModule} from '@angular/material/dialog';
 import { EtiquetteDialogueComponent } from './components/fiche-technique/fiche-technique-details/etiquette-dialogue/etiquette-dialogue.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 const route = [
   {path : '', redirectTo : "/fiches-techniques", pathMatch : 'full'},
@@ -98,10 +102,16 @@ const route = [
     MatCardModule,
     MatRadioModule,
     MatDialogModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSlideToggleModule
 
   ],
-  providers: [],
+  providers: [
+    {
+      provide: LOCALE_ID,
+      useValue: 'fr-FR'
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { FicheTechnique } from '../models/fiche-technique';
 import { Ingredients } from '../models/ingredients';
+import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -80,7 +81,7 @@ export class FicheTechniqueService {
 
   updateFicheTechniqueByIngredients(ingr : Ingredients){
     const allFts = this.getAllFicheTechniques();
-    allFts.subscribe(arr => {
+    allFts.pipe(first()).subscribe(arr => {
       console.log(arr);
       for(let i = 0; i < arr.length ; i ++){
         let ft = arr[i];
@@ -98,8 +99,8 @@ export class FicheTechniqueService {
       if(progression[i].progression) progression[i].progression = this.exploreAndEditProgression(progression[i].progression, ingredient);
       else{
         for(let j = 0 ; j < progression[i].ingredients.length ; j++){
-          if(progression[i].ingredients[j].id === ingredient.id){
-            progression[i].ingredients[j] = JSON.parse(JSON.stringify(ingredient));
+          if(progression[i].ingredients[j].ingredient.id === ingredient.id){
+            progression[i].ingredients[j].ingredient = JSON.parse(JSON.stringify(ingredient));
           }
         }
       }
