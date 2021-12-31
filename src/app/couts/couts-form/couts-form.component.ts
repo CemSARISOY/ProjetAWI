@@ -22,6 +22,8 @@ export class CoutsFormComponent implements OnInit {
       coutProdPerc: [0,[Validators.required]],
       tauxHorPers: [0,[Validators.required]],
       tauxHorsForf: [0,[Validators.required]],
+      coefCharge :[0,[Validators.required]],
+      coefWithoutCharge :[0,[Validators.required]],
       charges:'',
       assaisonnement:''
     })
@@ -34,6 +36,8 @@ export class CoutsFormComponent implements OnInit {
       this.coutsForm.get('tauxHorsForf').setValue(c.tauxForf)
       this.coutsForm.get('charges').setValue(c.useCharge ? 'Oui' : 'Non')
       this.coutsForm.get('assaisonnement').setValue(c.usePerc ? 'Oui' : 'Non')
+      this.coutsForm.get('coefCharge').setValue(c.coefCharge)
+      this.coutsForm.get('coefWithoutCharge').setValue(c.coefcoefWithoutCharge)
 
       this.controlCharges(c.useCharge);
       this.controlAssaisonnement(c.usePerc);
@@ -59,11 +63,15 @@ export class CoutsFormComponent implements OnInit {
       console.log("enable");
       this.coutsForm.get('tauxHorPers').enable()
       this.coutsForm.get('tauxHorsForf').enable()
+      this.coutsForm.get('coefCharge').enable()
+      this.coutsForm.get('coefWithoutCharge').disable()
     }
     else {
       console.log("disable");
       this.coutsForm.get('tauxHorPers').disable()
       this.coutsForm.get('tauxHorsForf').disable()
+      this.coutsForm.get('coefCharge').disable()
+      this.coutsForm.get('coefWithoutCharge').enable()   
     }
 
   }
@@ -89,7 +97,9 @@ export class CoutsFormComponent implements OnInit {
       coutProdFixe : this.coutsForm.get('coutProdFix').value,
       coutProdPerc :this.coutsForm.get('coutProdPerc').value,
       tauxForf :this.coutsForm.get('tauxHorsForf').value,
-      tauxPers :this.coutsForm.get('tauxHorPers').value
+      tauxPers :this.coutsForm.get('tauxHorPers').value,
+      coefCharge:this.coutsForm.get('coefCharge').value,
+      coefcoefWithoutCharge:this.coutsForm.get('coefWithoutCharge').value
 
 
     }

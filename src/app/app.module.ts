@@ -41,6 +41,8 @@ import {MatRadioModule} from '@angular/material/radio';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr'
 registerLocaleData(localeFr)
+import {MatDialogModule} from '@angular/material/dialog';
+import { EtiquetteDialogueComponent } from './components/fiche-technique/fiche-technique-details/etiquette-dialogue/etiquette-dialogue.component';
 
 const route = [
   {path : '', redirectTo : "/fiches-techniques", pathMatch : 'full'},
@@ -64,7 +66,9 @@ const route = [
     EtapeFormComponent,
     FicheTechniqueDetailsComponent,
     NotFoundComponent,
-    CoutsFormComponent
+    CoutsFormComponent,
+    EtiquetteDialogueComponent
+
   ],
   imports: [
     BrowserModule,
@@ -94,7 +98,8 @@ const route = [
     DragDropModule,
     MatAutocompleteModule,
     MatCardModule,
-    MatRadioModule
+    MatRadioModule,
+    MatDialogModule
 
   ],
   providers: [

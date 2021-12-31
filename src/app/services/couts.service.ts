@@ -25,7 +25,9 @@ export class CoutsService {
       doc.coutProdPerc,
       doc.coutProdFixe,
       doc.tauxPers,
-      doc.tauxForf
+      doc.tauxForf,
+      doc.coefCharge,
+      doc.coefWithoutCharge
     );
   }
 

@@ -1,3 +1,5 @@
+
+
 export class Cout {
   public useCharge:boolean;
   public usePerc:boolean;
@@ -5,13 +7,18 @@ export class Cout {
   public coutProdFixe:number;
   public tauxPers:number;
   public tauxForf:number;
+  public coefCharge:number;
+  public coefcoefWithoutCharge:number;
+  
 
-    public constructor(useCharge:boolean,usePerc:boolean,coutProdPerc:number,coutProdFixe:number,tauxPers:number,tauxForf:number){
+    public constructor(useCharge:boolean,usePerc:boolean,coutProdPerc:number,coutProdFixe:number,tauxPers:number,tauxForf:number,coefCharge:number,coefcoefWithoutCharge:number){
         this.useCharge=useCharge
         this.usePerc=usePerc
         this.coutProdPerc=coutProdPerc
         this.coutProdFixe=coutProdFixe
         this.tauxPers=tauxPers
         this.tauxForf= tauxForf
+        this.coefCharge = coefCharge
+        this.coefcoefWithoutCharge = coefcoefWithoutCharge
     }
 }
