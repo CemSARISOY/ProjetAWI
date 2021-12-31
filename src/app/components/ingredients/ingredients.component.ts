@@ -166,6 +166,7 @@ deleteNotification = (ingredient : IngredientsItem) => {Swal.fire({
 // PDF
 public openPDF():void {
   let DATA = document.getElementById('htmlData');
+  
       
   html2canvas(DATA).then(canvas => {
       

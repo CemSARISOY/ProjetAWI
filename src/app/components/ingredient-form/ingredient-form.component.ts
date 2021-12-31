@@ -41,7 +41,7 @@ export class IngredientFormComponent implements OnInit,OnChanges {
       id:[''],
       CODE : ['',[Validators.required,Validators.pattern("^[0-9]+$")]],
       LIBELLE : ['',[Validators.required]],
-      PRIX_UNITAIRE:  ['',[Validators.required,Validators.pattern("^[0-9]+(\.[0-9])*$")]],
+      PRIX_UNITAIRE:  ['',[Validators.required,Validators.pattern("^[0-9]+(\.[0-9]{2})*$")]],
       UNITE : ['',[Validators.required]],
       CATEGORIE :  ['',[Validators.required]],
       STOCK :  ['',[Validators.required]],

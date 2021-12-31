@@ -8,6 +8,8 @@ import { DialogData } from '../fiche-technique-details.component';
   templateUrl: './etiquette-dialogue.component.html',
   styleUrls: ['./etiquette-dialogue.component.css']
 })
+
+
 export class EtiquetteDialogueComponent  {
 
     dialogForm;
@@ -17,7 +19,8 @@ export class EtiquetteDialogueComponent  {
       public fb: FormBuilder
     ) {
       this.dialogForm = this.fb.group({
-        numberOfEtiq: [,[Validators.required]]
+        numberOfEtiq: [,[Validators.required]],
+        modifyStock : false,
       })
     
     }
@@ -26,6 +29,8 @@ export class EtiquetteDialogueComponent  {
     onNoClick(): void {
       this.dialogRef.close();
     }
-
+    showValue():void {
+      console.log(this.data.modifyStock)
+    }
     
   }

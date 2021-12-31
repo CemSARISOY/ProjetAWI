@@ -9,6 +9,7 @@ import { FicheTechniqueService } from './fiche-technique.service';
   providedIn: 'root',
 })
 export class IngredientsService {
+
   private path = '/Ingredient/';
   private ingredientStore: AngularFirestore;
   private ingredientCollection: AngularFirestoreCollection<Ingredients>;
@@ -80,4 +81,5 @@ export class IngredientsService {
         }
       });
   }
+
 }

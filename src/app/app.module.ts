@@ -40,6 +40,7 @@ import { CoutsFormComponent } from './couts/couts-form/couts-form.component';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatDialogModule} from '@angular/material/dialog';
 import { EtiquetteDialogueComponent } from './components/fiche-technique/fiche-technique-details/etiquette-dialogue/etiquette-dialogue.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 const route = [
   {path : '', redirectTo : "/fiches-techniques", pathMatch : 'full'},
@@ -64,7 +65,7 @@ const route = [
     FicheTechniqueDetailsComponent,
     NotFoundComponent,
     CoutsFormComponent,
-    EtiquetteDialogueComponent
+    EtiquetteDialogueComponent,
 
   ],
   imports: [
@@ -96,7 +97,8 @@ const route = [
     MatAutocompleteModule,
     MatCardModule,
     MatRadioModule,
-    MatDialogModule
+    MatDialogModule,
+    MatCheckboxModule
 
   ],
   providers: [],
