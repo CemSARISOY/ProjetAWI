@@ -93,6 +93,7 @@ export class FicheTechniqueService {
   }
 
   private exploreAndEditProgression(oldProgression : any[], ingredient : Ingredients) : any[]{
+    console.log("explore")
     let progression = [...oldProgression];
     for(let i = 0 ; i < progression.length; i++){
 
