@@ -105,7 +105,7 @@ export class FicheTechniqueDetailsComponent implements OnInit {
         const modifyStock = result.modifyStock
         let ingrds = [];
         console.log('The dialog was closed ' + result.modifyStock + result.numberOfEtiq);
-        this.ficheTechnique$.subscribe(ft => {
+        this.ficheTechnique$.pipe(first()).subscribe(ft => {
           console.log(ft.intitule)
           ft.progression.forEach(element => {
             if (!(element.ingredients === undefined)) {
