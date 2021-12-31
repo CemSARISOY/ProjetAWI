@@ -8,7 +8,7 @@ export class Cout {
   public tauxPers:number;
   public tauxForf:number;
   public coefCharge:number;
-  public coefcoefWithoutCharge:number;
+  public coefWithoutCharge:number;
   
 
     public constructor(useCharge:boolean,usePerc:boolean,coutProdPerc:number,coutProdFixe:number,tauxPers:number,tauxForf:number,coefCharge:number,coefcoefWithoutCharge:number){
@@ -19,6 +19,6 @@ export class Cout {
         this.tauxPers=tauxPers
         this.tauxForf= tauxForf
         this.coefCharge = coefCharge
-        this.coefcoefWithoutCharge = coefcoefWithoutCharge
+        this.coefWithoutCharge = coefcoefWithoutCharge
     }
 }

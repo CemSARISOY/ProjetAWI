@@ -71,7 +71,7 @@ export class FicheTechniqueDetailsComponent implements OnInit {
           this.prixVente = this.coutProduction * cout.coefCharge
         } else {
           this.coutProduction = this.coutMatiere;
-          this.prixVente = this.coutProduction * cout.coefcoefWithoutCharge;
+          this.prixVente = this.coutProduction * cout.coefWithoutCharge;
         }
 
         this.seuilRentabilite = Math.ceil(this.coutProduction / (this.prixVente / 1.1) / data.nbCouvert);

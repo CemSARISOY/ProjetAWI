@@ -37,7 +37,7 @@ export class CoutsFormComponent implements OnInit {
       this.coutsForm.get('charges').setValue(c.useCharge ? 'Oui' : 'Non')
       this.coutsForm.get('assaisonnement').setValue(c.usePerc ? 'Oui' : 'Non')
       this.coutsForm.get('coefCharge').setValue(c.coefCharge)
-      this.coutsForm.get('coefWithoutCharge').setValue(c.coefcoefWithoutCharge)
+      this.coutsForm.get('coefWithoutCharge').setValue(c.coefWithoutCharge)
 
       this.controlCharges(c.useCharge);
       this.controlAssaisonnement(c.usePerc);
@@ -99,7 +99,7 @@ export class CoutsFormComponent implements OnInit {
       tauxForf :this.coutsForm.get('tauxHorsForf').value,
       tauxPers :this.coutsForm.get('tauxHorPers').value,
       coefCharge:this.coutsForm.get('coefCharge').value,
-      coefcoefWithoutCharge:this.coutsForm.get('coefWithoutCharge').value
+      coefWithoutCharge:this.coutsForm.get('coefWithoutCharge').value
 
 
     }
