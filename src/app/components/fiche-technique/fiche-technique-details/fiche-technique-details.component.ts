@@ -13,14 +13,19 @@ import { Cout } from 'src/app/models/cout';
   templateUrl: './fiche-technique-details.component.html',
   styleUrls: ['./fiche-technique-details.component.css']
 })
+
+
 export class FicheTechniqueDetailsComponent implements OnInit {
 
   queryId : string;
   ficheTechnique$ : Observable<FicheTechnique>;
   couts$ : Observable<Cout>
   coutMatiere : number;
+  coutCharge : number;
 
   constructor(private router : Router, private route : ActivatedRoute, private ficheTechniqueService : FicheTechniqueService, private coutsService : CoutsService) { }
+
+  
 
   ngOnInit(): void {
     
@@ -33,12 +38,28 @@ export class FicheTechniqueDetailsComponent implements OnInit {
         console.log(data);
         
         this.coutMatiere = this.getCoutMatiere(data.progression);
-
         if(cout.usePerc) this.coutMatiere = this.coutMatiere + this.coutMatiere * (cout.coutProdPerc / 100);
         else this.coutMatiere = this.coutMatiere + cout.coutProdFixe;
+
+        let tempsNecessaire = this.getTempsNecessaire(data.progression);
+        if(cout.useCharge) {
+          this.coutCharge = ((Number(cout.tauxForf) + Number(cout.tauxPers)) / 60 ) * tempsNecessaire
+        }
+
       });
       
     })
+  }
+
+  getTempsNecessaire(progression : any[]) : number{
+    let sum : number = 0;
+    for(let i = 0; i < progression.length ; i ++){
+      if(progression[i].progression) sum+= this.getTempsNecessaire(progression[i].progression)
+      else{
+        sum+= Number(progression[i].temps);
+      }
+    }
+    return sum;
   }
 
   getCoutMatiere(progression : any[]) : number{

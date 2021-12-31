@@ -31,7 +31,10 @@
   <mat-divider></mat-divider>
 
   <mat-card-content>
-    Coût de la matière : {{ coutMatiere}} €
+    Coût de la matière : {{ coutMatiere|  currency:'EUR':'symbol'}}<br>
+    Coût des charges : {{ coutCharge |  currency:'EUR':'symbol'}}<br>
+    Coût de production : {{ (coutMatiere + coutCharge) |  currency:'EUR':'symbol' }} <br>
+    Coût de production par portion : {{ (coutMatiere + coutCharge) / ficheTechnique.nbCouvert |  currency:'EUR':'symbol'}}
   </mat-card-content>
 
   <mat-card-actions>

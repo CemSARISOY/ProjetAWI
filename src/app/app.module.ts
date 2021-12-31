@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms'
@@ -38,6 +38,9 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { MatCardModule } from '@angular/material/card';
 import { CoutsFormComponent } from './couts/couts-form/couts-form.component';
 import {MatRadioModule} from '@angular/material/radio';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr'
+registerLocaleData(localeFr)
 
 const route = [
   {path : '', redirectTo : "/fiches-techniques", pathMatch : 'full'},
@@ -94,7 +97,12 @@ const route = [
     MatRadioModule
 
   ],
-  providers: [],
+  providers: [
+    {
+      provide: LOCALE_ID,
+      useValue: 'fr-FR'
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
