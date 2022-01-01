@@ -93,7 +93,7 @@ export class CoutsFormComponent implements OnInit {
   OnSubmit(){
     var cout : Cout = {
       useCharge :this.coutsForm.get('charges').value=='Oui'?true:false,
-      usePerc : this.coutsForm.get('assaisonnement').value=='OUi'?true:false,
+      usePerc : this.coutsForm.get('assaisonnement').value=='Oui'?true:false,
       coutProdFixe : this.coutsForm.get('coutProdFix').value,
       coutProdPerc :this.coutsForm.get('coutProdPerc').value,
       tauxForf :this.coutsForm.get('tauxHorsForf').value,
@@ -103,6 +103,7 @@ export class CoutsFormComponent implements OnInit {
 
 
     }
+    console.log(cout)
     this.coutService.update(cout) 
     Swal.fire('Coûts sauvegardés !', '', 'success')
   }
