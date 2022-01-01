@@ -215,7 +215,10 @@ export class FicheTechniqueDetailsComponent implements OnInit {
           console.log("fini" + modifyStock)
 
           if (modifyStock) {
+            var StockNegatif = []
             filteredArray.forEach(ing => {
+              console.log(ing.stock)
+              console.log(""+ing.quantite +"*"+ numberOfEtiq)
               var ingredientToUpdate: Ingredients = {
                 id: ing.id,
                 CODE: ing.code,
@@ -226,9 +229,26 @@ export class FicheTechniqueDetailsComponent implements OnInit {
                 STOCK: ing.stock - (ing.quantite * numberOfEtiq),
                 ALLERGENES: ing.allergenes
               }
-            
+              console.log(""+ing.stock +"-"+ing.quantite +"*"+ numberOfEtiq )
+              console.log(ingredientToUpdate)
+              
+              if (ingredientToUpdate.STOCK <= 0 ){
+                StockNegatif.push(ingredientToUpdate.LIBELLE)
+              }
+              
               this.ingredientService.updateIngredient(ingredientToUpdate)
             });
+
+            if (StockNegatif.length > 0 ){
+              var message = "Le ingredients suivants ont un stock negatif : "
+              StockNegatif.forEach(libelle => message = message + " "+libelle)
+              Swal.fire(
+                'Stock négatif !',
+                message,
+                'warning'
+              )
+            }
+           
           }
 
         })
