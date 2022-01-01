@@ -33,7 +33,7 @@ export class IngredientsComponent implements AfterViewInit {
   dataSource: IngredientsDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['CODE', 'LIBELLE' ,'PRIX_UNITAIRE','UNITE','CATEGORIE'];
+  displayedColumns = ['CODE', 'LIBELLE' ,'PRIX_UNITAIRE','UNITE','STOCK','CATEGORIE'];
   expandedElement: IngredientsItem | null;
   expansable : boolean = true;
   isHide : boolean = true;

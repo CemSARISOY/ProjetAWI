@@ -48,6 +48,12 @@
       <td mat-cell *matCellDef="let row">{{row.PRIX_UNITAIRE}}</td>
     </ng-container>
 
+    <!-- Stock Column -->
+    <ng-container matColumnDef="STOCK">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Stock</th>
+      <td mat-cell *matCellDef="let row">{{row.STOCK}}</td>
+    </ng-container>
+
     <!-- Categorie Column -->
     <ng-container matColumnDef="CATEGORIE">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Catégorie</th>
