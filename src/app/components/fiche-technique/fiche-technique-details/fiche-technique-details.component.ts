@@ -180,7 +180,7 @@ export class FicheTechniqueDetailsComponent implements OnInit {
             doc.text(titre, 10, currentHeight)
             doc.setFont('Times', 'normal')
             currentHeight += 12
-            //ajout du body 
+            //ajout du body
             filteredArray.forEach(ingredient => {
               if (ingredient.isAllergenic) {
                 doc.setFont('Times', 'bold')
@@ -216,6 +216,7 @@ export class FicheTechniqueDetailsComponent implements OnInit {
 
           if (modifyStock) {
             var StockNegatif = []
+            let toModify = []
             filteredArray.forEach(ing => {
               console.log(ing.stock)
               console.log(""+ing.quantite +"*"+ numberOfEtiq)
@@ -229,15 +230,16 @@ export class FicheTechniqueDetailsComponent implements OnInit {
                 STOCK: ing.stock - (ing.quantite * numberOfEtiq),
                 ALLERGENES: ing.allergenes
               }
+              toModify.push(ingredientToUpdate)
               console.log(""+ing.stock +"-"+ing.quantite +"*"+ numberOfEtiq )
               console.log(ingredientToUpdate)
-              
+
               if (ingredientToUpdate.STOCK <= 0 ){
                 StockNegatif.push(ingredientToUpdate.LIBELLE)
               }
-              
-              this.ingredientService.updateIngredient(ingredientToUpdate)
+
             });
+            this.ingredientService.updateIngredients(toModify)
 
             if (StockNegatif.length > 0 ){
               var message = "Le ingredients suivants ont un stock negatif : "
@@ -248,7 +250,7 @@ export class FicheTechniqueDetailsComponent implements OnInit {
                 'warning'
               )
             }
-           
+
           }
 
         })

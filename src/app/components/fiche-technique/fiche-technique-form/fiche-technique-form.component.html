@@ -51,7 +51,7 @@
         <button mat-flat-button color="primary" (click)="addingStep()" >Ajouter une étape</button>
         <button mat-flat-button color="primary" (click)="addingFt()">Ajouter une fiche technique</button>
       </div>
-      
+
 
       <div id="newStep" *ngIf="isAddingStep">
         <button mat-icon-button color="primary" (click)="isAddingStep = false; this.modifyingStep = undefined">
@@ -60,7 +60,7 @@
             </mat-icon>
         </button>
         <app-etape-form (newStepValues)="newStep($event)" (modifiedStepValues)="this.modifyStep($event)" [values]="modifyingStep"></app-etape-form>
-        
+
       </div>
 
       <div id="newFt" *ngIf="isAddingFt">
@@ -81,7 +81,7 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
-        
+
         <button mat-flat-button color="primary" (click)="addFt()">Ajouter la fiche technique</button>
       </div>
 

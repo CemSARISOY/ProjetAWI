@@ -30,7 +30,7 @@ export class FicheTechniqueService {
     }
     return null;
   }
-    
+
 
   getAllFicheTechniques() : Observable<FicheTechnique[]>{
     return this.ficheTechniqueCollection.valueChanges({idField: "id"})
@@ -49,22 +49,22 @@ export class FicheTechniqueService {
   updateFicheTechnique(oldFicheTechnique : FicheTechnique, newFicheTechnique : FicheTechnique){
     const id = newFicheTechnique.id;
     oldFicheTechnique.id = id;
-    
+
     const query = this.ficheTechniqueStore.collection(this.path, (ref) => ref.where("progression","array-contains",JSON.parse(JSON.stringify(oldFicheTechnique))))
     query.get().subscribe(data => {
       data.docs.forEach(docSnap => {
 
         const doc : any = docSnap.data()
         const save = JSON.parse(JSON.stringify(doc));
-        
+
         for(let i = 0 ; i < doc.progression.length ; i++){
           if(doc.progression[i].id === id) doc.progression[i] = JSON.parse(JSON.stringify(newFicheTechnique))
         }
-    
+
         // Recursivité
         this.updateFicheTechnique(new FicheTechnique(save.intitule, save.responsable, save.nbCouvert, save.progression, save.categorie, docSnap.id), new FicheTechnique(doc.intitule, doc.responsable, doc.nbCouvert, doc.progression, doc.categorie, docSnap.id))
-        
-        
+
+
         this.ficheTechniqueCollection.doc(docSnap.id).set({
           categorie: doc.categorie,
           intitule: doc.intitule,
@@ -74,9 +74,9 @@ export class FicheTechniqueService {
           id: docSnap.id
         });
       })
-      
+
     });
-    this.ficheTechniqueCollection.doc(id).set(Object.assign({}, newFicheTechnique))  
+    this.ficheTechniqueCollection.doc(id).set(Object.assign({}, newFicheTechnique))
   }
 
   updateFicheTechniqueByIngredients(ingr : Ingredients){
@@ -89,7 +89,20 @@ export class FicheTechniqueService {
         this.ficheTechniqueCollection.doc(ft.id).set(Object.assign({}, ft))
       }
     });
-    
+
+  }
+
+  updateFicheTechniqueByIngredientsArray(ingredients : Ingredients[]){
+    const allFts = this.getAllFicheTechniques();
+    allFts.pipe(first()).subscribe(arr => {
+      for(let i = 0; i < arr.length ; i ++){
+        let ft = arr[i];
+        ingredients.forEach(ingr => {
+          this.exploreAndEditProgression(ft.progression, ingr);
+        })
+        this.ficheTechniqueCollection.doc(ft.id).set(Object.assign({}, ft));
+      }
+    });
   }
 
   private exploreAndEditProgression(oldProgression : any[], ingredient : Ingredients) : any[]{
@@ -106,7 +119,7 @@ export class FicheTechniqueService {
         }
       }
     }
-    
+
     return progression;
   }
 

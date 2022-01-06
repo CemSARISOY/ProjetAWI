@@ -55,7 +55,22 @@ export class IngredientsService {
     this.ingredientCollection.doc(id).update(Object.assign({}, ingredient));
     ingredient.id = id
 
-}
+  }
+
+  updateIngredients(ingredients: Ingredients[]){
+    // Modifier en premier les fiches techniques
+    console.log( "ingredient service")
+    this.ficheTechniqueService.updateFicheTechniqueByIngredientsArray(ingredients);
+
+    ingredients.forEach( ingredient => {
+      var id = ingredient.id
+      delete ingredient.id
+      this.ingredientCollection.doc(id).update(Object.assign({}, ingredient));
+      ingredient.id = id
+    })
+
+
+  }
 
 
   getIngredient(ingredientId: string): Observable<Ingredients> {

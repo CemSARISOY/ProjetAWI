@@ -97,21 +97,21 @@ table > tr > *:first-child{
   opacity: 0;
 }
 
-.cdk-drag-animating { 
+.cdk-drag-animating {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
 
 .example-list {
-  width: 100%;  
+  width: 100%;
   display: block;
   background: white;
   overflow: hidden;
-} 
+}
 
 
 .example-handle {
-  position: absolute;  
+  position: absolute;
   color: #ccc;
   cursor: move;
   width: 24px;
@@ -129,7 +129,7 @@ table > tr > *:first-child{
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.example-box {  
+.example-box {
   box-sizing: border-box;
   border-radius: 5px;
   border-bottom: solid 1px #ced4da;

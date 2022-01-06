@@ -27,7 +27,7 @@ export class FicheTechniqueFormComponent implements OnInit {
   newFicheTechnique : string;
   modifyingStep : any;
   modifyingStepIndex : number;
-  
+
   // Form
   nomPlat : string
   nomCuisinier : string
@@ -47,7 +47,7 @@ export class FicheTechniqueFormComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id');
     if(this.id){
       this.modifyingFt$ = this.ficheTechniqueService.getOneFicheTechnique(this.id);
-      this.modifyingFt$.subscribe((data : FicheTechnique) => { 
+      this.modifyingFt$.subscribe((data : FicheTechnique) => {
         this.modifyingFt = data;
         this.categorie = data.categorie;
         this.nomPlat = data.intitule;
@@ -56,10 +56,10 @@ export class FicheTechniqueFormComponent implements OnInit {
         this.etapes = data.progression;
       })
     }
-    
-    
+
+
     this.ficheTechniques$ = this.ficheTechniqueService.getAllFicheTechniques();
-    
+
   }
 
   private filterFt(value: string): void{
@@ -77,9 +77,9 @@ export class FicheTechniqueFormComponent implements OnInit {
   public addingFt(){
 
     if(this.filteredOptionsFt === undefined){
-      
+
       this.filteredOptionsFt = this.ficheTechniques$;
-      
+
       this.myControlFt.valueChanges.subscribe(value =>
         this.filterFt(value)
       );
@@ -88,7 +88,7 @@ export class FicheTechniqueFormComponent implements OnInit {
     this.isAddingFt = true;
   }
 
-  
+
 
   public addFt(){
     let found = false;
@@ -107,7 +107,7 @@ export class FicheTechniqueFormComponent implements OnInit {
             id: ficheTechnique.id
           })
           this.newFicheTechnique = "";
-        } 
+        }
       });
       this.isAddingFt=!found;
     });
@@ -126,7 +126,7 @@ export class FicheTechniqueFormComponent implements OnInit {
     this.modifyingStep = undefined;
   }
 
-  
+
 
 
   drop(event: CdkDragDrop<string[]>) {
@@ -162,11 +162,11 @@ export class FicheTechniqueFormComponent implements OnInit {
             this.router.navigate(["/fiches-techniques"])
           }else{
             console.log("erreur");
-            
+
           }
         });
-        
-        
+
+
       }
     })
   }
@@ -184,10 +184,10 @@ export class FicheTechniqueFormComponent implements OnInit {
         this.ficheTechniques$.pipe(first()).subscribe(data => {
           let newF : FicheTechnique = new FicheTechnique(this.nomPlat,this.nomCuisinier, this.nbCouverts,this.etapes,this.categorie, this.id);
           this.ficheTechniqueService.updateFicheTechnique(this.modifyingFt, newF)
-          //this.router.navigate(["/fiches-techniques"])
+          this.router.navigate(["/fiches-techniques"])
         });
-        
-        
+
+
       }
     })
   }
