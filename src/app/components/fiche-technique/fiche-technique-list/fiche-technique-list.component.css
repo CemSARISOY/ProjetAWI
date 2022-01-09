@@ -1,6 +1,24 @@
-table {
+table, #header {
     margin-left:5%;
     width: 90%;
+}
+
+#header{
+  margin-top:1%;
+  display: flex;
+}
+
+#header > *{
+  flex:1;
+}
+
+#header button:hover{
+  transform: scale(1.1);
+}
+
+#header div{
+  display: flex;
+  justify-content: flex-end;
 }
 
 .mat-row .mat-cell {

@@ -47,8 +47,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 const route = [
-  {path : '', redirectTo : "/fiches-techniques", pathMatch : 'full'},
-  {path: 'fiches-techniques', component:FicheTechniqueListComponent},
+  {path : '', redirectTo : "/fiches-techniques", pathMatch : 'full', name: 'Fiches Techniques'},
+  {path: 'fiches-techniques', component:FicheTechniqueListComponent, name: 'Fiches Techniques'},
   {path: 'fiches-techniques/create', component:FicheTechniqueFormComponent},
   {path: 'fiches-techniques/:id', component:FicheTechniqueDetailsComponent},
   {path: 'fiches-techniques/:id/modify', component:FicheTechniqueFormComponent},

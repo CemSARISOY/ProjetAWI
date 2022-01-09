@@ -303,7 +303,7 @@ export class FicheTechniqueDetailsComponent implements OnInit {
 
   // PDF
   public openPDF(): void {
-    let DATA = document.getElementById('container');
+    let DATA = document.getElementById('pdf');
 
     html2canvas(DATA).then(canvas => {
 

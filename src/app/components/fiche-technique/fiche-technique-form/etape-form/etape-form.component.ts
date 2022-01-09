@@ -45,7 +45,7 @@ export class EtapeFormComponent implements OnInit {
     }
     
     
-    this.ingredients = this.ingredientsService.getAllIngredients();
+    //this.ingredients = this.ingredientsService.getAllIngredients();
     this.filteredOptions = this.ingredients;
     this.myControl.valueChanges.subscribe(value =>
       this.filter(value)
@@ -58,7 +58,7 @@ export class EtapeFormComponent implements OnInit {
     const ingrExists = new Promise( (resolve, reject) => {
       this.ingredients.forEach(data => {
         data.forEach((ingredient : Ingredients) => {
-          if(ingredient.LIBELLE == this.newIngredient)
+          if(ingredient.LIBELLE == this.newIngredient && this.quantite !== null)
           {
             found = true
             this.ingredientsEtape.push({ingredient:JSON.parse(JSON.stringify(ingredient)),quantite:this.quantite})

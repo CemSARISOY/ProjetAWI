@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FicheTechnique } from 'src/app/models/fiche-technique';
 import { FicheTechniqueService } from 'src/app/services/fiche-technique.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,8 +12,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./fiche-technique-list.component.css']
 })
 export class FicheTechniqueListComponent implements OnInit {
-
-  public fichesTechniques : Observable<FicheTechnique[]>
+  @ViewChild(MatSort) sort!: MatSort;
+  public fichesTechniques$ : Observable<FicheTechnique[]>
 
   displayedColumns : string[] = ["intitule","categorie","ingredients"]
   dataSource : MatTableDataSource<any>;
@@ -20,13 +21,14 @@ export class FicheTechniqueListComponent implements OnInit {
   constructor(private ficheTechniqueService : FicheTechniqueService, private router : Router) { }
 
   ngOnInit(): void {
-    this.fichesTechniques = this.ficheTechniqueService.getAllFicheTechniques();
-    this.fichesTechniques.subscribe(ft => {
+    this.fichesTechniques$ = this.ficheTechniqueService.getAllFicheTechniques();
+    this.fichesTechniques$.subscribe(ft => {
       let test = [];
       for(let i = 0; i < ft.length ; i++ ){
         test.push ({...ft[i], ingredients: [...new Set(this.getListeIngredients(ft[i].progression))]})
       }
       this.dataSource = new MatTableDataSource(test);
+      this.dataSource.sort = this.sort;
     })
 
   }

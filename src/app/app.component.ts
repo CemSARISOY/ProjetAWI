@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Ingredients } from './models/ingredients';
 import { IngredientsService } from './services/ingredients.service';
 
@@ -8,23 +9,18 @@ import { IngredientsService } from './services/ingredients.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  router : String;
 
-  constructor(private ingredientService : IngredientsService){}
+  constructor(private _router: Router){
+    _router.events.subscribe( () => {
+      this.router = _router.url;
+    })
+  }
 
   title = 'ProjetAWI';
 
   ngOnInit(){
-    //this.ingredientService.getAllIngredients().subscribe(ingredient => console.log("hey"));
-    //this.ingredientService.addIngredient(new Ingredients(2000,"kebabs","VIANDES / VOLAILLES",0.50,"P"))
 
-    /* this.ingredientService.getIngredient("SVHoTCzCNoecPlVTu9GU")
-     .subscribe(ingredient => {
-       console.log(ingredient);
-      console.log(ingredient.id)
-     ingredient.LIBELLE = "Tacos";
-        this.ingredientService.deleteIngredient(ingredient)});*/
-
-      //this.ingredientService.updateIngredient(ingredient)});
 
 
   }

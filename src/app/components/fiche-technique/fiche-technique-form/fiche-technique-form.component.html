@@ -1,4 +1,4 @@
-<div id="tout">
+<mat-card id="tout">
     <div id="entete">
       <mat-form-field>
         <mat-label>Nom du plat </mat-label>
@@ -14,11 +14,15 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Catégorie </mat-label>
-        <input matInput type="text" [(ngModel)]="categorie" />
+        <mat-select [(ngModel)]="categorie">
+          <mat-option value="Entrée">Entrée</mat-option>
+          <mat-option value="Plat">Plat</mat-option>
+          <mat-option value="Dessert">Dessert</mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
     <div id="etape">
-      <table cdkDropList (cdkDropListDropped)="drop($event)" *ngIf="etapes.length>0">
+      <table cdkDropList class="example-box" (cdkDropListDropped)="drop($event)" *ngIf="etapes.length>0">
         <tr>
           <th>Etape</th>
           <th>Description</th>
@@ -26,17 +30,17 @@
           <th>Temps</th>
           <th></th>
         </tr>
-        <tr class="example-box" cdkDrag cdkDragLockAxis="y" *ngFor="let etape of etapes; let index=index" >
+        <tr  cdkDrag cdkDragLockAxis="y" *ngFor="let etape of etapes; let index=index" >
           <td>{{index+1}}</td>
           <td *ngIf="etape.progression !== undefined">Realiser {{ etape.intitule }}</td>
           <td *ngIf="etape.progression === undefined">{{etape.description}}</td>
           <td *ngIf="!etape.ingredients || etape.ingredients.length ==0">Aucun ingrédient nécessaire</td>
           <td *ngIf="etape.ingredients && etape.ingredients.length > 0"><div *ngFor="let ingredient of etape.ingredients">{{ingredient.ingredient.LIBELLE}} : {{ingredient.quantite}}</div></td>
           <td>{{etape.temps}} mins</td>
-          <td *ngIf="(this.modifyingStep === undefined && !isAddingStep ) "><button *ngIf="etape.progression === undefined" mat-icon-button color="primary" (click)="modify(index)" >
+          <td *ngIf="(this.modifyingStep === undefined && !isAddingStep ) "><button *ngIf="etape.progression === undefined" mat-icon-button color="accent" (click)="modify(index)" >
             <mat-icon>edit</mat-icon>
           </button>
-            <button mat-icon-button color="primary" (click)="etapes.splice(index,1)" >
+            <button mat-icon-button color="warn" (click)="etapes.splice(index,1)" >
               <mat-icon>delete</mat-icon>
             </button></td>
 
@@ -87,7 +91,7 @@
 
     </div>
     <div>
-      <button *ngIf="!isModifying()" mat-flat-button color="primary" (click)="create()" >Créer</button>
-      <button *ngIf="isModifying()" mat-flat-button color="primary" (click)="modifyFt()" >Modifier</button>
+      <button *ngIf="!isModifying()" mat-flat-button color="accent" (click)="create()" >Créer</button>
+      <button *ngIf="isModifying()" mat-flat-button color="accent" (click)="modifyFt()" >Modifier</button>
     </div>
-</div>
+  </mat-card>

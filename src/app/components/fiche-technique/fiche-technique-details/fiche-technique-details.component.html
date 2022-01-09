@@ -1,64 +1,167 @@
 
 
-<mat-slide-toggle
-class="example-margin"
-[(ngModel)]="coutActive">
-Calculer les coûts
-</mat-slide-toggle>
-
-<mat-card *ngIf="ficheTechnique$ | async as ficheTechnique " id="container">
 
 
-
-  <mat-card-title>Fiche technique {{ficheTechnique.intitule}}</mat-card-title>
-  <mat-card-subtitle>Responsable : {{ficheTechnique.responsable}}</mat-card-subtitle>
-  <mat-card-subtitle>Nombre de couverts : {{ficheTechnique.nbCouvert}}</mat-card-subtitle>
-
-
-  <mat-divider></mat-divider>
-
-  <!-- Recursivité étapes -->
-  <mat-card-content>
-    <ol>
-      <ng-template #recursiveList let-list>
-      <li *ngFor="let prog of list">
-        <ng-container *ngIf="prog.progression">Réaliser {{prog.intitule}}</ng-container>
-        <ng-container *ngIf="!prog.progression">Titre étape : {{ prog.titreEtape }} / Ingrédients : <ng-container *ngFor="let ingredient of prog.ingredients">{{ingredient.ingredient.LIBELLE}} : {{ingredient.quantite}}</ng-container></ng-container>
-        <ol *ngIf="prog.progression" >
-          
-          <ng-container *ngTemplateOutlet="recursiveList; context:{$implicit: prog.progression}"></ng-container>
-        </ol>
-        
-      </li>
-      </ng-template>
-      <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: ficheTechnique.progression }"></ng-container>
-    </ol>
-  </mat-card-content>
-
-  <mat-divider></mat-divider>
-
-  <mat-card-content *ngIf="coutActive">
-    Coût de la matière : {{ coutMatiere|  currency:'EUR':'symbol'}}<br>
-    <div *ngIf="coutCharge !== undefined">
-      Coût des charges : {{ coutCharge |  currency:'EUR':'symbol'}}<br>
-    </div>
-    Coût de production : {{ (coutMatiere ) |  currency:'EUR':'symbol' }} <br>
-    Coût de production par portion : {{ (coutMatiere ) / ficheTechnique.nbCouvert |  currency:'EUR':'symbol'}}<br>
-    Prix de vente : {{ prixVente | currency:'EUR':'symbol'}} <br>
-    Prix de vente par portion : {{ (prixVente) / ficheTechnique.nbCouvert | currency:'EUR':'symbol'}} <br>
-    Seuil de rentabilité : {{ seuilRentabilite }} portions <br>
-    Benefice : {{ benefice | currency:'EUR':'symbol'  }} <br>
-    Benefice par portion : {{ benefice / ficheTechnique.nbCouvert | currency:'EUR':'symbol'}}
-  </mat-card-content>
-
-  <mat-card-actions>
-    <button mat-button [routerLink]="['./modify']">Modifier</button>
-    <button mat-button (click)="delete()">Supprimer</button>
-    <button mat-button (click)="openDialog()">Générer des étiquettes</button>
-  </mat-card-actions>
+<mat-card class="cards">
+  <button mat-button [routerLink]="['./modify']">Modifier</button>
+  <button mat-button (click)="delete()">Supprimer</button>
+  <button mat-button (click)="openDialog()">Générer des étiquettes</button>
+  <button mat-button class="btn btn-success btn-block" (click)="openPDF()">Download PDF</button>
+  <mat-slide-toggle
+    class="example-margin"
+    [(ngModel)]="coutActive">
+    Calculer les coûts
+  </mat-slide-toggle>
 </mat-card>
 
-<div class="col-md-4 text-right">
-  <button class="btn btn-success btn-block" (click)="openPDF()">Download PDF</button>
-</div>
+<mat-card id="pdf" *ngIf="ficheTechnique$ | async as ficheTechnique " class="cards">
+
+
+
+  <table class="mainTables">
+    <tr>
+      <th>FICHE TECHNIQUE</th>
+    </tr>
+    <tr>
+      <td>
+        <table>
+          <tr>
+            <td id="gauche">
+              <table>
+                <tr>
+                  <th>INTITULE</th>
+                </tr>
+                <tr>
+                  <td class="center">{{ficheTechnique.intitule}}</td>
+                </tr>
+                <tr>
+                  <table class="content">
+                    <tr>
+                      <th>DENREES</th>
+                      <th>UNITES</th>
+                      <th>QUANTITES</th>
+                    </tr>
+                    <ng-template #recursiveList1 let-list>
+                      <ng-container *ngFor="let prog of list">
+                        <tr>
+                          <td><span>{{prog.titreEtape}} :</span></td>
+                          <td></td><td></td>
+                        </tr>
+                        <tr *ngFor="let ingredient of prog.ingredients">
+                          <td>{{ingredient.ingredient.LIBELLE}}</td>
+                          <td class="center">{{ingredient.ingredient.UNITE}}</td>
+                          <td class="center">{{ingredient.quantite}}</td> 
+                        </tr>
+                        <ol *ngIf="prog.progression" >
+                          
+                          <ng-container *ngTemplateOutlet="recursiveList1; context:{$implicit: prog.progression}"></ng-container>
+                        </ol>
+                        
+                      </ng-container>
+                    </ng-template>
+                    <ng-container *ngTemplateOutlet="recursiveList1; context:{ $implicit: ficheTechnique.progression }"></ng-container>
+                  </table>
+                </tr>
+              </table>
+            </td>
+            <td id="droite">
+              <tr>
+                <table>
+                  <tr>
+                    <th>RESPONSABLE</th>
+                    <th>NBRE DE COUVERTS</th>
+                  </tr>
+                  <tr>
+                    <td class="center">{{ficheTechnique.responsable}}</td>
+                    <td class="center">{{ficheTechnique.nbCouvert}}</td>
+                  </tr>
+                  <tr>
+                    
+                  </tr>
+                </table>
+              </tr>
+              <tr>
+                <table class="content">
+                  <tr>
+                    <th>N° PHASE</th>
+                    <th>TECHNIQUES DE REALISATION</th>
+                    <th>DUREE</th>
+                  </tr>
+                  <ng-template #recursiveList2 let-list>
+                    <ng-container *ngFor="let prog of list; let index = index">
+                      <tr>
+                        <td class="center"><span>{{index+1}}</span></td>
+                        <td><span>{{prog.titreEtape}} :</span></td>
+                        <td class="center">{{prog.temps}}'</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>{{prog.description}}</td>
+                        <td></td>
+                      </tr>
+                      <ol *ngIf="prog.progression" >
+                        
+                        <ng-container *ngTemplateOutlet="recursiveList2; context:{$implicit: prog.progression}"></ng-container>
+                      </ol>
+                      
+                    </ng-container>
+                  </ng-template>
+                  <ng-container *ngTemplateOutlet="recursiveList2; context:{ $implicit: ficheTechnique.progression }"></ng-container>
+                </table>
+              </tr>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <table class="mainTables" *ngIf="coutActive">
+    <tr>
+      <th>COÛTS</th>
+    </tr>
+    <tr>
+      <td>
+        <table>
+          <tr>
+            <td>Coût de la matière</td>
+            <td>{{ coutMatiere|  currency:'EUR':'symbol'}}</td>
+            <td>Coût des charges</td>
+            <td *ngIf="coutCharge === undefined">0 €</td>
+            <td *ngIf="coutCharge !== undefined">{{ coutCharge |  currency:'EUR':'symbol'}}</td>
+          </tr>
+          <tr>
+            <td>Coût de production</td>
+            <td>{{ (coutMatiere ) |  currency:'EUR':'symbol' }}</td>
+            <td>Coût de production par portion</td>
+            <td>{{ (coutMatiere ) / ficheTechnique.nbCouvert |  currency:'EUR':'symbol'}}</td>
+          </tr>
+          <tr>
+            <td>Prix de vente</td>
+            <td>{{ prixVente | currency:'EUR':'symbol'}}</td>
+            <td>Prix de vente par portion</td>
+            <td>{{ (prixVente) / ficheTechnique.nbCouvert | currency:'EUR':'symbol'}}</td>
+          </tr>
+          <tr>
+            <td>Benefice</td>
+            <td>{{ benefice | currency:'EUR':'symbol'}}</td>
+            <td>Benefice par portion</td>
+            <td>{{ (benefice) / ficheTechnique.nbCouvert | currency:'EUR':'symbol'}}</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <table>
+          <tr>
+            <td>Seuil de rentabilite</td>
+            <td *ngIf="seuilRentabilite<=1">{{ seuilRentabilite }} portion</td>
+            <td *ngIf="seuilRentabilite>1">{{ seuilRentabilite }} portions</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</mat-card>
+
 

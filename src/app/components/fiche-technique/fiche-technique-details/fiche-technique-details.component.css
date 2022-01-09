@@ -1,5 +1,41 @@
-#container{
+.cards{
     width:90%;
     margin-left:4%;
     margin-top:2%;
+}
+
+table, td, th {
+    border: 1px solid black;
+}
+
+.mainTables{
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+              0 2px 2px 0 rgba(0, 0, 0, 0.14),
+              0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+th{
+    background-color:#ccc;
+  }
+
+table.content > tr > td{
+    border:0px;
+    border-right: 1px solid black;
+    border-collapse:collapse;
+    padding-left:3px;
+}
+
+span{
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.center{
+    text-align: center;
 }

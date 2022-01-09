@@ -1,13 +1,19 @@
-<a [routerLink]="['/fiches-techniques/create']">Créer</a>
 
-<!--Filtering-->
-<mat-form-field>
-  <input
-    matInput
-    (keyup)="applyFilter($any($event.target).value)"
-    placeholder="Filter"
-  />
-</mat-form-field>
+<div id="header">
+  <!--Filtering-->
+  <mat-form-field appearance="outline">
+    <input
+      matInput
+      (keyup)="applyFilter($any($event.target).value)"
+      placeholder="Filter"
+    />
+  </mat-form-field>
+  <div><button mat-fab color="accent" [routerLink]="['/fiches-techniques/create']">
+    <mat-icon>add</mat-icon>
+  </button></div>
+  
+</div>
+
 
 <table
   mat-table
