@@ -60,14 +60,12 @@ export class CoutsFormComponent implements OnInit {
 
   controlCharges(bool: boolean) {
     if (bool) {
-      console.log("enable");
       this.coutsForm.get('tauxHorPers').enable()
       this.coutsForm.get('tauxHorsForf').enable()
       this.coutsForm.get('coefCharge').enable()
       this.coutsForm.get('coefWithoutCharge').disable()
     }
     else {
-      console.log("disable");
       this.coutsForm.get('tauxHorPers').disable()
       this.coutsForm.get('tauxHorsForf').disable()
       this.coutsForm.get('coefCharge').disable()
@@ -78,12 +76,10 @@ export class CoutsFormComponent implements OnInit {
 
   controlAssaisonnement(bool: boolean) {
     if (bool) {
-      console.log("enable");
       this.coutsForm.get('coutProdFix').disable()
       this.coutsForm.get('coutProdPerc').enable()
     }
     else {
-      console.log("disable");
       this.coutsForm.get('coutProdFix').enable()
       this.coutsForm.get('coutProdPerc').disable()
     }
@@ -103,7 +99,6 @@ export class CoutsFormComponent implements OnInit {
 
 
     }
-    console.log(cout)
     this.coutService.update(cout) 
     Swal.fire('Coûts sauvegardés !', '', 'success')
   }

@@ -56,8 +56,6 @@ export class FicheTechniqueDetailsComponent implements OnInit {
     this.couts$ = this.coutsService.getCouts();
     this.ficheTechnique$.pipe(first()).subscribe(data => {
       this.couts$.pipe(first()).subscribe(cout => {
-        console.log(cout);
-        console.log(data);
 
         this.coutMatiere = this.getCoutMatiere(data.progression);
         if (cout.usePerc) this.coutMatiere = this.coutMatiere + this.coutMatiere * (cout.coutProdPerc / 100);
@@ -104,9 +102,7 @@ export class FicheTechniqueDetailsComponent implements OnInit {
         const numberOfEtiq = result.numberOfEtiq
         const modifyStock = result.modifyStock
         let ingrds = [];
-        console.log('The dialog was closed ' + result.modifyStock + result.numberOfEtiq);
         this.ficheTechnique$.pipe(first()).subscribe(ft => {
-          console.log(ft.intitule)
           ft.progression.forEach(element => {
             if (!(element.ingredients === undefined)) {
 
@@ -129,7 +125,6 @@ export class FicheTechniqueDetailsComponent implements OnInit {
           })
 
           ingrds.reduce
-          console.log(ingrds)
           var filteredArray = [];
           ingrds.reduce(function (res, value) {
             if (!res[value.id]) {
@@ -153,9 +148,6 @@ export class FicheTechniqueDetailsComponent implements OnInit {
           }, {});
 
 
-          console.log(filteredArray)
-
-
           const titre = "" + ft.intitule + "\n"
             + "---------------------------\n"
           var body = ""
@@ -171,7 +163,6 @@ export class FicheTechniqueDetailsComponent implements OnInit {
           var etiquetteHeight = 0;
 
 
-          console.log(numberOfEtiq)
           var firstPageFilled = false
           for (let i = 0; i < numberOfEtiq; i++) {
             currentHeight += 10
@@ -194,7 +185,6 @@ export class FicheTechniqueDetailsComponent implements OnInit {
               currentHeight += 8
               if (!firstPageFilled) {
                 etiquetteHeight = currentHeight
-                console.log(etiquetteHeight)
                 firstPageFilled = true
               }
 
@@ -212,14 +202,11 @@ export class FicheTechniqueDetailsComponent implements OnInit {
           }
           // doc.addPage("a4");
           doc.save("" + ft.intitule + "-etiquettes.pdf"); // will save the file in the current working directory
-          console.log("fini" + modifyStock)
 
           if (modifyStock) {
             var StockNegatif = []
             let toModify = []
             filteredArray.forEach(ing => {
-              console.log(ing.stock)
-              console.log(""+ing.quantite +"*"+ numberOfEtiq)
               var ingredientToUpdate: Ingredients = {
                 id: ing.id,
                 CODE: ing.code,
@@ -231,8 +218,6 @@ export class FicheTechniqueDetailsComponent implements OnInit {
                 ALLERGENES: ing.allergenes
               }
               toModify.push(ingredientToUpdate)
-              console.log(""+ing.stock +"-"+ing.quantite +"*"+ numberOfEtiq )
-              console.log(ingredientToUpdate)
 
               if (ingredientToUpdate.STOCK <= 0 ){
                 StockNegatif.push(ingredientToUpdate.LIBELLE)
@@ -294,7 +279,6 @@ export class FicheTechniqueDetailsComponent implements OnInit {
             this.router.navigate(["/fiches-techniques"]);
           })
           .catch(() => {
-            console.log("error");
           });
       }
     })

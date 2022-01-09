@@ -77,7 +77,6 @@ export class IngredientFormComponent implements OnInit,OnChanges {
   }
 
   ngOnInit(): void {
-    console.log("init")
     if (this.modeAdd){
       this.buttonName = "Ajouter l'ingrédient"
       this.toggleEdit()
@@ -125,7 +124,6 @@ export class IngredientFormComponent implements OnInit,OnChanges {
   
     this.ingredientUpdated.emit(ingredient)
     if (this.modeAdd){
-      console.log("vlear")
       this.clearForm()
     }
     else {
@@ -135,7 +133,6 @@ export class IngredientFormComponent implements OnInit,OnChanges {
 
   addKeywordFromInput(event: MatChipInputEvent) {
     if (event.value) {
-      console.log("event value:"+event + event.value)
       this.keywords.add(event.value);
       event.chipInput!.clear();
     }

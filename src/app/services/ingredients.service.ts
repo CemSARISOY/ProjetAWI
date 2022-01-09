@@ -47,7 +47,6 @@ export class IngredientsService {
 
   updateIngredient(ingredient: Ingredients){
     // Modifier en premier les fiches techniques
-    console.log( "ingredient service")
     this.ficheTechniqueService.updateFicheTechniqueByIngredients(ingredient);
 
     var id = ingredient.id
@@ -59,7 +58,6 @@ export class IngredientsService {
 
   updateIngredients(ingredients: Ingredients[]){
     // Modifier en premier les fiches techniques
-    console.log( "ingredient service")
     this.ficheTechniqueService.updateFicheTechniqueByIngredientsArray(ingredients);
 
     ingredients.forEach( ingredient => {

@@ -82,7 +82,6 @@ export class FicheTechniqueService {
   updateFicheTechniqueByIngredients(ingr : Ingredients){
     const allFts = this.getAllFicheTechniques();
     allFts.pipe(first()).subscribe(arr => {
-      console.log(arr);
       for(let i = 0; i < arr.length ; i ++){
         let ft = arr[i];
         this.exploreAndEditProgression(ft.progression, ingr);
@@ -106,7 +105,6 @@ export class FicheTechniqueService {
   }
 
   private exploreAndEditProgression(oldProgression : any[], ingredient : Ingredients) : any[]{
-    console.log("explore")
     let progression = [...oldProgression];
     for(let i = 0 ; i < progression.length; i++){
 

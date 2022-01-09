@@ -161,7 +161,6 @@ export class FicheTechniqueFormComponent implements OnInit {
             ;
             this.router.navigate(["/fiches-techniques"])
           }else{
-            console.log("erreur");
 
           }
         });

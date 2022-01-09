@@ -30,7 +30,6 @@ export class EtiquetteDialogueComponent  {
       this.dialogRef.close();
     }
     showValue():void {
-      console.log(this.data.modifyStock)
     }
     
   }
