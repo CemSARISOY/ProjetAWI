@@ -1,0 +1,17 @@
+.FormFields{
+    display:flex;
+    width: 100%;
+}
+
+form{
+    width:80%;
+}
+
+div > form > div > * {
+    width:30%;
+}
+
+
+mat-form-field{
+    margin-right:1%;
+}

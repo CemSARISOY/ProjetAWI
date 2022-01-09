@@ -24,7 +24,7 @@ import html2canvas from 'html2canvas';
   ],
   
 })
-export class IngredientsComponent implements AfterViewInit {
+export class IngredientsComponent   {
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -35,7 +35,7 @@ export class IngredientsComponent implements AfterViewInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['CODE', 'LIBELLE' ,'PRIX_UNITAIRE','UNITE','STOCK','CATEGORIE'];
   expandedElement: IngredientsItem | null;
-  expansable : boolean = true;
+  expansable : boolean = false;
   isHide : boolean = true;
   ingredients : IngredientsItem[]
 
@@ -66,39 +66,18 @@ export class IngredientsComponent implements AfterViewInit {
     this.dataSource.filter = filterValue;
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
-  }
 
-  DeleteMode() {
-    this.expansable = false;
-    console.log(this.expansable)
-    var i = this.displayedColumns.length -1
-    while (this.displayedColumns[i] != 'CATEGORIE'){
-      console.log(this.displayedColumns)
-      this.displayedColumns.pop()
-      console.log(this.displayedColumns)
-      i+=-1
-    }
-    this.displayedColumns.push('DELETE');
-   }
-
-
-  ViewMode(){
-    this.expansable = true;
-    console.log(this.expansable)
+  switchMode(){
     var i = this.displayedColumns.length -1
     while (this.displayedColumns[i] != 'CATEGORIE'){
       this.displayedColumns.pop()
       i+=-1
     }
-
+    if(this.expansable) this.displayedColumns.push('DELETE');
   }
 
   expand(element){
-    if(this.expansable) this.expandedElement = this.expandedElement === element ? null : element;
+    if(!this.expansable) this.expandedElement = this.expandedElement === element ? null : element;
     else return null;
   }
 

@@ -1,99 +1,91 @@
-<div class="FormFields" style="float:left">
-<!--Form -->
-<form [formGroup]="ingredientForm" (ngSubmit)="addNotification()" novalidate>
- 
-
-  <p>
+<div class="FormFields">
+  <!--Form -->
+  <form [formGroup]="ingredientForm" (ngSubmit)="addNotification()" novalidate>
+    <div>
       <mat-form-field class="example-full-width" appearance="fill">
-          <mat-label>CODE</mat-label>
-          <input formControlName="CODE" matInput placeholder="3455" >
-        </mat-form-field>
-  </p>
-
-  <p>
+        <mat-label>CODE</mat-label>
+        <input formControlName="CODE" matInput placeholder="3455" />
+      </mat-form-field>
       <mat-form-field class="example-full-width" appearance="fill">
-          <mat-label>CATEGORIE</mat-label>
-          <input formControlName="CATEGORIE" matInput placeholder="VIANDES" >
-
-        </mat-form-field>
-
-      <!--
         <mat-label>CATEGORIE</mat-label>
-        <mat-select formControlName="CATEGORIE" matInput placeholder="VIANDES">
-          <mat-option value="one">First option</mat-option>
-          <mat-option value="two">Second option</mat-option>
-        </mat-select>-->
+        <input formControlName="CATEGORIE" matInput placeholder="VIANDES" />
+      </mat-form-field>
 
-  </p> 
- 
-  <p>
       <mat-form-field class="example-full-width" appearance="fill">
-          <mat-label>UNITE</mat-label>
-          <input formControlName="UNITE" matInput placeholder="Kg" >
-        </mat-form-field>
-  </p>
+        <mat-label>LIBELLE</mat-label>
+        <input formControlName="LIBELLE" matInput placeholder="Kebab" />
+      </mat-form-field>
+    </div>
 
-  <p>
+    <!--
+      <mat-label>CATEGORIE</mat-label>
+      <mat-select formControlName="CATEGORIE" matInput placeholder="VIANDES">
+        <mat-option value="one">First option</mat-option>
+        <mat-option value="two">Second option</mat-option>
+      </mat-select>-->
+    <div>
       <mat-form-field class="example-full-width" appearance="fill">
-          <mat-label>PRIX UNITAIRE</mat-label>
-          <span matSuffix>€&nbsp;</span>
-          <input formControlName="PRIX_UNITAIRE" matInput placeholder="3.94" >
+        <mat-label>UNITE</mat-label>
+        <input formControlName="UNITE" matInput placeholder="Kg" />
+      </mat-form-field>
 
-        </mat-form-field>
-
-  </p>
-
-  <p>
       <mat-form-field class="example-full-width" appearance="fill">
-          <mat-label>LIBELLE</mat-label>
-          <input formControlName="LIBELLE" matInput placeholder="Kebab" >
-
-        </mat-form-field>
-
-  </p>
-<p>
-  <mat-form-field>
-    <mat-label>STOCK</mat-label>
-    <input matInput formControlName="STOCK" type="number" min=0 />
-</mat-form-field>
-</p>
-    <!--Submit -->
-    <button mat-flat-button color="primary" [disabled]="enableSubmit||!ingredientForm.valid">{{buttonName}}</button>
+        <mat-label>PRIX UNITAIRE</mat-label>
+        <span matSuffix>€&nbsp;</span>
+        <input formControlName="PRIX_UNITAIRE" matInput placeholder="3.94" />
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>STOCK</mat-label>
+        <input matInput formControlName="STOCK" type="number" min="0" />
+      </mat-form-field>
+    </div>
 
     
-
-</form>
+   <!--Submit -->
+   <button
+   mat-flat-button
+   color="primary"
+   [disabled]="enableSubmit || !ingredientForm.valid"
+   >
+   {{ buttonName }}
+   </button>
+    
+  </form>
+  <div class="Allergenes">
+    <!--Chips Allergene -->
+    <mat-form-field class="example-chip-list" appearance="fill">
+      <mat-label>Allergenes keywords</mat-label>
+      <mat-chip-list
+        #chipList
+        aria-label="Allergènes"
+        multiple
+        [formControl]="ingredientForm.get('ALLERGENE')"
+      >
+        <mat-chip
+          *ngFor="let keyword of keywords"
+          [selected]="keyword"
+          [value]="keyword"
+          (removed)="removeKeyword(keyword)"
+        >
+          {{ keyword }}
+        </mat-chip>
+      </mat-chip-list>
+    </mat-form-field>
+    <p>
+      <b>Selectionnez un allergène puis appuyez sur espace</b>
+    </p>
+  </div>
+ 
 </div>
 
-<div class="Allergenes" style="float:right;clear:right;">
-<!--Chips Allergene -->
-<mat-form-field class="example-chip-list" appearance="fill">
-  <mat-label>Allergenes keywords</mat-label>
-  <mat-chip-list #chipList aria-label="Allergenes keywords" multiple [formControl]="ingredientForm.get('ALLERGENE')">
-    <mat-chip
-        *ngFor="let keyword of keywords"
-        [selected]="keyword"
-        [value]="keyword"
-        (removed)="removeKeyword(keyword)">
-      {{keyword}}
-    </mat-chip>
-</mat-chip-list>
-</mat-form-field>
-<p>
-  <b>The following keywords are selected:</b> {{ingredientForm.get('ALLERGENE').value }}
-</p>
-</div>
+
 
 
 <!--edit -->
-<div [hidden] = "modeAdd">
+<div *ngIf="!modeAdd">
   <button mat-mini-fab color="primary" (click)="editNotification()">
     <mat-icon>edit</mat-icon>
-  </button>  
+  </button>
 </div>
-
-<p>
-  <i>Select a focused chip by pressing <code>SPACE</code></i>
-</p>
 
 

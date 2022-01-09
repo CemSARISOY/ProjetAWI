@@ -34,7 +34,6 @@ export class FicheTechniqueListComponent implements OnInit {
         this.ingredientsListe = [...new Set(this.ingredientsListe)];
         let temp = {...ft[i], ingredients: [...new Set(this.getListeIngredients(ft[i].progression))]};
         delete temp.progression;
-        delete temp.id;
         test.push (temp)
   
       }

@@ -5,9 +5,20 @@ tr.example-detail-row {
   height: 0;
 }
 
+#slider{
+  margin-top:1%;
+}
+
+.mat-slide-toggle-label{
+  justify-content: center;
+  margin-top: 1%;
+}
+
 tr.example-element-row:not(.example-expanded-row):hover {
+  cursor:pointer;
   background: whitesmoke;
 }
+
 
 tr.example-element-row:not(.example-expanded-row):active {
   background: #efefef;
@@ -43,4 +54,32 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .example-element-description-attribution {
   opacity: 0.5;
+}
+
+div {
+  margin-left:5%;
+  margin-bottom: 2%;
+  width: 90%;
+}
+
+table{
+width:100%;
+}
+
+#header{
+margin-top:1%;
+display: flex;
+}
+
+#header > *{
+flex:1;
+}
+
+#header button:hover{
+  transform: scale(1.1);
+}
+
+#header div{
+  display: flex;
+  justify-content: flex-end;
 }

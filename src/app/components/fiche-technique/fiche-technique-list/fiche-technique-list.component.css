@@ -10,11 +10,14 @@ table{
 #header{
   margin-top:1%;
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #header > *{
   flex:1;
 }
+
 
 #header button:hover{
   transform: scale(1.1);

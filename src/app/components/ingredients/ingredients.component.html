@@ -1,18 +1,36 @@
-<div class="mat-elevation-z8" id = "htmlData">
 
-  <!--Selection des modes-->
-  <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-    <mat-button-toggle (click)="ViewMode()">View</mat-button-toggle>
-    <mat-button-toggle (click)="DeleteMode()">Delete</mat-button-toggle>
-  </mat-button-toggle-group>
+<div id="header">
 
-  <!--Filtering-->
-  <mat-form-field >
-    <input matInput (keyup)="applyFilter($any($event.target).value)" placeholder="Filter">
+   <!--Filtering-->
+   <mat-form-field appearance="outline" >
+    <input matInput (keyup)="applyFilter($any($event.target).value)" placeholder="Filtrer">
   </mat-form-field>
+  <!--Selection des modes-->
+  <mat-slide-toggle
+  id="slider"
+  [(ngModel)]="expansable" (change)="switchMode()">
+  Suppression
+
+  </mat-slide-toggle>
+ 
+
+  
+  <div>
+    <button mat-fab color="accent" (click)="showAddForm()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+</div>
 
 
+<div>
+  <mat-card *ngIf="!isHide">
+    <app-ingredient-form [modeAdd]="true" (update)="addIngredient($event)"></app-ingredient-form>
+  </mat-card>
+</div>
 
+
+<div id="table" class="mat-elevation-z8">
   <table mat-table class="full-width-table" [dataSource]="dataSource" matSort multiTemplateDataRows
     aria-label="Elements">
 
@@ -95,15 +113,4 @@
   </mat-paginator>
 </div>
 
-<button mat-fab color="primary" (click)="showAddForm()">
-  <mat-icon>add</mat-icon>
-</button>
 
-<div [hidden]="isHide">
-  <app-ingredient-form [modeAdd]="true" (update)="addIngredient($event)"></app-ingredient-form>
-</div>
-
-<!--PDF-->
-<div class="col-md-4 text-right">
-  <button class="btn btn-success btn-block" (click)="openPDF()">Download PDF</button>
-</div>

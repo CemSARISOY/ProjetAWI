@@ -79,11 +79,11 @@ export class IngredientFormComponent implements OnInit,OnChanges {
   ngOnInit(): void {
     console.log("init")
     if (this.modeAdd){
-      this.buttonName = "Add"
+      this.buttonName = "Ajouter l'ingrédient"
       this.toggleEdit()
     }
     else {
-      this.buttonName = "Submit"
+      this.buttonName = "Modifier l'ingrédient"
     }
   }
 
