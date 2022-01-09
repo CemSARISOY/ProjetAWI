@@ -1,79 +1,88 @@
+<div id="container">
+  <mat-card>
+    <form [formGroup]="coutsForm" (ngSubmit)="OnSubmit()">
 
-    <form  [formGroup]="coutsForm" (ngSubmit)="OnSubmit()">
-        <label>Utiliser le coût des charges pour les calculs des coûts</label>
+
+      <div>
         <div>
-            <mat-radio-group color="primary" formControlName="charges">
-                <mat-radio-button value="Oui" (click)="controlCharges(true)">Oui</mat-radio-button>
-                <mat-radio-button value="Non" (click)="controlCharges(false)">Non</mat-radio-button>
-            </mat-radio-group>
+          <label>Coût des assaisonnement :</label>
+          <mat-radio-group color="primary" formControlName="assaisonnement">
+            <div>
+              <mat-radio-button value="Oui" (click)="controlAssaisonnement(true)">Pourcentage du coût matière
+              </mat-radio-button>
+            </div>
+            <div>
+              <mat-radio-button value="Non" (click)="controlAssaisonnement(false)">Montant fixe
+              </mat-radio-button>
+            </div>
+            
+          </mat-radio-group>
+        </div>
+        <div>
+          <div></div>
+          <mat-form-field appearance="fill">
+            <mat-label>Coût d'aissaisonnement en pourcentage du coût matière</mat-label>
+            <input formControlName="coutProdPerc" matInput placeholder="hello" type="number" min="0" max="100" />
+            <span matSuffix>%&nbsp;</span>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Coût d'aissaisonnement fixe</mat-label>
+            <input formControlName="coutProdFix" matInput placeholder="" type="number" min="0" />
+            <span matSuffix>€&nbsp;</span>
+          </mat-form-field>
         </div>
 
+      </div>
+      <div>
 
-        <label>Coûts de production<label>
-                <div>
-                    <label>Coût des assaisonnement :</label>
-                    <mat-radio-group  color="primary"  formControlName="assaisonnement">
-                        <mat-radio-button value="Oui" (click)="controlAssaisonnement(true)">Pourcentage du coût matière</mat-radio-button>
-                        <mat-radio-button value="Non" (click)="controlAssaisonnement(false)">Montant fixe </mat-radio-button>        
-                    </mat-radio-group>
-                </div>
+        <div>
+          <label>Utiliser le coût des charges pour les calculs des coûts ?</label>
+          <mat-radio-group color="primary" formControlName="charges">
+            <div>
+              <mat-radio-button value="Oui" (click)="controlCharges(true)">Oui</mat-radio-button>
+            </div>
+            <div>
+            <mat-radio-button value="Non" (click)="controlCharges(false)">Non</mat-radio-button>
+            </div>
+          </mat-radio-group>
+        </div>
+        <div>
+          <label>Coût des charges</label>
+          <mat-form-field appearance="fill">
+            <mat-label>Taux horaire personnel</mat-label>
+            <input formControlName="tauxHorPers" matInput placeholder="" type="number" min="0" />
+            <span matSuffix>€&nbsp;</span>
+          </mat-form-field>
 
+          <mat-form-field appearance="fill">
+            <mat-label>Taux horaire forfaitaire</mat-label>
+            <input formControlName="tauxHorsForf" matInput placeholder="" type="number" min="0" />
+            <span matSuffix>€&nbsp;</span>
+          </mat-form-field>
+        </div>
 
-                <p>
-                    <mat-form-field appearance="fill">
-                        <mat-label>Coût d'aissaisonnement en pourcentage du coût matière</mat-label>
-                        <input formControlName="coutProdPerc" matInput placeholder="hello" type="number" min = 0 max= 100>
-                        <span matSuffix>%&nbsp;</span>
-                    </mat-form-field>
-                </p>
+        <div>
+          <label>Coefficient prix de vente</label>
+          <mat-form-field appearance="fill">
+            <mat-label>Avec charges</mat-label>
+            <input formControlName="coefCharge" matInput placeholder="" type="number" min="0" />
+          </mat-form-field>
 
+          <mat-form-field appearance="fill">
+            <mat-label>Sans charges</mat-label>
+            <input formControlName="coefWithoutCharge" matInput placeholder="" type="number" min="0" />
+          </mat-form-field>
+        </div>
 
+      </div>
 
-
-                <p>
-                    <mat-form-field appearance="fill">
-                        <mat-label>Coût d'aissaisonnement fixe</mat-label>
-                        <input formControlName="coutProdFix" matInput placeholder="" type="number" min = 0>
-                        <span matSuffix>€&nbsp;</span>
-                    </mat-form-field>
-                </p>
-
-                <label>Coût des chargess</label>
-                <p>
-                    <mat-form-field appearance="fill">
-                        <mat-label>Taux horaire personnel</mat-label>
-                        <input formControlName="tauxHorPers" matInput placeholder="" type="number" min = 0 >
-                        <span matSuffix>€&nbsp;</span>
-                    </mat-form-field>
-                </p>
-
-                <p>
-                    <mat-form-field appearance="fill">
-                        <mat-label>Taux horaire forfaitaire</mat-label>
-                        <input formControlName="tauxHorsForf" matInput placeholder="" type="number" min = 0 >
-                        <span matSuffix>€&nbsp;</span>
-                    </mat-form-field>
-                </p>
-
-
-                
-                <label>Coefficient prix de vente</label>
-                <p>
-                    <mat-form-field appearance="fill">
-                        <mat-label>Avec charges</mat-label>
-                        <input formControlName="coefCharge" matInput placeholder="" type="number" min = 0 >
-              
-                    </mat-form-field>
-                </p>
-
-                <p>
-                    <mat-form-field appearance="fill">
-                        <mat-label>Sans charges</mat-label>
-                        <input formControlName="coefWithoutCharge" matInput placeholder="" type="number" min = 0 >
-                     
-                    </mat-form-field>
-                </p>
-  
-                <button mat-flat-button color="primary" [disabled]="!coutsForm.valid" >Save</button>
-                
-            
+      <div id="bouton">
+        <button mat-flat-button color="primary" [disabled]="!coutsForm.valid">
+          Modifier
+        </button>
+      </div>
+      
+    </form>
+  </mat-card>
+</div>
