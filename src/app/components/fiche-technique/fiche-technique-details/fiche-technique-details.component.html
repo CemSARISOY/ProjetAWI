@@ -24,10 +24,10 @@
     </tr>
     <tr>
       <td>
-        <table>
+        <table >
           <tr>
             <td id="gauche">
-              <table>
+              <table >
                 <tr>
                   <th>INTITULE</th>
                 </tr>
@@ -38,8 +38,8 @@
                   <table class="content">
                     <tr>
                       <th>DENREES</th>
-                      <th>UNITES</th>
-                      <th>QUANTITES</th>
+                      <th class="unit">UNITES</th>
+                      <th class="qte">QUANTITES</th>
                     </tr>
                     <ng-template #recursiveList1 let-list>
                       <ng-container *ngFor="let prog of list">
@@ -49,8 +49,8 @@
                         </tr>
                         <tr *ngFor="let ingredient of prog.ingredients">
                           <td>{{ingredient.ingredient.LIBELLE}}</td>
-                          <td class="center">{{ingredient.ingredient.UNITE}}</td>
-                          <td class="center">{{ingredient.quantite}}</td> 
+                          <td class="unit center">{{ingredient.ingredient.UNITE}}</td>
+                          <td class="qte center">{{ingredient.quantite}}</td> 
                         </tr>
                         <ol *ngIf="prog.progression" >
                           
@@ -83,16 +83,16 @@
               <tr>
                 <table class="content">
                   <tr>
-                    <th>N° PHASE</th>
+                    <th class="phase">N° PHASE</th>
                     <th>TECHNIQUES DE REALISATION</th>
-                    <th>DUREE</th>
+                    <th class="time">DUREE</th>
                   </tr>
                   <ng-template #recursiveList2 let-list>
                     <ng-container *ngFor="let prog of list; let index = index">
                       <tr>
-                        <td class="center"><span>{{index+1}}</span></td>
+                        <td class="phase center"><b>{{index+1}}</b></td>
                         <td><span>{{prog.titreEtape}} :</span></td>
-                        <td class="center">{{prog.temps}}'</td>
+                        <td class="time center">{{prog.temps}}'</td>
                       </tr>
                       <tr>
                         <td></td>

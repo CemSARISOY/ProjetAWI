@@ -4,11 +4,8 @@
     margin-top:2%;
 }
 
-table, td, th {
-    border: 1px solid black;
-}
-
 .mainTables{
+    border:1px solid black;
     box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
               0 2px 2px 0 rgba(0, 0, 0, 0.14),
               0 1px 5px 0 rgba(0, 0, 0, 0.12);
@@ -26,9 +23,12 @@ th{
 
 table.content > tr > td{
     border:0px;
-    border-right: 1px solid black;
     border-collapse:collapse;
     padding-left:3px;
+}
+
+table.content > tr > td:last-child{
+    border:0px;
 }
 
 span{
@@ -37,4 +37,8 @@ span{
 }
 .center{
     text-align: center;
+}
+
+.unit, .qte, .phase, .time{
+    width:20%;
 }
