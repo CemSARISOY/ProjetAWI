@@ -3,39 +3,60 @@
   <!--Filtering-->
   <mat-form-field appearance="outline">
     <input
+      [(ngModel)]="filterVal"
       matInput
       (keyup)="applyFilter($any($event.target).value)"
-      placeholder="Filter"
+      placeholder="Filtrer"
     />
   </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Filtrer par ingrédients</mat-label>
+    <mat-select [formControl]="selectControl" multiple>
+      <mat-option (onSelectionChange)="filterSelect()" *ngFor="let ingredient of ingredientsListe" [value]="ingredient">{{ingredient}}</mat-option>
+    </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Catégorie</mat-label>
+      <mat-select [formControl]="categorie">
+        <mat-option value="aucun">Aucune</mat-option>
+        <mat-option value="Entrée">Entrée</mat-option>
+        <mat-option value="Plat">Plat</mat-option>
+        <mat-option value="Déssert">Déssert</mat-option>
+      </mat-select>
+    </mat-form-field>
+    
   <div><button mat-fab color="accent" [routerLink]="['/fiches-techniques/create']">
     <mat-icon>add</mat-icon>
   </button></div>
   
 </div>
 
-
-<table
+<div class="mat-elevation-z5">
+  <table
   mat-table
   [dataSource]="dataSource"
   matSort
   multiTemplateDataRows
-  class="mat-elevation-z8 demo-table"
->
+  class="demo-table"
+  >
   <ng-container matColumnDef="intitule">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Intitule</th>
     <td mat-cell *matCellDef="let row">{{ row.intitule }}</td>
   </ng-container>
+  <ng-container matColumnDef="responsable">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>responsable</th>
+    <td mat-cell *matCellDef="let row">{{ row.responsable }}</td>
+  </ng-container>
+  <ng-container matColumnDef="nbCouverts">
+    <th mat-header-cell *matHeaderCellDef>Nbre de couverts</th>
+    <td mat-cell *matCellDef="let row">{{ row.nbCouvert }}</td>
+  </ng-container>
 
   <ng-container matColumnDef="categorie">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Catégorie</th>
+    <th mat-header-cell *matHeaderCellDef>Catégorie</th>
     <td mat-cell *matCellDef="let row">{{ row.categorie }}</td>
   </ng-container>
 
-  <ng-container matColumnDef="ingredients">
-    <th mat-header-cell *matHeaderCellDef>Ingrédients</th>
-    <td mat-cell *matCellDef="let row">{{ row.ingredients }}</td>
-  </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr
@@ -43,4 +64,11 @@
     *matRowDef="let row; columns: displayedColumns"
     (click)="navigate(row)"
   ></tr>
-</table>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                showFirstLastButtons 
+                >
+  </mat-paginator>
+</div>
+

@@ -45,7 +45,7 @@ export class EtapeFormComponent implements OnInit {
     }
     
     
-    //this.ingredients = this.ingredientsService.getAllIngredients();
+    this.ingredients = this.ingredientsService.getAllIngredients();
     this.filteredOptions = this.ingredients;
     this.myControl.valueChanges.subscribe(value =>
       this.filter(value)

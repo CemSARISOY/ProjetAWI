@@ -1,6 +1,10 @@
-table, #header {
+div {
     margin-left:5%;
     width: 90%;
+}
+
+table{
+  width:100%;
 }
 
 #header{
@@ -30,3 +34,7 @@ table, #header {
   .mat-row:hover .mat-cell {
     border-color: currentColor;
   }
+
+mat-form-field{
+  margin-right:2%;
+}
