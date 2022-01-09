@@ -94,7 +94,13 @@ export class FicheTechniqueListComponent implements OnInit {
   getListeIngredients(progression : any[]){
     let liste = [];
     for(let i = 0; i < progression.length ; i ++){
-      if(progression[i].progression) liste.push(this.getListeIngredients(progression[i].progression))
+      if(progression[i].progression)
+      {
+        let temp = this.getListeIngredients(progression[i].progression)
+        temp.forEach( data => {
+          liste.push(data);
+        })
+      }
       else{
         for(let j = 0; j < progression[i].ingredients.length ; j++){
           liste.push(progression[i].ingredients[j].ingredient.LIBELLE);

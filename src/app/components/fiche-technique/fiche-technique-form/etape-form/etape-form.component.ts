@@ -24,7 +24,7 @@ export class EtapeFormComponent implements OnInit {
   description : string;
 
   newIngredient : string;
-  quantite : number;
+  quantite : number = 0;
   ingredientsEtape : any[] = [];
 
 

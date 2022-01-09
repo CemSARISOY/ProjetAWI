@@ -27,3 +27,7 @@
 #container > *:last-child {
   width: 100%;
 }
+
+#ingr * {
+  margin-right:1%;
+}
