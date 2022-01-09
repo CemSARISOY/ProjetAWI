@@ -20,7 +20,12 @@
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>{{this.router}}</span>
+      <span *ngIf="this.router === '/fiches-techniques'">Fiches Techniques</span>
+      <span *ngIf="this.router.includes('/fiches-techniques/') && this.router !== '/fiches-techniques/create' && !this.router.includes('modify')">Fiches Techniques / Détails</span>
+      <span *ngIf="this.router.includes('modify')">Fiches Techniques / Modifier</span>
+      <span *ngIf="this.router === '/fiches-techniques/create'">Fiches Techniques / Créer</span>
+      <span *ngIf="this.router === '/couts'">Coûts</span>
+      <span *ngIf="this.router === '/ingredients'">Ingrédients</span>
     </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

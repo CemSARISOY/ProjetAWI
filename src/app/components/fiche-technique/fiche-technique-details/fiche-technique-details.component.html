@@ -43,19 +43,22 @@
                     </tr>
                     <ng-template #recursiveList1 let-list>
                       <ng-container *ngFor="let prog of list">
-                        <tr>
-                          <td><span>{{prog.titreEtape}} :</span></td>
-                          <td></td><td></td>
-                        </tr>
-                        <tr *ngFor="let ingredient of prog.ingredients">
-                          <td>{{ingredient.ingredient.LIBELLE}}</td>
-                          <td class="unit center">{{ingredient.ingredient.UNITE}}</td>
-                          <td class="qte center">{{ingredient.quantite}}</td> 
-                        </tr>
-                        <ol *ngIf="prog.progression" >
+                        <ng-container *ngIf="prog.progression === undefined">
+                          <tr>
+                            <td><span>{{prog.titreEtape}} :</span></td>
+                            <td></td><td></td>
+                          </tr>
+                          <tr *ngFor="let ingredient of prog.ingredients">
+                            <td>{{ingredient.ingredient.LIBELLE}}</td>
+                            <td class="unit center">{{ingredient.ingredient.UNITE}}</td>
+                            <td class="qte center">{{ingredient.quantite}}</td> 
+                          </tr>
+                        </ng-container>
+                        
+                        <ng-container *ngIf="prog.progression" >
                           
                           <ng-container *ngTemplateOutlet="recursiveList1; context:{$implicit: prog.progression}"></ng-container>
-                        </ol>
+                        </ng-container>
                         
                       </ng-container>
                     </ng-template>
@@ -89,20 +92,22 @@
                   </tr>
                   <ng-template #recursiveList2 let-list>
                     <ng-container *ngFor="let prog of list; let index = index">
-                      <tr>
-                        <td class="phase center"><b>{{index+1}}</b></td>
-                        <td><span>{{prog.titreEtape}} :</span></td>
-                        <td class="time center">{{prog.temps}}'</td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td>{{prog.description}}</td>
-                        <td></td>
-                      </tr>
-                      <ol *ngIf="prog.progression" >
+                      <ng-container *ngIf="prog.progression === undefined">
+                        <tr>
+                          <td class="phase center"><b>{{index+1}}</b></td>
+                          <td><span>{{prog.titreEtape}} :</span></td>
+                          <td class="time center">{{prog.temps}}'</td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td>{{prog.description}}</td>
+                          <td></td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="prog.progression" >
                         
                         <ng-container *ngTemplateOutlet="recursiveList2; context:{$implicit: prog.progression}"></ng-container>
-                      </ol>
+                      </ng-container>
                       
                     </ng-container>
                   </ng-template>

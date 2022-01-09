@@ -34,9 +34,9 @@
           <td>{{index+1}}</td>
           <td *ngIf="etape.progression !== undefined">Realiser {{ etape.intitule }}</td>
           <td *ngIf="etape.progression === undefined">{{etape.description}}</td>
-          <td *ngIf="!etape.ingredients || etape.ingredients.length ==0">Aucun ingrédient nécessaire</td>
+          <td *ngIf="!etape.ingredients || etape.ingredients.length ==0"><span *ngIf="etape.progression === undefined">Aucun ingrédient nécessaire</span></td>
           <td *ngIf="etape.ingredients && etape.ingredients.length > 0"><div *ngFor="let ingredient of etape.ingredients">{{ingredient.ingredient.LIBELLE}} : {{ingredient.quantite}}</div></td>
-          <td>{{etape.temps}} mins</td>
+          <td><span *ngIf="etape.progression === undefined">{{etape.temps}} mins</span></td>
           <td *ngIf="(this.modifyingStep === undefined && !isAddingStep ) "><button *ngIf="etape.progression === undefined" mat-icon-button color="accent" (click)="modify(index)" >
             <mat-icon>edit</mat-icon>
           </button>
