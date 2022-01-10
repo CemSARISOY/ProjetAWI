@@ -1,5 +1,14 @@
 # ProjetAWI
 
+
+
+## Made by
+
+[Cem SARISOY](http://cemsarisoy.fr)   
+[Axel LAGET](http://github.com/lageta)
+
+## Made with Angular
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.4.
 
 ## Development server
